@@ -91,8 +91,34 @@ a:hover{text-decoration:underline}
   margin-bottom:14px;
 }
 
-.heroTop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.heroTitle{margin:0;font-size:22px;letter-spacing:.2px}
+.heroTop{
+  position:relative;
+  display:flex;
+  flex-direction:column;      /* banner arriba, título abajo */
+  align-items:flex-start;     /* título a la izquierda */
+  gap:10px;
+  padding-bottom:74px;        /* reserva para el botón absoluto */
+}
+
+.heroBanner{
+  display:block;              /* evita el espacio/baseline debajo de la imagen */
+  margin:0;
+  order:0;
+  max-width:min(718px, 100%);
+  height:auto;
+}
+
+.heroTitle{
+  order:1;
+  margin:0;
+  font-size:20px;
+  font-weight:1000;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+#seasonPill{ order:2; }
+
 .heroSub{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.45}
 
 .card{
@@ -419,27 +445,41 @@ tr:last-child td{border-bottom:none}
   table{ min-width:760px; } /* menos agresivo que 980px en móvil */
 }
 
-/* Botón "Reglamento" (mismo criterio que el resto del sitio) */
+/* Botón "Reglamento" (rojo) — abajo a la derecha dentro del hero */
 .reglamentoBtn{
+  position:absolute;
+  right:16px;
+  bottom:14px;
+
   display:inline-flex;
   align-items:center;
   justify-content:center;
 
   padding:16px 34px;
   font-weight:900;
-  font-size:16px;
-  letter-spacing:.12em;
+  font-size:14px;
+  letter-spacing:.18em;
   text-transform:uppercase;
 
   border-radius:999px;
   border:1px solid rgba(255,255,255,.10);
 
-  background: linear-gradient(135deg,#22d3ee,#0ea5e9);
-  color:#041016 !important;
-  box-shadow:0 12px 30px rgba(14,165,233,.28);
+  background: linear-gradient(135deg,#ef4444,#b91c1c);
+  color:#120305 !important;
+  box-shadow:0 12px 30px rgba(239,68,68,.25);
   text-decoration:none;
 }
-.reglamentoBtn:hover{ text-decoration:none; filter:brightness(1.03); }
+.reglamentoBtn:hover{ text-decoration:none; filter:brightness(1.04); }
+
+/* Mobile: botón en flujo normal, a la derecha */
+@media (max-width:720px){
+  .heroTop{ padding-bottom: 0; }
+  .reglamentoBtn{
+    position:static;
+    margin-left:auto;
+    margin-top:10px;
+  }
+}
 
 @media (max-width:520px){
   .wrap{ padding:12px; }
@@ -517,6 +557,7 @@ tr:last-child td{border-bottom:none}
 }
 
 .pageRules .topActions{ display:flex; gap:10px; flex-wrap:wrap; }
+
 
 /* Botones del reglamento (mismo vocabulario que los pills) */
 .pageRules .btn{
