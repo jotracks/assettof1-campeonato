@@ -1047,7 +1047,7 @@ body.pageRules{
 .hero{
   height: auto !important;
   min-height: 5 !important;
-  padding-bottom: 0 !important; /* recorta aire inferior */
+  padding-bottom: 5 !important; /* recorta aire inferior */
 }
 
 /* 2) Que el layout interno no meta padding/margen abajo */
