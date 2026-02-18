@@ -1,0 +1,987 @@
+/* css/style.css */
+
+:root{
+  --bg0:#05070d;
+  --bg1:#070a12;
+  --text:#EAF0FF;
+  --muted:rgba(234,240,255,.72);
+
+  --border:rgba(255,255,255,.10);
+  --shadow:0 18px 60px rgba(0,0,0,.45);
+  --br:18px;
+
+  --cyan:#38BDF8;
+  --ok:#22C55E;
+  --warn:#F59E0B;
+  --violet:#A855F7;
+  --pink:#FF4FD8;
+
+  --mono: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  --sans: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--sans);
+  color:var(--text);
+  background:#05070d;
+  overflow-x:hidden;
+}
+
+/* =========================================================
+   BACKGROUND 3D FIXED + PARALLAX SUAVE
+   ========================================================= */
+body::before{
+  content:"";
+  position:fixed;
+  inset:-40px;
+  z-index:-2;
+  pointer-events:none;
+
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px),
+    radial-gradient(900px 520px at 18% 12%, rgba(56,189,248,.14), transparent 62%),
+    radial-gradient(1000px 600px at 82% 6%, rgba(168,85,247,.14), transparent 62%),
+    radial-gradient(900px 700px at 55% 88%, rgba(34,197,94,.07), transparent 60%),
+    linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 45%, #04060b 100%);
+
+  background-size:88px 88px, 88px 88px, cover, cover, cover, cover;
+  background-position:0 0, 0 0, center, center, center, center;
+  background-attachment:fixed, fixed, fixed, fixed, fixed, fixed;
+
+  filter:saturate(1.08) contrast(1.05);
+  transform:translateZ(0);
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(1200px 700px at 50% 10%, rgba(0,0,0,.14), transparent 60%),
+    radial-gradient(1200px 700px at 50% 100%, rgba(0,0,0,.35), transparent 55%),
+    linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.55));
+  transform:translateZ(0);
+}
+@media (prefers-reduced-motion: reduce){
+  body::before{ background-attachment:scroll,scroll,scroll,scroll,scroll,scroll; }
+}
+
+/* =========================================================
+   Layout / components
+   ========================================================= */
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.wrap{max-width:1180px;margin:0 auto;padding:16px}
+
+.hero{
+  padding:14px 16px;
+  border-radius:var(--br);
+  border:1px solid var(--border);
+  background:
+    radial-gradient(1000px 280px at 15% 0%, rgba(225,29,41,.20), transparent 55%),
+    radial-gradient(900px 260px at 85% 0%, rgba(56,189,248,.14), transparent 55%),
+    linear-gradient(180deg, rgba(18,28,47,.86), rgba(18,28,47,.52));
+  box-shadow:var(--shadow);
+  margin-bottom:14px;
+}
+
+.heroTop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.heroTitle{margin:0;font-size:22px;letter-spacing:.2px}
+.heroSub{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.45}
+
+.card{
+  background: linear-gradient(180deg, rgba(18,28,47,.92), rgba(18,28,47,.72));
+  border:1px solid var(--border);
+  border-radius:var(--br);
+  padding:14px;
+  box-shadow:0 14px 45px rgba(0,0,0,.35);
+  margin-bottom:14px;
+}
+
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(7,10,15,.28);
+  color: rgba(234,240,255,.85);
+  font-size:12px;
+  font-weight:900;
+}
+.pill.violet{background:rgba(168,85,247,.14);border-color:rgba(168,85,247,.38)}
+.pill.cyan{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.35)}
+.right{margin-left:auto}
+.mono{font-family:var(--mono)}
+small{color:rgba(234,240,255,.70)}
+h2{margin:0 0 10px;font-size:16px}
+hr{border:none;height:1px;background:rgba(255,255,255,.08);margin:12px 0}
+
+/* =========================================================
+   Section headers (PNG) - centrados
+   ========================================================= */
+.sectionHeader{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin: 6px 0 12px;
+  text-align:center;
+}
+.sectionHeaderImg{
+  width: min(100%, 980px);
+  height: auto;
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+  border-radius: 14px;
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow: 0 14px 40px rgba(0,0,0,.30);
+}
+
+.standingsGap{ height: 18px; }
+
+/* =========================================================
+   STANDINGS - banner PNG como fondo
+   ========================================================= */
+.standings{display:flex;flex-direction:column;gap:10px}
+
+.standRow{
+  --teamColor: rgba(255,255,255,.18);
+  --teamBg: none;
+
+  display:grid;
+  grid-template-columns: 66px 1fr 104px;
+  align-items:center;
+  gap:12px;
+
+  padding:10px 12px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.10);
+
+  position:relative;
+  overflow:hidden;
+
+  background-image:
+    linear-gradient(90deg, rgba(10,20,40,.50), rgba(10,20,40,.28) 40%, rgba(10,20,40,.50)),
+    var(--teamBg);
+
+  background-size: cover, 100% 100%;
+  background-repeat:no-repeat,no-repeat;
+  background-position:center, bottom;
+}
+
+.standRow::before{
+  content:"";
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width:9px;
+  background: var(--teamColor);
+}
+
+.standRow::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(900px 220px at 20% 50%, rgba(0,0,0,.30), transparent 60%),
+    linear-gradient(90deg, rgba(0,0,0,.38), rgba(0,0,0,.08) 45%, rgba(0,0,0,.30));
+  pointer-events:none;
+}
+
+.standRow > *{ position:relative; z-index:1; }
+
+.posBox{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:14px;
+  height:48px;
+  font-weight:1000;
+  font-size:24px;
+  letter-spacing:.5px;
+  background: rgba(7,10,15,.60);
+  border:1px solid rgba(255,255,255,.10);
+}
+
+.namePlate{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  padding:10px 12px;
+  border-radius:14px;
+
+  background: rgba(7,10,15,.60);
+  border:1px solid rgba(255,255,255,.10);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  width: fit-content;
+  max-width: 100%;
+}
+
+.driverName{
+  font-weight:1000;
+  font-size:17px;
+  letter-spacing:.3px;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.teamName{
+  font-size:12px;
+  color: rgba(234,240,255,.72);
+  white-space:nowrap;
+}
+
+.pointsBox{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:6px;
+}
+.points{
+  width:76px;
+  height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:12px;
+  background: linear-gradient(180deg, rgba(220,0,0,.98), rgba(160,0,0,.98));
+  border:1px solid rgba(255,255,255,.12);
+
+  color:#fff;
+  font-weight:1000;
+  font-size:24px;
+  font-family: var(--mono);
+  letter-spacing:.3px;
+
+  text-shadow:0 2px 10px rgba(0,0,0,.35);
+}
+.wins{font-size:11px;color: rgba(234,240,255,.70)}
+
+@media (max-width:720px){
+  .standRow{ grid-template-columns: 58px 1fr 92px; }
+  .driverName{ font-size:15px; }
+  .posBox{ height:44px; font-size:22px; }
+  .points{ width:70px; height:42px; font-size:21px; }
+  .sectionHeaderImg{ border-radius: 12px; }
+}
+
+/* ======================================================
+   History tables
+   ====================================================== */
+.tableWrap{
+  overflow:auto;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:14px;
+  background: rgba(7,10,15,.18);
+}
+table{width:100%;border-collapse:collapse;min-width:980px}
+th,td{
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:9px 10px;
+  font-size:14px;
+  vertical-align:middle
+}
+th{
+  position:sticky;
+  top:0;
+  background: rgba(7,10,15,.55);
+  backdrop-filter: blur(8px);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-size:11px;
+  color: rgba(234,240,255,.75);
+}
+tr:last-child td{border-bottom:none}
+
+.winnerLine{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.winnerName{font-weight:1000;color: rgba(234,240,255,.95)}
+.winnerPill{background:rgba(34,197,94,.14);border-color:rgba(34,197,94,.38)}
+
+/* Fast lap / overtakes header lines */
+.fastLapLine,
+.overtakeLine{
+  margin-top: 8px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.fastLapName,
+.overtakeName{
+  font-weight:1000;
+  color: rgba(234,240,255,.92);
+}
+
+/* Badges */
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  font-weight:900;
+  font-size:11px;
+}
+.badge.dnf{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.35)}
+.badge.dsq{background:rgba(239,68,68,.14);border-color:rgba(239,68,68,.38)}
+.badge.pen{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.35)}
+.badge.fl{background:rgba(168,85,247,.18);border-color:rgba(168,85,247,.38);color:#F1D9FF}
+.badge.ovr{background:rgba(56,189,248,.14);border-color:rgba(56,189,248,.38);color:rgba(234,240,255,.92)}
+.badge.tyre{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:rgba(234,240,255,.88)}
+.badge.reg{background:rgba(34,197,94,.10);border-color:rgba(34,197,94,.32);color:rgba(234,240,255,.92)}
+
+/* Inscriptos (sin resultados todavía) */
+.standRow.registeredOnly{ opacity:.78; }
+.standRow.registeredOnly .points{
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  border-color: rgba(255,255,255,.14);
+  color: rgba(234,240,255,.92);
+}
+
+/* Fast lap row highlight */
+.fastLapRow td{
+  background: rgba(168,85,247,.10) !important;
+}
+.fastLapRow td:first-child{
+  box-shadow: inset 4px 0 0 rgba(168,85,247,.70);
+}
+
+/* Most overtakes row highlight */
+.mostOvertakesRow td{
+  background: rgba(56,189,248,.09) !important;
+}
+.mostOvertakesRow td:first-child{
+  box-shadow: inset 4px 0 0 rgba(56,189,248,.70);
+}
+
+/* Dots */
+.flDot{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  margin-right:8px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,79,216,.95), rgba(168,85,247,.95));
+  box-shadow:
+    0 0 0 3px rgba(168,85,247,.18),
+    0 0 16px rgba(255,79,216,.25);
+  vertical-align: middle;
+}
+.otDot{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  margin-right:8px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.92), rgba(56,189,248,.95));
+  box-shadow:
+    0 0 0 3px rgba(56,189,248,.16),
+    0 0 16px rgba(56,189,248,.22);
+  vertical-align: middle;
+}
+
+.nameText{ vertical-align: middle; }
+
+
+/* Tyre dots */
+.tyreDots{ display:inline-flex; gap:6px; align-items:center; flex-wrap:wrap; margin-right:8px; vertical-align:middle; }
+.tyreDot{ width:12px; height:12px; border-radius:999px; border:2px solid rgba(255,255,255,.55); box-shadow:0 2px 10px rgba(0,0,0,.25); }
+.tyreDot.hard{ background:#fff; }
+.tyreDot.medium{ background:#f7d200; border-color: rgba(255,255,255,.25); }
+.tyreDot.soft{ background:#ff2b2b; border-color: rgba(255,255,255,.20); }
+.tyreDot.inter{ background:#22c55e; border-color: rgba(255,255,255,.20); }
+.tyreDot.wet{ background:#3b82f6; border-color: rgba(255,255,255,.20); }
+
+.badge.warn{ background:rgba(255,79,216,.12); border-color:rgba(255,79,216,.35); color:rgba(255,235,255,.95); }
+
+
+/* =========================================================
+   Quick responsive fixes (site-wide)
+   ========================================================= */
+
+/* Evita que el grid / textos fuerzen ancho extra en mobile */
+.standRow{ min-width:0; }
+.namePlate{ min-width:0; }
+.driverName, .teamName{
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* Scroll suave en tablas en iOS */
+.tableWrap{ -webkit-overflow-scrolling: touch; }
+@media (max-width:720px){
+  table{ min-width:760px; } /* menos agresivo que 980px en móvil */
+}
+
+/* Botón "Reglamento" (mismo criterio que el resto del sitio) */
+.reglamentoBtn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:16px 34px;
+  font-weight:900;
+  font-size:16px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+
+  background: linear-gradient(135deg,#22d3ee,#0ea5e9);
+  color:#041016 !important;
+  box-shadow:0 12px 30px rgba(14,165,233,.28);
+  text-decoration:none;
+}
+.reglamentoBtn:hover{ text-decoration:none; filter:brightness(1.03); }
+
+@media (max-width:520px){
+  .wrap{ padding:12px; }
+  .hero{ padding:12px 12px; }
+  .card{ padding:12px; }
+}
+
+/* =========================================================
+   REGLAMENTO PAGE (scoped) — unifica look & feel con index
+   ========================================================= */
+
+.pageRules{
+  /* acento rojo F1, pero sobre el mismo theme del sitio */
+  --accent:#e11d2e;
+  --accent2:#ffb020;
+}
+
+/* Topbar */
+.pageRules .topbar{
+  position:sticky;
+  top:12px;
+  z-index:20;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+
+  padding:12px 14px;
+  border-radius:var(--br);
+  border:1px solid var(--border);
+  background: linear-gradient(180deg, rgba(18,28,47,.92), rgba(18,28,47,.72));
+  box-shadow:0 14px 45px rgba(0,0,0,.35);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.pageRules .brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+.pageRules .brandMark{
+  width:40px;
+  height:40px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background: rgba(7,10,15,.35);
+  border:1px solid rgba(255,255,255,.10);
+}
+.pageRules .brandMark svg{ width:22px; height:22px; opacity:.95; }
+.pageRules .brandTitle{
+  display:flex;
+  flex-direction:column;
+  line-height:1.15;
+  min-width:0;
+}
+.pageRules .brandTitle strong{
+  font-size:13px;
+  letter-spacing:.02em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.pageRules .brandTitle span{
+  font-size:12px;
+  color:var(--muted);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.pageRules .topActions{ display:flex; gap:10px; flex-wrap:wrap; }
+
+/* Botones del reglamento (mismo vocabulario que los pills) */
+.pageRules .btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(7,10,15,.28);
+  color: rgba(234,240,255,.90);
+
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  text-decoration:none;
+}
+.pageRules .btn:hover{ text-decoration:none; transform: translateY(-1px); }
+
+.pageRules .btn.primary{
+  background: linear-gradient(135deg,#22d3ee,#0ea5e9);
+  color:#041016;
+  border-color: rgba(255,255,255,.14);
+  box-shadow:0 10px 24px rgba(14,165,233,.22);
+}
+
+/* Hero del reglamento: reusa .hero del sitio */
+.pageRules .hero{
+  margin-top:14px;
+}
+.pageRules .heroInner{ max-width: 980px; }
+.pageRules .kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  font-size:12px;
+  color: rgba(234,240,255,.85);
+}
+.pageRules .pillRed{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,79,216,.95), rgba(225,29,46,.95));
+  box-shadow: 0 12px 22px rgba(225,29,46,.20);
+}
+.pageRules .hero h1{
+  margin:10px 0 8px;
+  line-height:1.08;
+  font-size: clamp(22px, 4.8vw, 34px);
+}
+.pageRules .hero p{
+  margin:0;
+  max-width: 80ch;
+  color: rgba(234,240,255,.78);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.pageRules .heroBadges{
+  margin-top:14px;
+  display:grid;
+  gap:14px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  align-items:stretch;
+}
+@media (min-width:1024px){
+  .pageRules .heroBadges{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+.pageRules .heroBadges .badge{
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(7,10,15,.26);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:54px;
+}
+.pageRules .heroBadges .badge b{ font-size:13px; line-height:1.1; }
+.pageRules .heroBadges .badge small{
+  display:block;
+  margin-top:4px;
+  color: rgba(234,240,255,.70);
+  font-size:12px;
+}
+
+/* Layout */
+.pageRules .grid{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns: 320px 1fr;
+  gap:14px;
+  align-items:start;
+}
+
+/* TOC */
+.pageRules .toc{
+  position:sticky;
+  top:92px;
+
+  border-radius:var(--br);
+  border:1px solid var(--border);
+  background: linear-gradient(180deg, rgba(18,28,47,.92), rgba(18,28,47,.72));
+  box-shadow:0 14px 45px rgba(0,0,0,.35);
+  overflow:hidden;
+}
+.pageRules .tocHeader{
+  padding:12px 14px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.pageRules .tocHeader strong{ font-size:13px; letter-spacing:.02em; }
+.pageRules .tocHeader span{ font-size:12px; color:var(--muted); }
+
+.pageRules .tocList{
+  list-style:none;
+  padding:10px;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.pageRules .tocList a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  padding:10px 10px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(7,10,15,.20);
+
+  color: rgba(234,240,255,.88);
+  text-decoration:none;
+  transition: transform .08s ease, border-color .12s ease, background .12s ease;
+}
+.pageRules .tocList a:hover{ transform: translateY(-1px); }
+.pageRules .tocList a.active{
+  background: rgba(225,29,46,.14);
+  border-color: rgba(225,29,46,.32);
+}
+.pageRules .tocList .n{
+  width:26px;
+  height:26px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background: rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.10);
+  font-weight:1000;
+}
+
+/* Content sections */
+.pageRules .content{ display:flex; flex-direction:column; gap:14px; }
+
+.pageRules .section{
+  border:1px solid var(--border);
+  border-radius:var(--br);
+  background: linear-gradient(180deg, rgba(18,28,47,.92), rgba(18,28,47,.72));
+  box-shadow:0 14px 45px rgba(0,0,0,.35);
+  overflow:hidden;
+}
+.pageRules .sectionHeader{
+  padding:14px 16px 12px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  background:
+    radial-gradient(900px 220px at 25% 50%, rgba(225,29,46,.18), transparent 60%),
+    linear-gradient(90deg, rgba(225,29,46,.26), rgba(0,0,0,0));
+  text-align:left; /* override del .sectionHeader global */
+  justify-content:flex-start;
+}
+.pageRules .sectionHeader h2{
+  margin:0;
+  font-size:18px;
+}
+.pageRules .sectionHeader p{
+  margin:6px 0 0;
+  color: rgba(234,240,255,.78);
+  font-size:13px;
+  line-height:1.6;
+  max-width:80ch;
+}
+.pageRules .sectionBody{ padding:14px 16px 16px; }
+
+.pageRules .subgrid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:12px;
+}
+.pageRules .subgrid.subgrid2{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.pageRules .subgrid.subgrid1{ grid-template-columns: 1fr; }
+
+.pageRules .callout{
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(7,10,15,.22);
+}
+.pageRules .callout.warn{
+  border-color: rgba(245,158,11,.35);
+  background: rgba(245,158,11,.10);
+}
+.pageRules .callout.good{
+  border-color: rgba(34,197,94,.35);
+  background: rgba(34,197,94,.10);
+}
+
+.pageRules .list{
+  margin:10px 0 0;
+  padding-left:18px;
+  color: rgba(234,240,255,.82);
+  line-height:1.6;
+}
+.pageRules .list li{ margin:6px 0; }
+.pageRules .muted{ color: var(--muted); }
+
+/* Anchor offsets: que el topbar no tape el título al navegar */
+.pageRules section[id]{ scroll-margin-top: 110px; }
+
+/* Mobile rules */
+@media (max-width:980px){
+  .pageRules .grid{ grid-template-columns: 1fr; }
+  .pageRules .toc{ position:static; }
+  .pageRules section[id]{ scroll-margin-top: 18px; }
+}
+@media (max-width:720px){
+  .pageRules .topbar{ position:static; }
+  .pageRules .heroBadges{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .pageRules .tocList{
+    flex-direction:row;
+    overflow:auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .pageRules .tocList li{ flex:0 0 auto; }
+  .pageRules .tocList a{ white-space:nowrap; }
+}
+
+
+/* =========================================================
+   REGLAMENTO — fixes de centrado + extra mobile-friendly (v2)
+   ========================================================= */
+
+/* 1) Centrado robusto del layout (desktop) */
+body.pageRules{
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+/* el contenedor real de la página */
+body.pageRules > .wrap{
+  width: min(1180px, 100%);
+  max-width: 1180px;
+  margin: 0;            /* el centrado lo hace el flex del body */
+  padding: 16px;
+}
+
+/* por si algún CSS externo mueve grid/aside */
+.pageRules .topbar,
+.pageRules .hero,
+.pageRules .grid{
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* 2) Mobile: más legible, menos “aplastado” */
+@media (max-width: 1100px){
+  .pageRules .subgrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 980px){
+  body.pageRules > .wrap{ padding: 14px; }
+  .pageRules .heroInner{ max-width: 100%; }
+  .pageRules .hero p{ font-size: 15px; }
+  .pageRules .sectionHeader h2{ font-size: 17px; }
+}
+
+@media (max-width: 720px){
+  body.pageRules > .wrap{ padding: 12px; }
+
+  /* Topbar menos invasiva */
+  .pageRules .topbar{
+    position: static;
+    padding: 10px 12px;
+  }
+  .pageRules .topActions{ width: 100%; justify-content: flex-end; }
+
+  /* Índice: que no robe pantalla */
+  .pageRules .tocHeader{ padding: 10px 12px; }
+  .pageRules .tocList{
+    flex-direction: row;
+    gap: 8px;
+    padding: 10px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .pageRules .tocList li{ flex: 0 0 auto; }
+  .pageRules .tocList a{ padding: 9px 10px; white-space: nowrap; }
+
+  /* Cards: una columna */
+  .pageRules .subgrid{ grid-template-columns: 1fr; }
+
+  /* Badges: 2x2, y si es muy chico: 1 columna */
+  .pageRules .heroBadges{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 420px){
+  .pageRules .heroBadges{ grid-template-columns: 1fr; }
+  .pageRules .btn{ padding: 8px 10px; }
+}
+
+
+/* =========================================================
+   PAGE RULES — HARD CENTERING (desktop) + EXTRA MOBILE LOVE
+   ========================================================= */
+body.pageRules{
+  /* evita cualquier corrimiento por wrappers raros */
+  overflow-x:hidden;
+}
+.pageRules .wrap{
+  /* si por algún motivo otro CSS pisa .wrap, acá lo blindamos */
+  width:100%;
+  max-width:1180px;
+  margin-inline:auto;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  align-items:center; /* centra visualmente hijos que no sean full-width */
+}
+.pageRules .wrap > *{
+  width:100%;
+}
+/* por las dudas: que el grid nunca quede "shrink" */
+.pageRules .grid{
+  width:100%;
+  margin-inline:auto;
+}
+.pageRules .toc, .pageRules .ruleCard, .pageRules .hero, .pageRules .topbar{
+  max-width:100%;
+}
+.pageRules .grid > *{ min-width:0; }
+
+/* Mobile: una columna antes, texto + cards más respirables */
+@media (max-width: 980px){
+  .pageRules .grid{ grid-template-columns: 1fr; }
+  .pageRules .toc{
+    position:sticky;
+    top:76px;
+  }
+}
+@media (max-width: 560px){
+  .pageRules .wrap{ padding:12px; }
+  .pageRules .topbar{ top:8px; padding:10px 12px; }
+  .pageRules .hero{ padding:12px; }
+  .pageRules .heroTitle{ font-size:20px; }
+  .pageRules .badgeRow{ gap:8px; }
+  .pageRules .badge{ padding:8px 10px; }
+  .pageRules .ruleHeader{ padding:12px 12px; }
+  .pageRules .ruleBody{ padding:12px 12px; }
+  .pageRules .subgrid{ grid-template-columns: 1fr; }
+}
+
+
+
+
+/* ===== Reglamentos: badges superiores como cards iguales ===== */
+.pageRules .badgeRow{
+  margin-top:14px;
+  display:grid;
+  gap:12px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  align-items:stretch;
+}
+.pageRules .badgeRow .badge{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:16px;
+  width:100%;
+  font-size:13px;
+  font-weight:800;
+  border:1px solid rgba(255,255,255,.12);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+}
+.pageRules .badgeRow .badge b{ font-size:13px; }
+.pageRules .badgeRow .badge small{
+  font-size:12px;
+  font-weight:700;
+  opacity:.8;
+}
+@media (max-width: 820px){
+  .pageRules .badgeRow{ grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px){
+  .pageRules .badgeRow{ grid-template-columns: 1fr; gap:10px; }
+}
+
+
+/* Hero meta (reemplaza badges) */
+.pageRules .heroMeta{
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.pageRules .heroMeta .metaItem{
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 13px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.pageRules .heroMeta .metaItem b{
+  font-weight: 700;
+}
+
+.pageRules .heroMeta .metaItem .metaVal{
+  font-weight: 400;
+  color: rgba(234,240,255,.75);
+}
+
+/* Separador | */
+.pageRules .heroMeta .metaItem + .metaItem::before{
+  content: "|";
+  display: inline-block;
+  margin: 0 10px 0 6px;
+  color: rgba(234,240,255,.35);
+}
+
+/* Mobile: que respire un poco más y permita wrap */
+@media (max-width: 560px){
+  .pageRules .heroMeta{
+    justify-content: flex-start;
+    gap: 6px;
+  }
+  .pageRules .heroMeta .metaItem{
+    white-space: normal;
+  }
+}
