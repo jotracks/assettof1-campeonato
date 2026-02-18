@@ -10,7 +10,7 @@
     /* --- overrides (header cleanup) --- */
     .hero { position: relative; }
 
-    /* ✅ Layout correcto: banner arriba, título abajo-izq, botón abajo-der */
+    /* ✅ Layout: banner arriba, título abajo-izq, botón abajo-der */
     .heroTop{
       display:grid;
       grid-template-columns: 1fr auto;
@@ -23,7 +23,7 @@
 
     .heroBanner{
       grid-area:banner;
-      display:block; /* elimina gap/baseline debajo de la imagen */
+      display:block;
       margin:0;
     }
 
@@ -42,7 +42,29 @@
 
     #seasonPill{ display:none !important; } /* keep in DOM for JS, hide visually */
 
-    /* Mobile: evita header gigante y mejora lectura */
+    /* ✅ NUEVO: dock de redes abajo a la derecha (usa el "margen libre") */
+    .heroSocialDock{
+      position:absolute;
+      right:22px;
+      bottom:18px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      z-index:2;
+    }
+
+    .heroSocialDock .socialPill{
+      padding:10px 12px;
+      font-size:12px;
+      letter-spacing:.06em;
+      opacity:.92;
+      /* hace el texto más legible sobre el fondo */
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .heroSocialDock .socialPill:hover{ opacity:1; }
+
+    /* Mobile: evita superposición (dock pasa a flujo normal debajo del botón) */
     @media (max-width:720px){
       .wrap{ padding:12px; }
 
@@ -56,6 +78,7 @@
       }
 
       .heroTitle{ font-size: clamp(18px, 5vw, 22px); }
+
       .reglamentoBtn{
         width:100%;
         justify-content:center;
@@ -63,6 +86,13 @@
         font-size:13px;
         letter-spacing:.08em;
       }
+
+      .heroSocialDock{
+        position:static;     /* vuelve al flujo */
+        margin-top:10px;
+        justify-content:flex-end;
+      }
+
       .updatedFooter{ justify-content:center; }
       .updatedText{ white-space:normal; text-align:center; }
     }
@@ -98,6 +128,27 @@
         <span class="pill" id="seasonPill">Temporada</span>
 
         <a class="pill right reglamentoBtn" href="./reglamento.html">Reglamento</a>
+      </div>
+
+      <!-- ✅ NUEVO: redes abajo a la derecha (en el margen libre) -->
+      <div class="heroSocialDock">
+        <a
+          class="pill right socialPill"
+          href="https://www.instagram.com/assetto.f1/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram AssettoF1"
+          title="Instagram"
+        >Instagram</a>
+
+        <a
+          class="pill right socialPill"
+          href="https://chat.whatsapp.com/Db5wf2PYOR4Do7m6kQv76M"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Grupo de WhatsApp AssettoF1"
+          title="WhatsApp"
+        >WhatsApp</a>
       </div>
 
       <p class="heroSub" id="subtitle"></p>
