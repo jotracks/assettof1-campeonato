@@ -1,148 +1,310 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>F1 Assetto Corsa</title>
-  <link href="css/style.css" rel="stylesheet"/>
+  <meta name="color-scheme" content="dark light" />
+  <title>Campeonato</title>
 
   <style>
-    /* --- overrides (header cleanup) --- */
-    .hero { position: relative; }
-
-    /* ✅ Layout correcto: banner arriba, título abajo-izq, botón abajo-der */
-    .heroTop{
-      display:grid;
-      grid-template-columns: 1fr auto;
-      grid-template-areas:
-        "banner banner"
-        "title  btn";
-      align-items:end;
-      gap:10px 16px;
+    :root{
+      --bg: #0b0d10;
+      --card: rgba(255,255,255,.06);
+      --border: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.65);
+      --shadow: 0 12px 28px rgba(0,0,0,.35);
+      --radius: 18px;
     }
 
-    .heroBanner{
-      grid-area:banner;
-      display:block; /* elimina gap/baseline debajo de la imagen */
-      margin:0;
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin: 0;
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(120,160,255,.18), transparent 60%),
+                  radial-gradient(900px 500px at 80% 0%, rgba(255,120,200,.10), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      overflow-x: hidden;
+      overflow-y: auto; /* importante para mobile */
     }
 
-    .heroTitle{
-      grid-area:title;
-      margin:0;
-      padding:0;
-      line-height:1.15;
+    a{ color: inherit; }
+
+    .wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 14px 40px;
     }
 
-    .reglamentoBtn{
-      grid-area:btn;
-      justify-self:end;
-      align-self:end;
+    header{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
-    #seasonPill{ display:none !important; } /* keep in DOM for JS, hide visually */
+    .topRow{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      justify-content: space-between;
+    }
 
-    /* Mobile: evita header gigante y mejora lectura */
-    @media (max-width:720px){
-      .wrap{ padding:12px; }
+    h1{
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: .3px;
+      color: var(--text);
+    }
 
-      .heroTop{
-        grid-template-columns: 1fr;
-        grid-template-areas:
-          "banner"
-          "title"
-          "btn";
-        gap:10px;
+    .pills{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pill{
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+      backdrop-filter: blur(10px);
+      white-space: nowrap;
+    }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media (min-width: 920px){
+      .grid{
+        grid-template-columns: 1.2fr .8fr;
+        align-items: start;
       }
-
-      .heroTitle{ font-size: clamp(18px, 5vw, 22px); }
-      .reglamentoBtn{
-        width:100%;
-        justify-content:center;
-        padding:12px 16px;
-        font-size:13px;
-        letter-spacing:.08em;
-      }
-      .updatedFooter{ justify-content:center; }
-      .updatedText{ white-space:normal; text-align:center; }
     }
 
-    /* Updated moved to bottom */
-    .pageFooter{
-      margin:24px 0 40px;
-      padding:0 8px;
+    .card{
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
-    .updatedFooter{
+
+    .cardHead{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .cardTitle{
+      margin: 0;
+      font-size: 14px;
+      letter-spacing: .2px;
+      color: var(--text);
+    }
+
+    .sub{
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* =========================
+       Secciones que crea tu JS
+       ========================= */
+    .sectionHeader{
       display:flex;
-      justify-content:flex-end;
+      align-items:center;
+      gap:10px;
+      padding: 14px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
     }
-    .updatedText{
-      font-size:12px;
-      opacity:.7;
-      white-space:nowrap;
+    .sectionHeaderImg{
+      height: 18px;
+      width: auto;
+      opacity: .95;
     }
 
-    /* keep the old stats pills hidden */
-    #pointsPill, #racesPill{ display:none !important; }
+    /* Host containers */
+    .standings{
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .standingsGap{
+      height: 8px;
+    }
+
+    /* Rows (pilotos / equipos) */
+    .standRow{
+      --teamColor: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+      border-radius: 14px;
+      padding: 10px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap; /* clave para mobile */
+      position: relative;
+      overflow: hidden;
+    }
+    .standRow::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(90deg, color-mix(in oklab, var(--teamColor) 35%, transparent), transparent 55%);
+      opacity: .8;
+      pointer-events: none;
+    }
+    .standRow > *{ position: relative; }
+
+    .posBox{
+      min-width: 42px;
+      height: 34px;
+      border-radius: 10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 800;
+      font-size: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    .namePlate{
+      display:flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 180px;
+      flex: 1 1 220px;
+    }
+    .driverName{
+      font-weight: 750;
+      font-size: 14px;
+      line-height: 1.1;
+    }
+    .teamName{
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .pointsBox{
+      margin-left: auto;
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      flex: 0 0 auto;
+    }
+    .points{
+      font-weight: 900;
+    }
+
+    /* En mobile: que no se “pierdan” los puntos a la derecha */
+    @media (max-width: 520px){
+      .pointsBox{ margin-left: 0; }
+      .namePlate{ min-width: 140px; flex-basis: 100%; }
+      .posBox{ height: 32px; }
+    }
+
+    /* History */
+    #history{
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Load card (picker) */
+    #loadCard{ display:none; }
+    .loadInner{
+      padding: 14px;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    input[type="file"]{
+      width: 100%;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px dashed rgba(255,255,255,.18);
+      background: rgba(0,0,0,.20);
+      color: var(--muted);
+    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <header class="hero">
-      <div class="heroTop">
-        <img class="heroBanner" src="./img/banner.png" alt="AssettoF1 - Liga" width="718" height="85">
-
-        <h1 class="heroTitle" id="title">TEMPORADA 2026 - Etapa 1</h1>
-
-        <span class="pill" id="seasonPill">Temporada</span>
-
-        <a class="pill right reglamentoBtn" href="./reglamento.html">Reglamento</a>
+    <header>
+      <div class="topRow">
+        <h1>Standings</h1>
+        <div class="pills">
+          <div class="pill" id="seasonPill">Temporada: —</div>
+          <div class="pill" id="updatedPill">Actualizado: —</div>
+          <div class="pill" id="driversCount">Pilotos: —</div>
+          <div class="pill" id="racesPill">Fechas: —</div>
+          <div class="pill" id="pointsPill">Puntos: —</div>
+        </div>
       </div>
-
-      <p class="heroSub" id="subtitle"></p>
+      <div class="sub" id="historyCount">—</div>
     </header>
 
-    <div class="card" id="loadCard" style="display:none">
-      <div class="row">
-        <span class="pill warn">Modo offline</span>
-        <small>
-          Si abriste con <span class="mono">file://</span>, algunos navegadores bloquean <span class="mono">fetch()</span>.
-          Cargá tu <span class="mono">championship.json</span> manualmente:
-        </small>
-      </div>
-      <div class="row" style="margin-top:10px">
-        <input accept=".json,application/json" id="filePicker" type="file"/>
-        <small>Elegí el archivo exportado desde el builder.</small>
-      </div>
+    <div class="grid">
+      <!-- Standings -->
+      <section class="card" id="standingsCard">
+        <div class="cardHead">
+          <h2 class="cardTitle">Clasificación</h2>
+          <div class="sub">Pilotos y equipos</div>
+        </div>
+
+        <!-- Tu JS renderiza acá -->
+        <div class="standings" id="driversStandings"></div>
+
+        <!-- Tu JS crea y rellena teamsStandings si hace falta -->
+        <div class="standingsGap"></div>
+        <div class="standings" id="teamsStandings"></div>
+      </section>
+
+      <!-- History -->
+      <section class="card">
+        <div class="cardHead">
+          <h2 class="cardTitle">Historial</h2>
+          <div class="sub">Resultados por fecha</div>
+        </div>
+        <div id="history"></div>
+      </section>
     </div>
 
-    <div class="card" id="standingsCard">
-      <div class="row">
-        <span class="pill ok" id="driversCount">Pilotos: 0</span>
-        <span class="pill" id="pointsPill" style="display:none !important;">Puntos: 20–17–14…</span>
-        <span class="pill" id="racesPill" style="display:none !important;">Fechas: 0</span>
+    <!-- Offline / fallback loader -->
+    <section class="card" id="loadCard" style="margin-top:14px;">
+      <div class="cardHead">
+        <h2 class="cardTitle">Cargar JSON manual</h2>
+        <div class="sub">Si no se pudo cargar automático</div>
       </div>
-      <hr/>
-      <h2>Campeonato de Pilotos</h2>
-      <div class="standings" id="driversStandings"></div>
-    </div>
-
-    <div class="card">
-      <div class="row">
-        <h2 style="margin:0">Resultados (última → primera)</h2>
-        <span class="pill right" id="historyCount">0 carreras</span>
+      <div class="loadInner">
+        <input id="filePicker" type="file" accept=".json,application/json" />
+        <div class="sub">Tip: poné <b>data/championship.json</b> o <b>data/entrylist.json</b> en el hosting para carga automática.</div>
       </div>
-      <div id="history"></div>
-    </div>
+    </section>
   </div>
 
-  <footer class="pageFooter">
-    <div class="updatedFooter">
-      <span class="updatedText" id="updatedPill">Actualizado</span>
-    </div>
-  </footer>
-
-<script src="app.js" defer></script>
+  <!-- Tu app -->
+  <script src="js/app.js" defer></script>
 </body>
 </html>
