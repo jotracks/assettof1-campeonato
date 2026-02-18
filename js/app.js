@@ -260,7 +260,6 @@ function renderStandingsBroadcast(drivers) {
     pts.textContent = String(d.points ?? 0);
 
     ptsBox.appendChild(pts);
-    if (entryMode) ptsBox.style.display = "none";
 
     row.appendChild(pos);
     row.appendChild(plate);
@@ -316,7 +315,6 @@ function ensureTeamsSection(card) {
 }
 
 function renderTeamsStandingsBroadcast(teams, opts = {}) {
-  const entryMode = !!opts.entryMode;
   const driversHost = document.getElementById("driversStandings");
   if (!driversHost) return;
 
@@ -326,6 +324,8 @@ function renderTeamsStandingsBroadcast(teams, opts = {}) {
 
   const host = ensureTeamsSection(card);
   host.innerHTML = "";
+
+  const hidePoints = !!opts.hidePoints;
 
   teams.forEach((t, i) => {
     const slug = teamSlug(t.team);
@@ -359,10 +359,10 @@ function renderTeamsStandingsBroadcast(teams, opts = {}) {
 
     const pts = document.createElement("div");
     pts.className = "points";
-    pts.textContent = String(t.points);
+    pts.textContent = hidePoints ? "" : String(t.points);
+    ptsBox.style.visibility = hidePoints ? "hidden" : "visible";
 
     ptsBox.appendChild(pts);
-    if (entryMode) ptsBox.style.display = "none";
 
     row.appendChild(pos);
     row.appendChild(plate);
@@ -605,10 +605,7 @@ function raceCard(race) {
 /* ======================================================
    Main render
    ====================================================== */
-function render(data, opts = {}) {
-  const entryMode = !!opts.entryMode;
-  document.body.classList.toggle("entryMode", entryMode);
-
+function render(data) {
   const season = data?.meta?.season || "Temporada";
   const updated = data?.meta?.updatedAt || "";
   const pts = Array.isArray(data?.meta?.points)
@@ -617,8 +614,7 @@ function render(data, opts = {}) {
 
   document.getElementById("seasonPill").textContent = season;
   document.getElementById("updatedPill").textContent = updated ? "Actualizado: " + updated : "Actualizado";
-  const pointsPillEl = document.getElementById("pointsPill");
-  pointsPillEl.textContent = entryMode ? "Puntos: —" : "Puntos: " + pts.join(",");
+  document.getElementById("pointsPill").textContent = "Puntos: " + pts.join(",");
 
   const races = (data?.races || []).slice();
 
@@ -644,7 +640,7 @@ document.getElementById("driversCount").textContent = `Pilotos: ${drivers.length
   renderStandingsBroadcast(drivers);
 
   const teams = computeTeamsFromDrivers(drivers);
-  renderTeamsStandingsBroadcast(teams, { entryMode });
+  renderTeamsStandingsBroadcast(teams, { hidePoints: !!data.__entryMode });
 
   const hist = document.getElementById("history");
   hist.innerHTML = "";
@@ -699,22 +695,24 @@ function entryListToDrivers(entryJson) {
   return drivers;
 }
 
+
 function isEntryListJson(obj) {
   return !!(obj && (obj.EntryList || obj.entryList || obj.entry_list));
 }
 
-function entryListToPseudoChampionship(entryJson) {
+function coerceEntryListToChampionship(entryJson, seasonLabel = "Inscriptos") {
+  const drivers = entryListToDrivers(entryJson);
   return {
+    __entryMode: true,
     meta: {
-      season: "Inscriptos",
+      season: seasonLabel,
       updatedAt: "",
-      points: [],
+      // points table: render() will fall back to defaults
     },
     races: [],
-    standings: { drivers: entryListToDrivers(entryJson) },
+    standings: { drivers }
   };
 }
-
 
 async function tryFetchAny(urls) {
   let lastErr = null;
@@ -753,27 +751,23 @@ function enableOfflinePicker() {
     if (!f) return;
     const txt = await f.text();
     let data = JSON.parse(txt);
-    if (isEntryListJson(data)) {
-      data = entryListToPseudoChampionship(data);
-      render(data, { entryMode: true });
-    } else {
-      render(data, { entryMode: false });
+    if (isEntryListJson(data) && !Array.isArray(data?.races) && !Array.isArray(data?.standings?.drivers)) {
+      data = coerceEntryListToChampionship(data, "Inscriptos");
     }
+    render(data);
   });
 }
 
 (async function main() {
   try {
-    const data = await tryFetch();
+    let data = await tryFetch();
 
-    // If someone points this app directly at an entrylist.json, support it.
-    if (isEntryListJson(data)) {
-      const pseudo = entryListToPseudoChampionship(data);
-      render(pseudo, { entryMode: true });
+    // If the fetched file is actually an EntryList JSON, render it as a 0-points "pre-season" standings.
+    if (isEntryListJson(data) && !Array.isArray(data?.races) && !Array.isArray(data?.standings?.drivers)) {
+      data = coerceEntryListToChampionship(data, "Inscriptos");
+      render(data);
       return;
     }
-
-    let entryMode = false;
 
     // If no races/standings yet, try to populate the grid from an EntryList JSON
     if (!hasAnyStandingsOrRaces(data)) {
@@ -783,7 +777,6 @@ function enableOfflinePicker() {
         if (entryDrivers.length) {
           data.standings = data.standings || {};
           data.standings.drivers = entryDrivers;
-          entryMode = true; // pre-season entrylist view
         }
       } catch (e) {
         // silently ignore entry list fetch, we'll still render what we have
@@ -791,19 +784,17 @@ function enableOfflinePicker() {
       }
     }
 
-    render(data, { entryMode });
+    render(data);
   } catch (e) {
-    // If championship.json is missing, try to render entrylist.json directly.
     console.warn(e);
+    // If championship.json is missing, try to render entrylist.json directly.
     try {
       const entryJson = await tryFetchAny(ENTRYLIST_URL_CANDIDATES);
-      const pseudo = entryListToPseudoChampionship(entryJson);
-      if ((pseudo.standings?.drivers || []).length) {
-        render(pseudo, { entryMode: true });
-        return;
-      }
-    } catch (_) {}
-
-    enableOfflinePicker();
+      const coerced = coerceEntryListToChampionship(entryJson, "Inscriptos");
+      render(coerced);
+    } catch (e2) {
+      console.warn("entrylist fallback failed", e2);
+      enableOfflinePicker();
+    }
   }
 })();
