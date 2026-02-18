@@ -658,8 +658,14 @@ document.getElementById("driversCount").textContent = `Pilotos: ${drivers.length
 // -------- Entry list (pre-season) support --------
 // If there are no races yet and standings are empty, we can pull drivers + teams from an EntryList JSON
 // (e.g. a Server Manager preset export) and show the grid publicly with 0 points.
+const CHAMPIONSHIP_URL_CANDIDATES = [
+  "data/championship.json",
+  "championship.json",
+];
+
 const ENTRYLIST_URL_CANDIDATES = [
   "data/entrylist.json",
+  "entrylist.json",
   "data/PRE Temporada  2026 .json",
   "PRE Temporada  2026 .json",
 ];
@@ -738,9 +744,7 @@ function hasAnyStandingsOrRaces(data) {
 }
 
 async function tryFetch() {
-  const res = await fetch("data/championship.json", { cache: "no-store" });
-  if (!res.ok) throw new Error("fetch failed");
-  return await res.json();
+  return await tryFetchAny(CHAMPIONSHIP_URL_CANDIDATES);
 }
 
 function enableOfflinePicker() {
