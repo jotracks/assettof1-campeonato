@@ -1,140 +1,238 @@
-/* js/app.js */
-
-const $ = (id) => document.getElementById(id);
-
-const elTitle = $("title");
-const elSubtitle = $("subtitle");
-
-const elLoadCard = $("loadCard");
-const elFilePicker = $("filePicker");
-
-const elDriversCount = $("driversCount");
-const elDriversStandings = $("driversStandings");
-
-const elHistoryCount = $("historyCount");
-const elHistory = $("history");
-
-const elUpdated = $("updatedPill");
-
-function setUpdatedNow() {
-  if (!elUpdated) return;
-  const d = new Date();
-  const pad = (n) => String(n).padStart(2, "0");
-  elUpdated.textContent = `Actualizado: ${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
-}
-
-function showOfflineCard(show) {
-  if (!elLoadCard) return;
-  elLoadCard.style.display = show ? "block" : "none";
-}
-
-async function fetchJson(path) {
-  // Importante: resolve contra el documento, no contra /js/
-  const url = new URL(path, document.baseURI).toString();
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`HTTP ${res.status} ${url}`);
-  return res.json();
-}
-
-async function loadAuto() {
-  // 1) championship.json (si existe)
-  try {
-    const data = await fetchJson("data/championship.json");
-    return { data, kind: "championship" };
-  } catch (_) {
-    // 2) entrylist.json (fallback)
-    const data = await fetchJson("data/entrylist.json");
-    return { data, kind: "entrylist" };
+// js/app.js
+function el(tag, attrs = {}, children = []) {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") n.className = v;
+    else if (k === "html") n.innerHTML = v;
+    else n.setAttribute(k, v);
   }
+  for (const c of children) {
+    if (typeof c === "string") n.appendChild(document.createTextNode(c));
+    else if (c) n.appendChild(c);
+  }
+  return n;
 }
 
-/* --------- Parsing flexible --------- */
+function escapeHtml(s) {
+  return String(s ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
 
-function pick(obj, keys, fallback = "") {
+function badge(type, txt) {
+  return `<span class="badge ${type}">${escapeHtml(txt)}</span>`;
+}
+
+function msToClock(ms) {
+  if (!Number.isFinite(ms) || ms <= 0) return "";
+  const total = Math.max(0, Math.floor(ms));
+  const m = Math.floor(total / 60000);
+  const s = Math.floor((total % 60000) / 1000);
+  const c = Math.floor((total % 1000) / 10);
+  return `${m}:${String(s).padStart(2, "0")}.${String(c).padStart(2, "0")}`;
+}
+
+function teamSlug(team) {
+  return String(team || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+function formatDriverDisplayName(full) {
+  const s = String(full || "").trim();
+  if (!s) return "—";
+  const parts = s.split(/\s+/).filter(Boolean);
+  if (parts.length === 1) return parts[0].toUpperCase();
+  const first = parts[0];
+  const last = parts[parts.length - 1];
+  const initial = first[0] ? first[0].toUpperCase() : "";
+  return `${initial}. ${last.toUpperCase()}`;
+}
+
+/* Color opcional por equipo */
+function hashColor(slug) {
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) >>> 0;
+  const hue = h % 360;
+  return `hsl(${hue} 80% 55%)`;
+}
+
+/* ======================================================
+   TEAM BANNER (case sensitive)
+   Busca: img/<TEAM>.(png|webp|jpg|jpeg)
+   ====================================================== */
+function teamBannerCandidates(team) {
+  const raw = String(team || "").trim();
+  if (!raw) return [];
+  const safe = raw.replace(/\.\.[/\\]/g, "").replace(/[/\\]/g, "_");
+  const base = safe.replace(/\.(png|webp|jpg|jpeg)$/i, "");
+  const enc = encodeURIComponent(base);
+
+  const rel = [
+    `img/${enc}.png`,
+    `img/${enc}.webp`,
+    `img/${enc}.jpg`,
+    `img/${enc}.jpeg`,
+  ];
+  return rel.map((p) => new URL(p, document.baseURI).toString());
+}
+
+function setRowTeamBanner(rowEl, team) {
+  const candidates = teamBannerCandidates(team);
+  if (!candidates.length) {
+    rowEl.style.setProperty("--teamBg", "none");
+    return;
+  }
+
+  const probe = new Image();
+  let idx = 0;
+
+  const tryNext = () => {
+    if (idx >= candidates.length) {
+      rowEl.style.setProperty("--teamBg", "none");
+      return;
+    }
+    const path = candidates[idx++];
+
+    probe.onload = () => rowEl.style.setProperty("--teamBg", `url('${path}')`);
+    probe.onerror = tryNext;
+
+    // cache-bust para desarrollo (podés borrar esto en prod)
+    probe.src = path + (path.includes("?") ? "&" : "?") + "v=" + Date.now();
+  };
+
+  tryNext();
+}
+
+function getTeamFromDriver(d) {
+  return (
+    typeof d.team === "string"
+      ? d.team
+      : typeof d.constructor === "string"
+        ? d.constructor
+        : ""
+  ).trim();
+}
+
+
+
+function getResultPointsAny(r) {
+  const keys = ["points", "pts", "score", "puntos"];
   for (const k of keys) {
-    if (obj && obj[k] !== undefined && obj[k] !== null && obj[k] !== "") return obj[k];
+    const n = Number(r?.[k]);
+    if (Number.isFinite(n)) return n;
   }
-  return fallback;
+  return null;
 }
 
-function toNumber(x, def = 0) {
-  const n = Number(x);
-  return Number.isFinite(n) ? n : def;
-}
+function ensureRacePoints(race, ptsTable) {
+  const results = Array.isArray(race?.results) ? race.results : [];
 
-function extractDrivers(raw) {
-  // Soporta varios formatos típicos
-  let arr =
-    (raw && Array.isArray(raw.drivers) && raw.drivers) ||
-    (raw && Array.isArray(raw.entries) && raw.entries) ||
-    (raw && raw.entrylist && Array.isArray(raw.entrylist.entries) && raw.entrylist.entries) ||
-    [];
+  // Sort classified by finishing position (pos > 0) and not DSQ
+  const classified = results
+    .filter((r) => Number(r?.pos) > 0 && String(r?.status || "OK").toUpperCase() !== "DSQ")
+    .slice()
+    .sort((a, b) => (a.pos ?? 0) - (b.pos ?? 0));
 
-  // Si viniera como objeto tipo { "Nombre": {...} }
-  if (!Array.isArray(arr) && raw && typeof raw === "object") {
-    const maybe = raw.standings || raw.classification;
-    if (Array.isArray(maybe)) arr = maybe;
-  }
-
-  if (!Array.isArray(arr)) arr = [];
-
-  const drivers = arr.map((d) => {
-    // drivers[] puede tener drivers internos (AC entrylist)
-    // Ej: { drivers:[{name:""}], team:"", car:"" }
-    let name =
-      (Array.isArray(d.drivers) && d.drivers[0] && pick(d.drivers[0], ["name", "driverName"])) ||
-      pick(d, ["name", "driver", "driverName", "playerName", "nick", "username"]);
-
-    let team = pick(d, ["team", "teamName", "constructor", "carName", "car", "vehicle"]);
-
-    const points = toNumber(pick(d, ["points", "pts", "score"], 0), 0);
-    const wins = toNumber(pick(d, ["wins", "victories"], 0), 0);
-
-    return {
-      name: String(name || "SIN NOMBRE").trim(),
-      team: String(team || "SIN EQUIPO").trim(),
-      points,
-      wins,
-    };
+  classified.forEach((r, idx) => {
+    const existing = getResultPointsAny(r);
+    r.points = existing != null ? existing : Number(ptsTable[idx] ?? 0);
   });
 
-  // Filtrar repetidos vacíos
-  return drivers.filter((x) => x.name && x.name !== "SIN NOMBRE");
+  // Everyone else: normalize points to 0 (and also normalize pts/score -> points)
+  results.forEach((r) => {
+    const existing = getResultPointsAny(r);
+    if (existing != null) r.points = existing;
+    if (r.points == null) r.points = 0;
+  });
 }
 
-function extractRaces(raw) {
-  // Soporta varios formatos posibles
-  const races =
-    (raw && Array.isArray(raw.races) && raw.races) ||
-    (raw && Array.isArray(raw.rounds) && raw.rounds) ||
-    [];
+function computeDriversFromRaces(races) {
+  const map = new Map();
 
-  if (!Array.isArray(races)) return [];
-  return races;
-}
+  for (const race of races) {
+    const results = Array.isArray(race?.results) ? race.results : [];
+    for (const r of results) {
+      const name = String(r?.driverName || "").trim();
+      if (!name) continue;
 
-/* --------- Render --------- */
+      if (!map.has(name)) {
+        map.set(name, { driverName: name, team: r.team || r.constructor || "", points: 0, wins: 0 });
+      }
+      const d = map.get(name);
 
-function clearNode(node) {
-  if (!node) return;
-  while (node.firstChild) node.removeChild(node.firstChild);
-}
+      if (!d.team && (r.team || r.constructor)) d.team = r.team || r.constructor;
 
-function renderStandings(drivers) {
-  clearNode(elDriversStandings);
+      const pts = Number(r?.points ?? 0);
+      if (Number.isFinite(pts)) d.points += pts;
 
-  // Orden: puntos desc, wins desc, nombre
-  const sorted = [...drivers].sort((a, b) => {
+      const st = String(r?.status || "OK").toUpperCase();
+      if (Number(r?.pos) === 1 && st !== "DSQ") d.wins += 1;
+    }
+  }
+
+  return [...map.values()].sort((a, b) => {
     if (b.points !== a.points) return b.points - a.points;
     if (b.wins !== a.wins) return b.wins - a.wins;
-    return a.name.localeCompare(b.name);
+    return String(a.driverName).localeCompare(String(b.driverName));
   });
+}
 
-  if (elDriversCount) elDriversCount.textContent = `Pilotos: ${sorted.length}`;
+/* ======================================================
+   Section headers (PNG)
+   ====================================================== */
+function headerImg(srcRel, alt) {
+  const src = new URL(srcRel, document.baseURI).toString();
+  const img = document.createElement("img");
+  img.className = "sectionHeaderImg";
+  img.alt = alt;
+  img.src = src + (src.includes("?") ? "&" : "?") + "v=" + Date.now();
+  return img;
+}
 
-  sorted.forEach((d, i) => {
+function ensurePilotsHeader(card, driversHost) {
+  if (card.querySelector("#pilotsHeader")) return;
+
+  const candidates = Array.from(card.querySelectorAll("h2, .sectionTitle, .cardTitle"));
+  const existing = candidates.find((n) => /piloto/i.test((n.textContent || "").trim()));
+
+  if (existing) {
+    existing.id = "pilotsHeader";
+    existing.textContent = "";
+    existing.appendChild(headerImg("img/campeonatodepilotos.png", "Campeonato de Pilotos"));
+    existing.classList.add("sectionHeader");
+    return;
+  }
+
+  const wrap = document.createElement("div");
+  wrap.id = "pilotsHeader";
+  wrap.className = "sectionHeader";
+  wrap.appendChild(headerImg("img/campeonatodepilotos.png", "Campeonato de Pilotos"));
+  driversHost.parentElement.insertBefore(wrap, driversHost);
+}
+
+/* ======================================================
+   Drivers standings (broadcast rows)
+   ====================================================== */
+function renderStandingsBroadcast(drivers) {
+  const host = document.getElementById("driversStandings");
+  host.innerHTML = "";
+
+  drivers.forEach((d, i) => {
+    const team = getTeamFromDriver(d);
+    const slug = teamSlug(team);
+
     const row = document.createElement("div");
     row.className = "standRow";
+
+    row.style.setProperty("--teamColor", slug ? hashColor(slug) : "rgba(255,255,255,.18)");
+    setRowTeamBanner(row, team);
 
     const pos = document.createElement("div");
     pos.className = "posBox";
@@ -143,193 +241,520 @@ function renderStandings(drivers) {
     const plate = document.createElement("div");
     plate.className = "namePlate";
 
-    const dn = document.createElement("div");
-    dn.className = "driverName";
-    dn.textContent = d.name;
+    const name = document.createElement("div");
+    name.className = "driverName";
+    name.textContent = formatDriverDisplayName(d.driverName);
 
-    const tn = document.createElement("div");
-    tn.className = "teamName";
-    tn.textContent = d.team;
+    const teamEl = document.createElement("div");
+    teamEl.className = "teamName";
+    teamEl.textContent = team || "";
 
-    plate.appendChild(dn);
-    plate.appendChild(tn);
+    plate.appendChild(name);
+    if (team) plate.appendChild(teamEl);
 
-    const pb = document.createElement("div");
-    pb.className = "pointsBox";
+    const ptsBox = document.createElement("div");
+    ptsBox.className = "pointsBox";
 
     const pts = document.createElement("div");
     pts.className = "points";
     pts.textContent = String(d.points ?? 0);
 
-    const wins = document.createElement("div");
-    wins.className = "wins";
-    wins.textContent = d.wins ? `Wins: ${d.wins}` : "";
-
-    pb.appendChild(pts);
-    pb.appendChild(wins);
+    ptsBox.appendChild(pts);
 
     row.appendChild(pos);
     row.appendChild(plate);
-    row.appendChild(pb);
+    row.appendChild(ptsBox);
 
-    elDriversStandings.appendChild(row);
+    host.appendChild(row);
   });
 }
 
-function renderHistory(races) {
-  clearNode(elHistory);
+/* ======================================================
+   Teams standings (grouped)
+   ====================================================== */
+function computeTeamsFromDrivers(drivers) {
+  const map = new Map();
 
-  if (!races || races.length === 0) {
-    if (elHistoryCount) elHistoryCount.textContent = "0 carreras";
-    return;
+  for (const d of drivers) {
+    const team = getTeamFromDriver(d) || "—";
+    if (!map.has(team)) map.set(team, { team, points: 0, wins: 0, drivers: 0 });
+    const t = map.get(team);
+    t.points += Number(d.points ?? 0);
+    t.wins += Number(d.wins ?? 0);
+    t.drivers += 1;
   }
 
-  if (elHistoryCount) elHistoryCount.textContent = `${races.length} carreras`;
+  return [...map.values()].sort((a, b) => {
+    if (b.points !== a.points) return b.points - a.points;
+    if (b.wins !== a.wins) return b.wins - a.wins;
+    return String(a.team).localeCompare(String(b.team));
+  });
+}
 
-  // Mostrar última → primera (como tu título)
-  const list = [...races].reverse();
+function ensureTeamsSection(card) {
+  let teamsHost = document.getElementById("teamsStandings");
+  if (teamsHost) return teamsHost;
 
-  list.forEach((r) => {
-    const card = document.createElement("div");
-    card.className = "raceCard";
+  const divider = document.createElement("div");
+  divider.className = "standingsGap";
 
-    const top = document.createElement("div");
-    top.className = "raceTop";
+  const header = document.createElement("div");
+  header.id = "teamsHeader";
+  header.className = "sectionHeader";
+  header.appendChild(headerImg("img/campeonatodeequipos.png", "Campeonato de Equipos"));
+
+  teamsHost = document.createElement("div");
+  teamsHost.id = "teamsStandings";
+  teamsHost.className = "standings";
+
+  card.appendChild(divider);
+  card.appendChild(header);
+  card.appendChild(teamsHost);
+
+  return teamsHost;
+}
+
+function renderTeamsStandingsBroadcast(teams) {
+  const driversHost = document.getElementById("driversStandings");
+  if (!driversHost) return;
+
+  const card = document.getElementById("standingsCard") || driversHost.parentElement;
+
+  ensurePilotsHeader(card, driversHost);
+
+  const host = ensureTeamsSection(card);
+  host.innerHTML = "";
+
+  teams.forEach((t, i) => {
+    const slug = teamSlug(t.team);
+
+    const row = document.createElement("div");
+    row.className = "standRow";
+
+    row.style.setProperty("--teamColor", slug ? hashColor(slug) : "rgba(255,255,255,.18)");
+    setRowTeamBanner(row, t.team);
+
+    const pos = document.createElement("div");
+    pos.className = "posBox";
+    pos.textContent = String(i + 1);
+
+    const plate = document.createElement("div");
+    plate.className = "namePlate";
 
     const name = document.createElement("div");
-    name.className = "raceName";
-    name.textContent = String(pick(r, ["name", "track", "title", "gp"], "Carrera")).toUpperCase();
+    name.className = "driverName";
+    name.textContent = String(t.team || "—").toUpperCase();
 
-    const date = document.createElement("div");
-    date.className = "raceDate";
-    date.textContent = String(pick(r, ["date", "day"], ""));
+    const sub = document.createElement("div");
+    sub.className = "teamName";
+    sub.textContent = `${t.drivers} pilotos`;
 
-    top.appendChild(name);
-    top.appendChild(date);
+    plate.appendChild(name);
+    plate.appendChild(sub);
 
-    const body = document.createElement("div");
-    body.className = "raceBody";
+    const ptsBox = document.createElement("div");
+    ptsBox.className = "pointsBox";
 
-    // Intentar sacar resultados
-    const results =
-      (Array.isArray(r.results) && r.results) ||
-      (Array.isArray(r.classification) && r.classification) ||
-      (Array.isArray(r.standings) && r.standings) ||
-      [];
+    const pts = document.createElement("div");
+    pts.className = "points";
+    pts.textContent = String(t.points);
 
-    if (Array.isArray(results) && results.length) {
-      const grid = document.createElement("div");
-      grid.className = "resultsGrid";
+    ptsBox.appendChild(pts);
 
-      results.forEach((it, idx) => {
-        const pos = document.createElement("div");
-        pos.className = "cellPos";
-        pos.textContent = String(pick(it, ["pos", "position"], idx + 1));
+    row.appendChild(pos);
+    row.appendChild(plate);
+    row.appendChild(ptsBox);
 
-        const drv = document.createElement("div");
-        drv.className = "cellDriver";
-        drv.textContent = String(pick(it, ["name", "driver", "driverName"], "—"));
-
-        const team = document.createElement("div");
-        team.className = "cellTeam";
-        team.textContent = String(pick(it, ["team", "teamName", "constructor"], "—"));
-
-        const time = document.createElement("div");
-        time.className = "cellTime";
-        time.textContent = String(pick(it, ["time", "gap", "best"], "—"));
-
-        grid.appendChild(pos);
-        grid.appendChild(drv);
-        grid.appendChild(team);
-        grid.appendChild(time);
-      });
-
-      body.appendChild(grid);
-    } else {
-      const p = document.createElement("div");
-      p.className = "muted";
-      p.textContent = "Sin resultados en el JSON.";
-      body.appendChild(p);
-    }
-
-    card.appendChild(top);
-    card.appendChild(body);
-
-    elHistory.appendChild(card);
+    host.appendChild(row);
   });
 }
 
-function applyHeaderFromData(raw) {
-  // Título/subtítulo si vienen
-  const t = pick(raw, ["title", "seasonTitle", "name"], "");
-  if (t && elTitle) elTitle.textContent = t;
+/* ======================================================
+   Results / history
+   ====================================================== */
+function buildTable(headers, rowObjs) {
+  const wrap = el("div", { class: "tableWrap" });
+  const table = el("table");
+  const thead = el("thead");
+  const trh = el("tr");
+  headers.forEach((h) => trh.appendChild(el("th", {}, [h])));
+  thead.appendChild(trh);
+  table.appendChild(thead);
 
-  const sub = pick(raw, ["subtitle", "description"], "");
-  if (elSubtitle) {
-    if (sub) {
-      elSubtitle.textContent = sub;
-      elSubtitle.style.display = "";
-    } else {
-      // ✅ evita espacio abajo del título si no hay subtítulo
-      elSubtitle.textContent = "";
-      elSubtitle.style.display = "none";
-    }
-  }
+  const tbody = el("tbody");
+  rowObjs.forEach((r) => {
+    const tr = el("tr");
+    if (r.__rowClass) tr.className = r.__rowClass;
+
+    r.__cells.forEach((cell) => {
+      const td = el("td");
+      if (cell && typeof cell === "object" && cell.__html != null) td.innerHTML = cell.__html;
+      else td.textContent = String(cell ?? "");
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  wrap.appendChild(table);
+  return wrap;
 }
 
-function renderAll(raw, kind) {
-  showOfflineCard(false);
-  setUpdatedNow();
-
-  applyHeaderFromData(raw);
-
-  const drivers = extractDrivers(raw);
-  renderStandings(drivers);
-
-  // history solo si es championship (o si hay races)
-  const races = extractRaces(raw);
-  renderHistory(races);
-
-  // Si es entrylist, no hay carreras
-  if (kind === "entrylist" && elHistoryCount) {
-    elHistoryCount.textContent = "0 carreras";
-  }
+function winnerFromRace(race) {
+  const res = (race.results || []).slice().sort((a, b) => (a.pos ?? 0) - (b.pos ?? 0));
+  const w = res.find((x) => (x.status || "OK") !== "DSQ") || res[0];
+  return w || null;
 }
 
-/* --------- Offline manual load --------- */
+function fastestLapInfo(race) {
+  return race.fastestLap || race.fastLap || null;
+}
 
-function setupFilePicker() {
-  if (!elFilePicker) return;
-  elFilePicker.addEventListener("change", async (e) => {
-    const file = e.target.files && e.target.files[0];
-    if (!file) return;
+function getTyreFromResult(r) {
+  const candidates = [
+    r.tyre, r.tire, r.compound,
+    r.tyres, r.tires,
+    r.finishTyre, r.finishTire,
+    r.finalTyre, r.finalTire,
+    r.endTyre, r.endTire,
+    r.tyreEnd, r.tireEnd,
+    r.tyreFinish, r.tireFinish
+  ];
 
+  for (const v of candidates) {
+    if (typeof v === "string" && v.trim()) return v.trim();
+    if (typeof v === "number" && Number.isFinite(v)) return String(v);
+  }
+
+  const obj = candidates.find((v) => v && typeof v === "object");
+  if (obj) {
+    if (typeof obj.compound === "string") return obj.compound;
+    if (typeof obj.name === "string") return obj.name;
     try {
-      const text = await file.text();
-      const raw = JSON.parse(text);
-      renderAll(raw, "manual");
-      showOfflineCard(false);
-    } catch (err) {
-      console.error("JSON inválido:", err);
-      alert("Ese JSON no se pudo leer. ¿Seguro exportaste el archivo correcto?");
+      const s = JSON.stringify(obj);
+      return s.length > 24 ? s.slice(0, 24) + "…" : s;
+    } catch (_) {}
+  }
+
+  return "";
+}
+
+function getStartPosFromResult(r) {
+  const candidates = [r.grid, r.startPos, r.start, r.gridPos, r.qualPos, r.qualiPos];
+  for (const v of candidates) {
+    const n = Number(v);
+    if (Number.isFinite(n) && n > 0) return Math.floor(n);
+  }
+  return null;
+}
+
+
+function tyreClass(t) {
+  const s = String(t || "").trim().toUpperCase();
+  if (!s) return "";
+  if (s === "H" || s === "HARD" || s === "C1" || s === "C2") return "hard";
+  if (s === "M" || s === "MEDIUM" || s === "C3") return "medium";
+  if (s === "S" || s === "SOFT" || s === "C4" || s === "C5") return "soft";
+  if (s === "I" || s === "INTER" || s === "INTERS" || s === "IM" || s === "INT") return "inter";
+  if (s === "W" || s === "WET" || s === "RAIN") return "wet";
+  if (/^C\d+$/.test(s)) return "soft";
+  return "";
+}
+
+function buildTyreDotsHtml(tyresUsed, tyreEnd) {
+  const used = Array.isArray(tyresUsed) ? tyresUsed.filter(Boolean) : [];
+  const end = String(tyreEnd || "").trim().toUpperCase();
+  const list = used.length ? used.map((x) => String(x).trim().toUpperCase()) : (end ? [end] : []);
+  if (!list.length) return "";
+  const dots = list.map((t) => `<span class="tyreDot ${tyreClass(t)}" title="${escapeHtml(t)}"></span>`).join("");
+  const tag = end ? `<span class="badge tyre">${escapeHtml(end)}</span>` : "";
+  return `<span class="tyreDots">${dots}</span>${tag ? " " + tag : ""}`;
+}
+
+
+function computeMostOvertakes(race) {
+  const mo = race.mostOvertakes || race.mostOvertake || race.overtakesLeader;
+  if (mo && typeof mo === "object") {
+    const name = String(mo.driverName || mo.driver || "").trim();
+    const gained = Number(mo.gained ?? mo.positions ?? mo.overtakes);
+    if (name && Number.isFinite(gained)) return { driverName: name, gained: Math.floor(gained) };
+  }
+
+  let best = null;
+  for (const r of (race.results || [])) {
+    const st = String(r.status || "OK").toUpperCase();
+    if (st === "DSQ") continue;
+
+    const grid = getStartPosFromResult(r);
+    const pos = Number(r.pos);
+    if (!grid || !Number.isFinite(pos) || pos <= 0) continue;
+
+    const gained = Math.floor(grid - pos);
+    if (!Number.isFinite(gained)) continue;
+    if (gained <= 0) continue;
+
+    if (!best || gained > best.gained) best = { driverName: String(r.driverName || "").trim(), gained };
+  }
+  return best;
+}
+
+function formatNotes(r) {
+  const notes = [];
+  const st = (r.status || "OK").toUpperCase();
+  if (st === "DNF") notes.push(badge("dnf", "DNF"));
+  if (st === "DSQ") notes.push(badge("dsq", "DSQ"));
+  const penMs = Number(r.penaltyExtraMs || 0);
+  if (penMs > 0) notes.push(badge("pen", `+${(penMs / 1000).toFixed(1)}s`));
+  return notes.join(" ");
+}
+
+function raceCard(race) {
+  const round = race.round ?? "?";
+  const date = race.date ? String(race.date) : "";
+  const track = race.trackName || "";
+
+  const head = el("div", { class: "row" }, [
+    el("span", { class: "pill" }, [`Fecha ${round}`]),
+    track ? el("span", { class: "pill" }, [track]) : null,
+    el("span", { class: "pill right mono" }, [date]),
+  ]);
+
+  const winner = winnerFromRace(race);
+  const winnerLine = el("div", { class: "winnerLine", style: "margin-top:10px" }, [
+    el("span", { class: "pill winnerPill" }, ["Ganador"]),
+    el("span", { class: "winnerName" }, [winner ? winner.driverName : "—"]),
+    winner?.team ? el("span", { class: "pill" }, [winner.team]) : null,
+  ]);
+
+  const fl = fastestLapInfo(race);
+  const flDriver = String(fl?.driverName || fl?.driver || "").trim();
+  const flTime = String(fl?.time || fl?.lapTime || "").trim();
+
+  const fastLapLine = fl
+    ? el("div", { class: "fastLapLine" }, [
+        el("span", { class: "pill violet" }, ["Vuelta rápida"]),
+        el("span", { class: "fastLapName" }, [flDriver || "—"]),
+        flTime ? el("span", { class: "pill violet mono" }, [flTime]) : null,
+      ])
+    : null;
+
+  const mo = computeMostOvertakes(race);
+  const overtakeLine = mo
+    ? el("div", { class: "overtakeLine" }, [
+        el("span", { class: "pill cyan" }, ["Más adelantamientos"]),
+        el("span", { class: "overtakeName" }, [mo.driverName]),
+        el("span", { class: "pill cyan mono" }, [`+${mo.gained}`]),
+      ])
+    : null;
+
+  const rows = (race.results || [])
+    .slice()
+    .sort((a, b) => (a.pos ?? 0) - (b.pos ?? 0))
+    .map((x) => {
+      const nameRaw = String(x.driverName || "").trim();
+      const isFL = flDriver && nameRaw === flDriver;
+      const isMO = mo?.driverName && nameRaw === mo.driverName;
+
+      const tyreEnd = getTyreFromResult(x) || x.tyreEnd || x.endTyre || "";
+      const tyreHtml = buildTyreDotsHtml(x.tyresUsed || x.tiresUsed || x.compoundsUsed || [], tyreEnd);
+
+      const dotHtml = [
+        isFL ? `<span class="flDot" title="Vuelta rápida"></span>` : "",
+        isMO ? `<span class="otDot" title="Más adelantamientos"></span>` : "",
+      ].join("");
+
+      const nameHtml = `${dotHtml}<span class="nameText">${escapeHtml(nameRaw)}</span>`;
+
+      let notesHtml = formatNotes(x);
+      if (x.noCompoundChange) notesHtml += (notesHtml ? " " : "") + badge("warn", "NO CHANGE");
+      if (isFL) notesHtml += (notesHtml ? " " : "") + badge("fl", "FL");
+      if (isMO && mo?.gained) notesHtml += (notesHtml ? " " : "") + badge("ovr", `+${mo.gained}`);
+
+      const rowClass = [
+        isFL ? "fastLapRow" : "",
+        isMO ? "mostOvertakesRow" : "",
+      ].filter(Boolean).join(" ");
+
+      return {
+        __rowClass: rowClass,
+        __cells: [
+          x.pos,
+          { __html: nameHtml },
+          x.team || "",
+          { __html: tyreHtml },
+          { __html: `<span class="mono">${msToClock(Number(x.finalTimeMs || 0)) || escapeHtml(x.finalTime || "")}</span>` },
+          { __html: `<span class="mono">${Number(x.points || 0)}</span>` },
+          { __html: notesHtml },
+        ],
+      };
+    });
+
+  const table = buildTable(["Pos", "Piloto", "Marca", "Neum", "Tiempo", "Pts", "Notas"], rows);
+
+  const card = el("div", { class: "card" }, [head, winnerLine]);
+  if (fastLapLine) card.appendChild(fastLapLine);
+  if (overtakeLine) card.appendChild(overtakeLine);
+  card.appendChild(el("div", { style: "margin-top:10px" }, [table]));
+  return card;
+}
+
+/* ======================================================
+   Main render
+   ====================================================== */
+function render(data) {
+  const season = data?.meta?.season || "Temporada";
+  const updated = data?.meta?.updatedAt || "";
+  const pts = Array.isArray(data?.meta?.points)
+    ? data.meta.points
+    : [20, 17, 14, 12, 10, 8, 6, 4, 2, 1];
+
+  document.getElementById("seasonPill").textContent = season;
+  document.getElementById("updatedPill").textContent = updated ? "Actualizado: " + updated : "Actualizado";
+  document.getElementById("pointsPill").textContent = "Puntos: " + pts.join(",");
+
+  const races = (data?.races || []).slice();
+
+// 1) Asegura puntos por carrera (si el JSON no trae results[].points / pts / score)
+races.forEach((r) => ensureRacePoints(r, pts));
+
+// 2) Usa standings del JSON si existe.
+//    Si falta, lo calcula desde las carreras.
+//    Si hay 0 puntos *pero NO hay resultados de carreras* (pre-temporada), lo respeta.
+const hasRaceResults = races.some(r => Array.isArray(r?.results) && r.results.length);
+
+let drivers = (data?.standings?.drivers || []).slice();
+if (!drivers.length) {
+  drivers = computeDriversFromRaces(races);
+} else if (hasRaceResults) {
+  const sum = drivers.reduce((acc, d) => acc + Number(d?.points ?? 0), 0);
+  if (!Number.isFinite(sum) || sum <= 0) drivers = computeDriversFromRaces(races);
+}
+document.getElementById("driversCount").textContent = `Pilotos: ${drivers.length}`;
+  document.getElementById("racesPill").textContent = `Fechas: ${races.length}`;
+  document.getElementById("historyCount").textContent = `${races.length} carreras`;
+
+  renderStandingsBroadcast(drivers);
+
+  const teams = computeTeamsFromDrivers(drivers);
+  renderTeamsStandingsBroadcast(teams);
+
+  const hist = document.getElementById("history");
+  hist.innerHTML = "";
+  races
+    .sort((a, b) => {
+      const ar = Number(a.round || 0);
+      const br = Number(b.round || 0);
+      if (br !== ar) return br - ar;
+      return String(b.date || "").localeCompare(String(a.date || ""));
+    })
+    .forEach((r) => hist.appendChild(raceCard(r)));
+}
+
+
+// -------- Entry list (pre-season) support --------
+// If there are no races yet and standings are empty, we can pull drivers + teams from an EntryList JSON
+// (e.g. a Server Manager preset export) and show the grid publicly with 0 points.
+const ENTRYLIST_URL_CANDIDATES = [
+  "data/entrylist.json",
+  "data/PRE Temporada  2026 .json",
+  "PRE Temporada  2026 .json",
+];
+
+const MODEL_TO_TEAM = {
+  gp_2026_w17: "Mercedes",
+  gp_2026_sf26: "Ferrari",
+  gp_2026_a526: "Alpine",
+  gp_2026_rb22: "Red Bull",
+  gp_2026_vcarb03: "VCARB",
+  gp_2026_cad26: "Cadillac",
+};
+
+function normalizeTeamFromEntry(e) {
+  const t = String(e?.Team || "").trim();
+  if (t) return t;
+  const m = String(e?.Model || "").trim();
+  return MODEL_TO_TEAM[m] || "";
+}
+
+function entryListToDrivers(entryJson) {
+  const list = entryJson?.EntryList || entryJson?.entryList || entryJson?.entry_list;
+  if (!list || typeof list !== "object") return [];
+  const drivers = [];
+  for (const v of Object.values(list)) {
+    const name = String(v?.Name || v?.name || "").trim();
+    if (!name) continue;
+    const team = normalizeTeamFromEntry(v);
+    drivers.push({ driverName: name, team: team, points: 0, wins: 0 });
+  }
+  // stable alphabetical order for "no races yet"
+  drivers.sort((a, b) => String(a.driverName).localeCompare(String(b.driverName)));
+  return drivers;
+}
+
+async function tryFetchAny(urls) {
+  let lastErr = null;
+  for (const u of urls) {
+    try {
+      const res = await fetch(u, { cache: "no-store" });
+      if (!res.ok) continue;
+      return await res.json();
+    } catch (e) {
+      lastErr = e;
     }
+  }
+  if (lastErr) throw lastErr;
+  throw new Error("fetch failed");
+}
+
+function hasAnyStandingsOrRaces(data) {
+  const races = Array.isArray(data?.races) ? data.races : [];
+  const drivers = Array.isArray(data?.standings?.drivers) ? data.standings.drivers : [];
+  const hasRaceResults = races.some(r => Array.isArray(r?.results) && r.results.length);
+  const hasDriverNames = drivers.some(d => String(d?.driverName || "").trim());
+  return hasRaceResults || hasDriverNames;
+}
+
+async function tryFetch() {
+  const res = await fetch("data/championship.json", { cache: "no-store" });
+  if (!res.ok) throw new Error("fetch failed");
+  return await res.json();
+}
+
+function enableOfflinePicker() {
+  document.getElementById("loadCard").style.display = "block";
+  const picker = document.getElementById("filePicker");
+  picker.addEventListener("change", async () => {
+    const f = picker.files?.[0];
+    if (!f) return;
+    const txt = await f.text();
+    const data = JSON.parse(txt);
+    render(data);
   });
 }
 
-/* --------- Init --------- */
-
-(async function init() {
-  setupFilePicker();
-
+(async function main() {
   try {
-    const { data, kind } = await loadAuto();
-    renderAll(data, kind);
-  } catch (err) {
-    console.error("No se pudo cargar data automáticamente:", err);
-    // Mostrar modo offline (file:// o falta data en GH Pages)
-    showOfflineCard(true);
-    setUpdatedNow();
-    // También oculto subtítulo para que no meta margen vacío
-    if (elSubtitle) elSubtitle.style.display = "none";
+    const data = await tryFetch();
+
+    // If no races/standings yet, try to populate the grid from an EntryList JSON
+    if (!hasAnyStandingsOrRaces(data)) {
+      try {
+        const entryJson = await tryFetchAny(ENTRYLIST_URL_CANDIDATES);
+        const entryDrivers = entryListToDrivers(entryJson);
+        if (entryDrivers.length) {
+          data.standings = data.standings || {};
+          data.standings.drivers = entryDrivers;
+        }
+      } catch (e) {
+        // silently ignore entry list fetch, we'll still render what we have
+        console.warn("entry list fetch failed", e);
+      }
+    }
+
+    render(data);
+  } catch (e) {
+    console.warn(e);
+    enableOfflinePicker();
   }
 })();
