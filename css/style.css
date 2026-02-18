@@ -1037,17 +1037,4 @@ body.pageRules{
 }
 
 
-/* Si el subtítulo está vacío, que no reserve espacio */
-.heroSub:empty{
-  display:none;
-  margin:0 !important;
-  padding:0 !important;
-}
-
-/* Recorta el “aire” inferior del banner (ajustá el número a gusto) */
-.hero{
-  padding-bottom: 4px; /* probá 10–18px */
-  /* si tu .hero tiene min-height en el css, descomentá: */
-  /* min-height: auto !important; */
-}
 
