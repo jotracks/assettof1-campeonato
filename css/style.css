@@ -1039,3 +1039,34 @@ body.pageRules{
 
 
 
+
+
+
+
+/* 1) Que el HERO no tenga altura fija */
+.hero{
+  height: auto !important;
+  min-height: 5 !important;
+  padding-bottom: 0 !important; /* recorta aire inferior */
+}
+
+/* 2) Que el layout interno no meta padding/margen abajo */
+.heroTop{
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* 3) El subtítulo, afuera (por si suma algo) */
+.heroSub{
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 0 !important;
+  line-height: 0 !important;
+}
+
+/* 4) Por si el banner tenía margen */
+.heroBanner{
+  margin-bottom: 0 !important;
+}
+
