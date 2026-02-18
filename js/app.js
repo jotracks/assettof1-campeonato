@@ -260,6 +260,7 @@ function renderStandingsBroadcast(drivers) {
     pts.textContent = String(d.points ?? 0);
 
     ptsBox.appendChild(pts);
+    if (entryMode) ptsBox.style.display = "none";
 
     row.appendChild(pos);
     row.appendChild(plate);
@@ -314,7 +315,8 @@ function ensureTeamsSection(card) {
   return teamsHost;
 }
 
-function renderTeamsStandingsBroadcast(teams) {
+function renderTeamsStandingsBroadcast(teams, opts = {}) {
+  const entryMode = !!opts.entryMode;
   const driversHost = document.getElementById("driversStandings");
   if (!driversHost) return;
 
@@ -360,6 +362,7 @@ function renderTeamsStandingsBroadcast(teams) {
     pts.textContent = String(t.points);
 
     ptsBox.appendChild(pts);
+    if (entryMode) ptsBox.style.display = "none";
 
     row.appendChild(pos);
     row.appendChild(plate);
@@ -602,7 +605,10 @@ function raceCard(race) {
 /* ======================================================
    Main render
    ====================================================== */
-function render(data) {
+function render(data, opts = {}) {
+  const entryMode = !!opts.entryMode;
+  document.body.classList.toggle("entryMode", entryMode);
+
   const season = data?.meta?.season || "Temporada";
   const updated = data?.meta?.updatedAt || "";
   const pts = Array.isArray(data?.meta?.points)
@@ -611,7 +617,8 @@ function render(data) {
 
   document.getElementById("seasonPill").textContent = season;
   document.getElementById("updatedPill").textContent = updated ? "Actualizado: " + updated : "Actualizado";
-  document.getElementById("pointsPill").textContent = "Puntos: " + pts.join(",");
+  const pointsPillEl = document.getElementById("pointsPill");
+  pointsPillEl.textContent = entryMode ? "Puntos: —" : "Puntos: " + pts.join(",");
 
   const races = (data?.races || []).slice();
 
@@ -637,7 +644,7 @@ document.getElementById("driversCount").textContent = `Pilotos: ${drivers.length
   renderStandingsBroadcast(drivers);
 
   const teams = computeTeamsFromDrivers(drivers);
-  renderTeamsStandingsBroadcast(teams);
+  renderTeamsStandingsBroadcast(teams, { entryMode });
 
   const hist = document.getElementById("history");
   hist.innerHTML = "";
@@ -692,6 +699,23 @@ function entryListToDrivers(entryJson) {
   return drivers;
 }
 
+function isEntryListJson(obj) {
+  return !!(obj && (obj.EntryList || obj.entryList || obj.entry_list));
+}
+
+function entryListToPseudoChampionship(entryJson) {
+  return {
+    meta: {
+      season: "Inscriptos",
+      updatedAt: "",
+      points: [],
+    },
+    races: [],
+    standings: { drivers: entryListToDrivers(entryJson) },
+  };
+}
+
+
 async function tryFetchAny(urls) {
   let lastErr = null;
   for (const u of urls) {
@@ -728,14 +752,28 @@ function enableOfflinePicker() {
     const f = picker.files?.[0];
     if (!f) return;
     const txt = await f.text();
-    const data = JSON.parse(txt);
-    render(data);
+    let data = JSON.parse(txt);
+    if (isEntryListJson(data)) {
+      data = entryListToPseudoChampionship(data);
+      render(data, { entryMode: true });
+    } else {
+      render(data, { entryMode: false });
+    }
   });
 }
 
 (async function main() {
   try {
     const data = await tryFetch();
+
+    // If someone points this app directly at an entrylist.json, support it.
+    if (isEntryListJson(data)) {
+      const pseudo = entryListToPseudoChampionship(data);
+      render(pseudo, { entryMode: true });
+      return;
+    }
+
+    let entryMode = false;
 
     // If no races/standings yet, try to populate the grid from an EntryList JSON
     if (!hasAnyStandingsOrRaces(data)) {
@@ -745,6 +783,7 @@ function enableOfflinePicker() {
         if (entryDrivers.length) {
           data.standings = data.standings || {};
           data.standings.drivers = entryDrivers;
+          entryMode = true; // pre-season entrylist view
         }
       } catch (e) {
         // silently ignore entry list fetch, we'll still render what we have
@@ -752,9 +791,19 @@ function enableOfflinePicker() {
       }
     }
 
-    render(data);
+    render(data, { entryMode });
   } catch (e) {
+    // If championship.json is missing, try to render entrylist.json directly.
     console.warn(e);
+    try {
+      const entryJson = await tryFetchAny(ENTRYLIST_URL_CANDIDATES);
+      const pseudo = entryListToPseudoChampionship(entryJson);
+      if ((pseudo.standings?.drivers || []).length) {
+        render(pseudo, { entryMode: true });
+        return;
+      }
+    } catch (_) {}
+
     enableOfflinePicker();
   }
 })();
