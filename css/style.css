@@ -458,7 +458,7 @@ tr:last-child td{border-bottom:none}
   table{ min-width:760px; } /* menos agresivo que 980px en móvil */
 }
 
-/* Botón "Reglamento" (rojo) — abajo a la derecha dentro del hero */
+/* Botón "Reglamento" — abajo a la derecha dentro del hero */
 .reglamentoBtn{
   position:absolute;
   right:16px;
@@ -477,9 +477,11 @@ tr:last-child td{border-bottom:none}
   border-radius:999px;
   border:1px solid rgba(255,255,255,.10);
 
- background: linear-gradient(135deg, rgb(190,242,100), rgb(101,163,13));
+  /* ✅ LIME (verde/amarillo) + glow suave */
+  background: linear-gradient(135deg,#bef264,#65a30d);
   box-shadow: 0 12px 30px rgba(190,242,100,.22);
-  color: rgb(16,33,15) !important;
+  color: #10210f !important;
+
   text-decoration:none;
 }
 .reglamentoBtn:hover{ text-decoration:none; filter:brightness(1.04); }
@@ -892,6 +894,8 @@ body.pageRules > .wrap{
   .pageRules .heroBadges{ grid-template-columns: 1fr; }
   .pageRules .btn{ padding: 8px 10px; }
 }
+
+
 
 
 /* =========================================================
