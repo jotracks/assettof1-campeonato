@@ -540,13 +540,15 @@ body.pageRules .wrap{ padding-top: 16px; }
 
 
 
-/* Headers de tablas: centrar SOLO imagen (no texto) */
-table thead th img{
-  margin-left: auto;
-  margin-right: auto;
+/* ===== Centrar SOLO los logos campeonatode*.png en headers ===== */
+/* Chrome moderno lo soporta perfecto (usa :has) */
+table thead th:has(img[src*="campeonatode"]) {
+  text-align: center;              /* centra inline/inline-block */
 }
 
-/* (Opcional) si esas imágenes te quedan muy grandes o “saltan” */
-table thead th img{
-  max-height: 28px;
+table thead th:has(img[src*="campeonatode"]) img{
+  display: inline-block;           /* anula tu img{display:block} SOLO acá */
+  margin: 0;                       /* no necesitamos auto acá */
+  max-height: 28px;                /* opcional: para que no “salte” el header */
+  height: auto;
 }
