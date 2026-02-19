@@ -110,14 +110,18 @@ hr{border:none; height:1px; background:rgba(255,255,255,.08); margin:12px 0}
   text-transform:uppercase;
   line-height:1.15;
 }
-.heroLinks{
-  grid-area:links;
-  justify-self:end;
-  align-self:end;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex-wrap:nowrap;
+@media (max-width:720px){
+  .heroLinks{
+    width:100%;
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap:10px;
+    justify-self:stretch;
+  }
+  .heroLinks .pill{
+    justify-content:center;   /* texto centrado dentro del pill */
+    width:100%;
+  }
 }
 
 #seasonPill{ display:none !important; } /* keep in DOM for JS */
