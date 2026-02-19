@@ -5,106 +5,6 @@
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
   <title>F1 Assetto Corsa</title>
   <link href="css/style.css" rel="stylesheet"/>
-
-  <style>
-    /* --- header layout --- */
-    .hero { position: relative; }
-
-    .heroTop{
-      display:grid;
-      grid-template-columns: 1fr auto;
-      grid-template-areas:
-        "banner banner"
-        "title  links";
-      align-items:end;
-      gap:10px 16px;
-    }
-
-    .heroBanner{
-      grid-area:banner;
-      display:block;
-      margin:0;
-    }
-
-    .heroTitle{
-      grid-area:title;
-      margin:0;
-      padding:0;
-      line-height:1.15;
-    }
-
-    /* ✅ 3 pills en fila */
-    .heroLinks{
-      grid-area:links;
-      justify-self:end;
-      align-self:end;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:nowrap;
-    }
-
-    #seasonPill{ display:none !important; } /* keep in DOM for JS, hide visually */
-
-    /* ✅ Colores pedidos */
-    .pillRed{
-      background: linear-gradient(180deg, rgba(255,85,85,.95), rgba(210,35,35,.95));
-      border: 1px solid rgba(255,120,120,.35);
-      color:#0b0b0b;
-    }
-    .pillRed:hover{ filter: brightness(1.05); }
-
-    .pillBlue{
-      background: rgba(60, 120, 255, 0.16);
-      border: 1px solid rgba(120, 170, 255, 0.32);
-      color: rgba(235, 245, 255, 0.95);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-    }
-    .pillBlue:hover{
-      background: rgba(60, 120, 255, 0.22);
-      border-color: rgba(120, 170, 255, 0.45);
-    }
-
-    /* Mobile: que sigan en fila pero bajen prolijo */
-    @media (max-width:720px){
-      .wrap{ padding:12px; }
-
-      .heroTop{
-        grid-template-columns: 1fr;
-        grid-template-areas:
-          "banner"
-          "title"
-          "links";
-        gap:10px;
-      }
-
-      .heroLinks{
-        width:100%;
-        justify-content:flex-end;
-        flex-wrap:wrap;
-        gap:10px;
-      }
-    }
-
-    /* Updated moved to bottom */
-    .pageFooter{
-      margin:24px 0 40px;
-      padding:0 8px;
-    }
-    .updatedFooter{
-      display:flex;
-      justify-content:flex-end;
-    }
-    .updatedText{
-      font-size:12px;
-      opacity:.7;
-      white-space:nowrap;
-    }
-
-    /* keep the old stats pills hidden */
-    #pointsPill, #racesPill{ display:none !important; }
-  </style>
 </head>
 
 <body>
@@ -115,32 +15,31 @@
 
         <h1 class="heroTitle" id="title">TEMPORADA 2026 - Etapa 1</h1>
 
+        <!-- keep in DOM for JS, hide visually via CSS -->
         <span class="pill" id="seasonPill">Temporada</span>
 
-        <!-- ✅ 3 pills en fila (Reglamento rojo, redes azul) -->
         <div class="heroLinks">
-          <a class="pill right pillBlue"
+          <a class="pill pill--blue"
              href="https://www.instagram.com/assetto.f1/"
              target="_blank" rel="noopener noreferrer"
              aria-label="Instagram AssettoF1" title="Instagram">Instagram</a>
 
-          <a class="pill right pillBlue"
+          <a class="pill pill--blue"
              href="https://chat.whatsapp.com/Db5wf2PYOR4Do7m6kQv76M"
              target="_blank" rel="noopener noreferrer"
              aria-label="Sumate" title="Sumate">Sumate</a>
 
-          <a class="pill right pillBlue"
+          <a class="pill pill--blue"
              href="http://181.231.189.90:8773/live-timing?server=0"
              target="_blank" rel="noopener noreferrer"
              aria-label="Live timing del server" title="Server">Server</a>
 
-          <a class="pill right pillBlue"
+          <a class="pill pill--blue"
              href="https://www.patreon.com/posts/jtrks-race-app-93369244"
              target="_blank" rel="noopener noreferrer"
              aria-label="Sistema de banderas" title="Sistema de banderas">Sistema de banderas</a>
 
-
-          <a class="pill right pillRed"
+          <a class="pill pill--lime"
              href="./reglamento.html"
              aria-label="Reglamento" title="Reglamento">Reglamento</a>
         </div>
@@ -151,7 +50,7 @@
 
     <div class="card" id="loadCard" style="display:none">
       <div class="row">
-        <span class="pill warn">Modo offline</span>
+        <span class="pill pill--warn">Modo offline</span>
         <small>
           Si abriste con <span class="mono">file://</span>, algunos navegadores bloquean <span class="mono">fetch()</span>.
           Cargá tu <span class="mono">championship.json</span> manualmente:
@@ -165,7 +64,7 @@
 
     <div class="card" id="standingsCard">
       <div class="row">
-        <span class="pill ok" id="driversCount">Pilotos: 0</span>
+        <span class="pill pill--ok" id="driversCount">Pilotos: 0</span>
         <span class="pill" id="pointsPill" style="display:none !important;">Puntos: 20–17–14…</span>
         <span class="pill" id="racesPill" style="display:none !important;">Fechas: 0</span>
       </div>
