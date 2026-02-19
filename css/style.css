@@ -534,3 +534,8 @@ body.pageRules .wrap{ padding-top: 16px; }
   .rulesTopbar{ position: static; }
 }
 
+/* ===== Tables: headers centrados ===== */
+th{
+  text-align: center;
+}
+
