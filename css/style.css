@@ -1,5 +1,3 @@
-
-
 :root{
   --bg0:#05070d;
   --bg1:#070a12;
@@ -479,10 +477,9 @@ tr:last-child td{border-bottom:none}
   border-radius:999px;
   border:1px solid rgba(255,255,255,.10);
 
-    background: linear-gradient(135deg,#bef264,#65a30d); /* lime suave -> lime más oscuro */
+  background: linear-gradient(135deg,#bef264,#65a30d); /* lime suave -> lime más oscuro */
   box-shadow: 0 12px 30px rgba(190,242,100,.22);       /* glow suave, no fluo brutal */
-  color: #10210f !important;   
-  box-shadow:0 12px 30px rgba(239,68,68,.25);
+  color: #10210f !important;
   text-decoration:none;
 }
 .reglamentoBtn:hover{ text-decoration:none; filter:brightness(1.04); }
@@ -1067,4 +1064,3 @@ body.pageRules{
 .heroBanner{
   margin-bottom: 0 !important;
 }
-
