@@ -477,9 +477,9 @@ tr:last-child td{border-bottom:none}
   border-radius:999px;
   border:1px solid rgba(255,255,255,.10);
 
-  background: linear-gradient(135deg,#bef264,#65a30d); /* lime suave -> lime más oscuro */
-  box-shadow: 0 12px 30px rgba(190,242,100,.22);       /* glow suave, no fluo brutal */
-  color: #10210f !important;
+ background: linear-gradient(135deg, rgb(190,242,100), rgb(101,163,13));
+  box-shadow: 0 12px 30px rgba(190,242,100,.22);
+  color: rgb(16,33,15) !important;
   text-decoration:none;
 }
 .reglamentoBtn:hover{ text-decoration:none; filter:brightness(1.04); }
