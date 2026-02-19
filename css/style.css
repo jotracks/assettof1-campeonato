@@ -534,8 +534,15 @@ body.pageRules .wrap{ padding-top: 16px; }
   .rulesTopbar{ position: static; }
 }
 
-/* ===== Tables: headers centrados ===== */
-th{
-  text-align: center;
+
+
+/* Headers de tablas: centrar SOLO imagen (no texto) */
+table thead th img{
+  margin-left: auto;
+  margin-right: auto;
 }
 
+/* (Opcional) si esas imágenes te quedan muy grandes o “saltan” */
+table thead th img{
+  max-height: 28px;
+}
