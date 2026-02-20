@@ -552,3 +552,146 @@ table thead th:has(img[src*="campeonatode"]) img{
   max-height: 28px;                /* opcional: para que no “salte” el header */
   height: auto;
 }
+
+/* =========================================================
+   VISUAL CUES (JS -> CSS mapping)
+   Esto pinta lo que el JS ya genera:
+   - Notas: <span class="badge dnf|dsq|pen|warn|fl|ovr|tyre">
+   - Neum:  <span class="tyreDots"><span class="tyreDot soft|medium|hard|inter|wet"></span>...
+   - Filas: .fastLapRow / .mostOvertakesRow
+   - Dots:  .flDot / .otDot
+   ========================================================= */
+
+/* Badges */
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:2px 8px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(7,10,15,.30);
+  color: rgba(234,240,255,.90);
+  font-size:11px;
+  font-weight:1000;
+  letter-spacing:.02em;
+  white-space:nowrap;
+  vertical-align:middle;
+}
+.badge + .badge{ margin-left:6px; }
+
+/* Status / flags */
+.badge.dnf{ background: rgba(239,68,68,.16); border-color: rgba(239,68,68,.42); }
+.badge.dsq{ background: rgba(148,163,184,.14); border-color: rgba(148,163,184,.32); }
+.badge.pen{ background: rgba(245,158,11,.14); border-color: rgba(245,158,11,.38); }
+.badge.warn{ background: rgba(245,158,11,.10); border-color: rgba(245,158,11,.30); }
+.badge.fl{ background: rgba(167,139,250,.16); border-color: rgba(167,139,250,.42); }
+.badge.ovr{ background: rgba(34,211,238,.12); border-color: rgba(34,211,238,.34); }
+.badge.tyre{ background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16); font-weight:900; }
+
+/* Legacy pills used by JS in the race header */
+.pill.violet{
+  background: rgba(167,139,250,.16);
+  border-color: rgba(167,139,250,.38);
+  color: rgba(245,240,255,.95);
+}
+.pill.cyan{
+  background: rgba(34,211,238,.14);
+  border-color: rgba(34,211,238,.35);
+  color: rgba(235,252,255,.95);
+}
+.pill.winnerPill{
+  background: rgba(34,197,94,.14);
+  border-color: rgba(34,197,94,.38);
+  color: rgba(235,255,245,.95);
+}
+
+/* Tyre dots */
+.tyreDots{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  vertical-align:middle;
+}
+.tyreDot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  display:inline-block;
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow: 0 0 0 2px rgba(0,0,0,.22) inset;
+}
+.tyreDot.soft{ background:#ef4444; }   /* rojo */
+.tyreDot.medium{ background:#facc15; } /* amarillo */
+.tyreDot.hard{ background:#e5e7eb; }   /* blanco/gris */
+.tyreDot.inter{ background:#22c55e; }  /* verde */
+.tyreDot.wet{ background:#3b82f6; }    /* azul */
+
+/* Name markers (fast lap / overtakes dots) */
+.flDot, .otDot{
+  display:inline-block;
+  width:8px; height:8px;
+  border-radius:50%;
+  margin-right:8px;
+  vertical-align:middle;
+  border:1px solid rgba(255,255,255,.22);
+}
+.flDot{ background:#a78bfa; }
+.otDot{ background:#22d3ee; }
+.nameText{ vertical-align:middle; }
+
+/* Row highlights */
+.fastLapRow td{
+  background: rgba(167,139,250,.08);
+}
+.mostOvertakesRow td{
+  background: rgba(34,211,238,.06);
+}
+
+/* Notes cell readability */
+td:last-child{ white-space:nowrap; }
+@media (max-width: 720px){
+  td:last-child{ white-space:normal; }
+}
+
+/* =========================================================
+   FIX: Reglamento centrado + sin overflow (aspect ratio OK)
+   ========================================================= */
+body.pageRules .wrap{
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+/* Evita que el grid se estire por contenido largo */
+.rulesGrid{ 
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+}
+.rulesToc, .rulesContent, .rulesSection, .rulesSectionBody, .rulesHero{
+  min-width: 0; /* clave para que no empuje el grid */
+}
+
+/* Wrapping seguro: nada “rompe” el ancho */
+.rulesSectionBody,
+.rulesLead,
+.rulesSectionBody p,
+.rulesSectionBody li{
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Si hay tablas/código dentro del reglamento, que no empujen el layout */
+body.pageRules .tableWrap{
+  max-width: 100%;
+}
+body.pageRules table{
+  min-width: 560px; /* un toque menos agresivo en mobile */
+}
+
+/* Mobile: todo en una columna y centrado */
+@media (max-width: 980px){
+  .rulesGrid{ grid-template-columns: 1fr; }
+  .rulesToc{ position: static; }
+}
