@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>F1 Assetto Corsa</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link href="css/style.css" rel="stylesheet"/>
+  <link href="css/tw.css" rel="stylesheet"/>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="heroTop">
+        <img class="heroBanner" src="./img/banner.png" alt="AssettoF1 - Liga" width="718" height="85">
+
+        <h1 class="heroTitle" id="title">LIVE TIMING</h1>
+
+        <!-- keep in DOM for JS, hide visually via CSS -->
+        <span class="pill" id="seasonPill">Temporada</span>
+
+        <div class="heroLinks">
+          
+          <a class="pill pill--blue"
+             href="https://chat.whatsapp.com/Db5wf2PYOR4Do7m6kQv76M"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Sumate" title="Sumate">Sumate</a>
+
+          <a class="pill pill--blue"
+             href="https://www.instagram.com/assetto.f1/"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Instagram AssettoF1" title="Instagram">Instagram</a>
+
+          <a class="pill pill--blue"
+             href="http://181.231.189.90:8773/live-timing?server=0"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Live timing del server" title="Server">Server</a>
+
+          <a class="pill pill--blue"
+             href="./live.html"
+             aria-label="Live embebido" title="Live">Live</a>
+
+          <a class="pill pill--blue"
+             href="https://www.patreon.com/posts/jtrks-race-app-93369244"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Sistema de banderas" title="Sistema de banderas">Sistema de banderas</a>
+
+          <a class="pill pill--lime" id="navPill"
+             href="./reglamento.html"
+             aria-label="Reglamento" title="Reglamento">Reglamento</a>
+        </div>
+      </div>
+
+      <p class="heroSub" id="subtitle"></p>
+    </header>
+
+    <main class="panel">
+      <div class="card liveCard">
+        <div class="cardHeader liveCard__header">
+          <h2>Live Timing (embebido)</h2>
+          <a class="pill pill--blue" href="http://181.231.189.90:8773/live-timing?server=0" target="_blank" rel="noopener noreferrer">Abrir en pestaña</a>
+        </div>
+
+        <p class="muted" style="margin-top:10px">
+          Si no carga dentro de la página, suele ser por bloqueo del navegador (HTTPS → HTTP) o por headers anti-iframe del servidor.
+          Igual podés abrirlo con el botón de arriba.
+        </p>
+
+        <div class="iframeWrap liveIframeWrap">
+          <iframe src="http://181.231.189.90:8773/live-timing?server=0" title="Live Timing" loading="lazy"
+            referrerpolicy="no-referrer"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+          ></iframe>
+        </div>
+      </div>
+    </main>
+  </div>
+
+<script>
+(() => {
+  const pill = document.getElementById("navPill");
+  if (!pill) return;
+
+  const path = (location.pathname || "").toLowerCase();
+  const isRules = path.endsWith("reglamento.html");
+  const isLive  = path.endsWith("live.html");
+
+  if (isRules || isLive) {
+    pill.href = "./index.html";
+    pill.textContent = "← Volver";
+    pill.setAttribute("aria-label", "Volver");
+    pill.title = "Volver";
+  } else {
+    pill.href = "./reglamento.html";
+    pill.textContent = "Reglamento";
+    pill.setAttribute("aria-label", "Reglamento");
+    pill.title = "Reglamento";
+  }
+})();
+</script>
+</body>
+</html>

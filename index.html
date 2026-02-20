@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>F1 Assetto Corsa</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link href="css/style.css" rel="stylesheet"/>
+  <link href="css/tw.css" rel="stylesheet"/>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="heroTop">
+        <img class="heroBanner" src="./img/banner.png" alt="AssettoF1 - Liga" width="718" height="85">
+
+        <h1 class="heroTitle" id="title">TEMPORADA 2026 - Etapa 1</h1>
+
+        <!-- keep in DOM for JS, hide visually via CSS -->
+        <span class="pill" id="seasonPill">Temporada</span>
+
+        <div class="heroLinks">
+          
+          <a class="pill pill--blue"
+             href="https://chat.whatsapp.com/Db5wf2PYOR4Do7m6kQv76M"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Sumate" title="Sumate">Sumate</a>
+
+          <a class="pill pill--blue"
+             href="https://www.instagram.com/assetto.f1/"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Instagram AssettoF1" title="Instagram">Instagram</a>
+
+          <a class="pill pill--blue"
+             href="http://181.231.189.90:8773/live-timing?server=0"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Live timing del server" title="Server">Server</a>
+
+          <a class="pill pill--blue"
+             href="./live.html"
+             aria-label="Live embebido" title="Live">Live</a>
+
+          <a class="pill pill--blue"
+             href="https://www.patreon.com/posts/jtrks-race-app-93369244"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Sistema de banderas" title="Sistema de banderas">Sistema de banderas</a>
+
+          <a class="pill pill--lime" id="navPill"
+             href="./reglamento.html"
+             aria-label="Reglamento" title="Reglamento">Reglamento</a>
+        </div>
+      </div>
+
+      <p class="heroSub" id="subtitle"></p>
+    </header>
+
+    <div class="card" id="loadCard" style="display:none">
+      <div class="row">
+        <span class="pill pill--warn">Modo offline</span>
+        <small>
+          Si abriste con <span class="mono">file://</span>, algunos navegadores bloquean <span class="mono">fetch()</span>.
+          Cargá tu <span class="mono">championship.json</span> manualmente:
+        </small>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <input accept=".json,application/json" id="filePicker" type="file"/>
+        <small>Elegí el archivo exportado desde el builder.</small>
+      </div>
+    </div>
+
+    <div class="card" id="standingsCard">
+      <div class="row">
+        <span class="pill pill--ok" id="driversCount">Pilotos: 0</span>
+        <span class="pill" id="pointsPill" style="display:none !important;">Puntos: 20–17–14…</span>
+        <span class="pill" id="racesPill" style="display:none !important;">Fechas: 0</span>
+      </div>
+            <hr/>
+
+      <!-- Orden definido por HTML (JS solo renderiza datos) -->
+<div class="tabsWrap" id="standingsTabs" aria-label="Campeonatos">
+  <div class="tabsBar" role="tablist" aria-label="Seleccionar campeonato">
+    <button class="tabBtn isActive" type="button" role="tab" aria-selected="true" aria-controls="tabPanelPilotos" id="tabPilotos" data-tab="pilotos">
+      Pilotos
+    </button>
+    <button class="tabBtn" type="button" role="tab" aria-selected="false" aria-controls="tabPanelEquipos" id="tabEquipos" data-tab="equipos">
+      Equipos
+    </button>
+  </div>
+
+  <section class="tabPanel isActive" role="tabpanel" id="tabPanelPilotos" aria-labelledby="tabPilotos" data-panel="pilotos">
+    <div class="sectionHeader" id="pilotsHeader">
+      <img class="sectionHeaderImg" src="./img/campeonatodepilotos.png" alt="Campeonato de Pilotos">
+    </div>
+
+    <div class="standings" id="driversStandings"></div>
+  </section>
+
+  <section class="tabPanel" role="tabpanel" id="tabPanelEquipos" aria-labelledby="tabEquipos" data-panel="equipos">
+    <div class="sectionHeader" id="teamsHeader">
+      <img class="sectionHeaderImg" src="./img/campeonatodeequipos.png" alt="Campeonato de Equipos">
+    </div>
+
+    <div class="standings" id="teamsStandings"></div>
+  </section>
+</div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <h2 style="margin:0">Resultados (última → primera)</h2>
+        <span class="pill right" id="historyCount">0 carreras</span>
+      </div>
+      <div id="history"></div>
+    </div>
+  </div>
+
+  <footer class="pageFooter">
+    <div class="updatedFooter">
+      <span class="updatedText" id="updatedPill">Actualizado</span>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+
+<script>
+(() => {
+  const root = document.getElementById("standingsTabs");
+  if (!root) return;
+
+  const btns = Array.from(root.querySelectorAll(".tabBtn"));
+  const panels = Array.from(root.querySelectorAll(".tabPanel"));
+
+  function setActive(tab) {
+    btns.forEach(b => {
+      const on = b.dataset.tab === tab;
+      b.classList.toggle("isActive", on);
+      b.setAttribute("aria-selected", on ? "true" : "false");
+      b.tabIndex = on ? 0 : -1;
+    });
+    panels.forEach(p => p.classList.toggle("isActive", p.dataset.panel === tab));
+
+    try { localStorage.setItem("standingsTab", tab); } catch (e) {}
+    // Keep URL hash in sync (nice for sharing)
+    if (history && history.replaceState) {
+      history.replaceState(null, "", "#" + tab);
+    } else {
+      location.hash = "#" + tab;
+    }
+  }
+
+  // Click handling
+  root.addEventListener("click", (e) => {
+    const b = e.target.closest(".tabBtn");
+    if (!b) return;
+    setActive(b.dataset.tab);
+  });
+
+  // Keyboard: left/right arrows
+  root.addEventListener("keydown", (e) => {
+    const current = document.activeElement?.closest?.(".tabBtn");
+    if (!current) return;
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+
+    e.preventDefault();
+    const i = btns.indexOf(current);
+    const next = e.key === "ArrowRight" ? (i + 1) % btns.length : (i - 1 + btns.length) % btns.length;
+    btns[next].focus();
+    setActive(btns[next].dataset.tab);
+  });
+
+  // Initial tab: hash > localStorage > default
+  const hash = (location.hash || "").replace("#", "").toLowerCase();
+  let initial = (hash === "equipos" || hash === "pilotos") ? hash : null;
+  if (!initial) {
+    try {
+      const saved = localStorage.getItem("standingsTab");
+      if (saved === "equipos" || saved === "pilotos") initial = saved;
+    } catch (e) {}
+  }
+  if (!initial) initial = "pilotos";
+
+  setActive(initial);
+})();
+</script>
+<script>
+(() => {
+  const pill = document.getElementById("navPill");
+  if (!pill) return;
+
+  const path = (location.pathname || "").toLowerCase();
+  const isRules = path.endsWith("reglamento.html");
+  const isLive  = path.endsWith("live.html");
+
+  if (isRules || isLive) {
+    pill.href = "./index.html";
+    pill.textContent = "← Volver";
+    pill.setAttribute("aria-label", "Volver");
+    pill.title = "Volver";
+  } else {
+    pill.href = "./reglamento.html";
+    pill.textContent = "Reglamento";
+    pill.setAttribute("aria-label", "Reglamento");
+    pill.title = "Reglamento";
+  }
+})();
+</script>
+</body>
+</html>
