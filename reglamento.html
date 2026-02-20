@@ -10,13 +10,53 @@
 <body class="pageRules">
   <div class="wrap">
 
-    <!-- Topbar -->
-    <div class="rulesTopbar">
-      <a class="pill pill--blue" href="./index.html">Volver</a>
-      <a class="pill pill--lime" href="#top">Empezar</a>
-    </div>
+    <header class="hero">
+      <div class="heroTop">
+        <img class="heroBanner" src="./img/banner.png" alt="AssettoF1 - Liga" width="718" height="85">
 
-    <!-- Hero -->
+        <h1 class="heroTitle" id="title">TEMPORADA 2026 - Etapa 1</h1>
+
+        <!-- keep in DOM for JS, hide visually via CSS -->
+        <span class="pill" id="seasonPill">Temporada</span>
+
+        <div class="heroLinks">
+          
+          <a class="pill pill--blue"
+             href="./index.html"
+             aria-label="Volver" title="Volver">Volver</a>
+
+          
+          <a class="pill pill--blue"
+             href="https://chat.whatsapp.com/Db5wf2PYOR4Do7m6kQv76M"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Sumate" title="Sumate">Sumate</a>
+
+          <a class="pill pill--blue"
+             href="https://www.instagram.com/assetto.f1/"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Instagram AssettoF1" title="Instagram">Instagram</a>
+
+          <a class="pill pill--blue"
+             href="http://181.231.189.90:8773/live-timing?server=0"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Live timing del server" title="Server">Server</a>
+
+          <a class="pill pill--blue"
+             href="https://www.patreon.com/posts/jtrks-race-app-93369244"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Sistema de banderas" title="Sistema de banderas">Sistema de banderas</a>
+
+          <a class="pill pill--lime"
+             href="#top"
+             aria-label="Reglamento" title="Reglamento">Reglamento</a>
+        </div>
+      </div>
+
+      <p class="heroSub" id="subtitle"></p>
+    </header>
+
+
+<!-- Hero -->
     <header class="rulesHero" id="top">
       <div class="rulesKicker">
         <span class="rulesDot"></span>
