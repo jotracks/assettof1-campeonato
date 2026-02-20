@@ -69,9 +69,22 @@
         <span class="pill" id="pointsPill" style="display:none !important;">Puntos: 20–17–14…</span>
         <span class="pill" id="racesPill" style="display:none !important;">Fechas: 0</span>
       </div>
-      <hr/>
-      <h2>Campeonato de Pilotos</h2>
+            <hr/>
+
+      <!-- Orden definido por HTML (JS solo renderiza datos) -->
+      <div class="sectionHeader" id="pilotsHeader">
+        <img class="sectionHeaderImg" src="./img/campeonatodepilotos.png" alt="Campeonato de Pilotos">
+      </div>
+
       <div class="standings" id="driversStandings"></div>
+
+      <div class="standingsGap" aria-hidden="true"></div>
+
+      <div class="sectionHeader" id="teamsHeader">
+        <img class="sectionHeaderImg" src="./img/campeonatodeequipos.png" alt="Campeonato de Equipos">
+      </div>
+
+      <div class="standings" id="teamsStandings"></div>
     </div>
 
     <div class="card">
