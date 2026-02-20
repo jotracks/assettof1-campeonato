@@ -315,14 +315,17 @@ function ensureTeamsSection(card) {
 }
 
 function renderTeamsStandingsBroadcast(teams, opts = {}) {
+  // Prefer HTML-defined container. If it doesn't exist, fall back to the old auto-insert behavior
+  // to not break older copies of index.html.
+  let host = document.getElementById("teamsStandings");
   const driversHost = document.getElementById("driversStandings");
   if (!driversHost) return;
 
-  const card = document.getElementById("standingsCard") || driversHost.parentElement;
+  if (!host) {
+    const card = document.getElementById("standingsCard") || driversHost.parentElement;
+    host = ensureTeamsSection(card);
+  }
 
-  ensurePilotsHeader(card, driversHost);
-
-  const host = ensureTeamsSection(card);
   host.innerHTML = "";
 
   const hidePoints = !!opts.hidePoints;
@@ -360,8 +363,8 @@ function renderTeamsStandingsBroadcast(teams, opts = {}) {
     const pts = document.createElement("div");
     pts.className = "points";
     pts.textContent = hidePoints ? "" : String(t.points);
-    ptsBox.style.visibility = hidePoints ? "hidden" : "visible";
 
+    ptsBox.style.visibility = hidePoints ? "hidden" : "visible";
     ptsBox.appendChild(pts);
 
     row.appendChild(pos);
