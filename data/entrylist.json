@@ -7,7 +7,7 @@
   "OverridePassword": true,
   "ReplacementPassword": "f12025",
   "Created": "2025-08-09T20:27:20.8626154-03:00",
-  "Updated": "2026-02-26T21:43:10.8994712-03:00",
+  "Updated": "2026-02-27T16:02:29.5886115-03:00",
   "Deleted": "0001-01-01T00:00:00Z",
   "UUID": "87580b76-37c4-48ec-a59d-38e779494786",
   "Starred": true,
@@ -19,7 +19,7 @@
   "ForceStopTime": 0,
   "ForceStopWithDrivers": false,
   "RaceConfig": {
-    "Cars": "aston_vantage_safety_car;gp_2026_a526;gp_2026_amr26;gp_2026_cad26;gp_2026_mcl40;gp_2026_rb22;gp_2026_sf26;gp_2026_vcarb03;gp_2026_w17",
+    "Cars": "aston_vantage_safety_car;gp_2026_a526;gp_2026_amr26;gp_2026_cad26;gp_2026_mcl40;gp_2026_r26;gp_2026_rb22;gp_2026_sf26;gp_2026_vcarb03;gp_2026_w17",
     "Track": "melbourne",
     "DisableChecksums": false,
     "ChecksumTrackKN5": false,
@@ -260,64 +260,8 @@
       "VIP": false
     },
     "CAR_10": {
-      "InternalUUID": "e93ea816-0223-48e5-a582-117746e42012",
-      "PitBox": 10,
-      "Name": "Matias Roldan",
-      "Team": "Williams",
-      "GUID": "76561199859773251",
-      "Model": "gp_2026_cad26",
-      "Skin": "Bottas",
-      "RaceNumber": 0,
-      "ClassID": "00000000-0000-0000-0000-000000000000",
-      "Ballast": 0,
-      "SpectatorMode": 0,
-      "Restrictor": 0,
-      "FixedSetup": "",
-      "ConnectAsSpectator": false,
-      "IsPlaceHolder": false,
-      "CSPCarFlags": {
-        "block_keyboard": false,
-        "block_joystick": false,
-        "block_steering_wheel": false,
-        "force_headlights": false,
-        "allow_color_change": false,
-        "allow_teleporting": false,
-        "allow_immediate_repair": false,
-        "allow_immediate_refuel": false
-      },
-      "VIP": false
-    },
-    "CAR_11": {
-      "InternalUUID": "83b439fe-8d42-409d-943e-26e080814b72",
-      "PitBox": 11,
-      "Name": "Tomas Iglesias",
-      "Team": "Audi",
-      "GUID": "76561198892138125",
-      "Model": "gp_2026_cad26",
-      "Skin": "Perez",
-      "RaceNumber": 0,
-      "ClassID": "00000000-0000-0000-0000-000000000000",
-      "Ballast": 0,
-      "SpectatorMode": 0,
-      "Restrictor": 0,
-      "FixedSetup": "",
-      "ConnectAsSpectator": false,
-      "IsPlaceHolder": false,
-      "CSPCarFlags": {
-        "block_keyboard": false,
-        "block_joystick": false,
-        "block_steering_wheel": false,
-        "force_headlights": false,
-        "allow_color_change": false,
-        "allow_teleporting": false,
-        "allow_immediate_repair": false,
-        "allow_immediate_refuel": false
-      },
-      "VIP": false
-    },
-    "CAR_12": {
       "InternalUUID": "dd4ff15e-b41d-420a-bc1a-fd65b9a6a276",
-      "PitBox": 12,
+      "PitBox": 10,
       "Name": "Jonathan Monzon",
       "Team": "Aston Martin",
       "GUID": "76561199557580783",
@@ -343,9 +287,9 @@
       },
       "VIP": false
     },
-    "CAR_13": {
+    "CAR_11": {
       "InternalUUID": "04aac42e-ef3b-4af8-8799-67fd55b8b80a",
-      "PitBox": 13,
+      "PitBox": 11,
       "Name": "Ariel Plaza",
       "Team": "Aston Martin",
       "GUID": "76561199783138379",
@@ -371,9 +315,9 @@
       },
       "VIP": false
     },
-    "CAR_14": {
+    "CAR_12": {
       "InternalUUID": "82b49136-f182-49c2-ad78-7db6d1822411",
-      "PitBox": 14,
+      "PitBox": 12,
       "Name": "Jeremias Ramirez",
       "Team": "Red Bull",
       "GUID": "76561198328767755",
@@ -399,9 +343,9 @@
       },
       "VIP": false
     },
-    "CAR_15": {
+    "CAR_13": {
       "InternalUUID": "a58c03df-398d-4eb8-8ffc-6ed98fb98880",
-      "PitBox": 15,
+      "PitBox": 13,
       "Name": "Sebastian Sanchez",
       "Team": "Red Bull",
       "GUID": "76561199778180071",
@@ -427,9 +371,9 @@
       },
       "VIP": false
     },
-    "CAR_16": {
+    "CAR_14": {
       "InternalUUID": "1367258b-34a3-43de-9602-2812f9c5b05c",
-      "PitBox": 16,
+      "PitBox": 14,
       "Name": "Franco Indartt",
       "Team": "Racing Bulls",
       "GUID": "76561199113016695",
@@ -455,14 +399,70 @@
       },
       "VIP": false
     },
+    "CAR_15": {
+      "InternalUUID": "07560aaf-7efa-4795-824e-515079c40358",
+      "PitBox": 15,
+      "Name": "Tomas Iglesias",
+      "Team": "Audi",
+      "GUID": "76561198892138125",
+      "Model": "gp_2026_r26",
+      "Skin": "Bortoleto",
+      "RaceNumber": 0,
+      "ClassID": "00000000-0000-0000-0000-000000000000",
+      "Ballast": 0,
+      "SpectatorMode": 0,
+      "Restrictor": 0,
+      "FixedSetup": "",
+      "ConnectAsSpectator": false,
+      "IsPlaceHolder": false,
+      "CSPCarFlags": {
+        "block_keyboard": false,
+        "block_joystick": false,
+        "block_steering_wheel": false,
+        "force_headlights": false,
+        "allow_color_change": false,
+        "allow_teleporting": false,
+        "allow_immediate_repair": false,
+        "allow_immediate_refuel": false
+      },
+      "VIP": false
+    },
+    "CAR_16": {
+      "InternalUUID": "e81ecdaa-2c5f-4727-9211-9f69f571716e",
+      "PitBox": 16,
+      "Name": "Alejandro Oppenlander",
+      "Team": "Audi",
+      "GUID": "76561198978892459",
+      "Model": "gp_2026_r26",
+      "Skin": "Hulkenberg",
+      "RaceNumber": 0,
+      "ClassID": "00000000-0000-0000-0000-000000000000",
+      "Ballast": 0,
+      "SpectatorMode": 0,
+      "Restrictor": 0,
+      "FixedSetup": "",
+      "ConnectAsSpectator": false,
+      "IsPlaceHolder": false,
+      "CSPCarFlags": {
+        "block_keyboard": false,
+        "block_joystick": false,
+        "block_steering_wheel": false,
+        "force_headlights": false,
+        "allow_color_change": false,
+        "allow_teleporting": false,
+        "allow_immediate_repair": false,
+        "allow_immediate_refuel": false
+      },
+      "VIP": false
+    },
     "CAR_17": {
-      "InternalUUID": "4a941cf6-a507-485b-8fba-811ad84b5fa1",
+      "InternalUUID": "69e40c86-cddb-4231-b5d7-a62fe3ccf9e7",
       "PitBox": 17,
-      "Name": "Matias daSilva",
-      "Team": "Mclaren",
-      "GUID": "76561198935125634",
-      "Model": "gp_2026_mcl40",
-      "Skin": "Norris",
+      "Name": "Raul Becker",
+      "Team": "Haas",
+      "GUID": "76561199114326553",
+      "Model": "gp_2026_cad26",
+      "Skin": "Perez",
       "RaceNumber": 0,
       "ClassID": "00000000-0000-0000-0000-000000000000",
       "Ballast": 0,
@@ -484,11 +484,11 @@
       "VIP": false
     },
     "CAR_18": {
-      "InternalUUID": "07560aaf-7efa-4795-824e-515079c40358",
+      "InternalUUID": "ebd15d65-0049-48b4-947f-9ff46b8834b6",
       "PitBox": 18,
-      "Name": "",
-      "Team": "",
-      "GUID": "",
+      "Name": "Sebastian Becker",
+      "Team": "Haas",
+      "GUID": "76561199021141165",
       "Model": "gp_2026_cad26",
       "Skin": "Perez",
       "RaceNumber": 0,
@@ -512,13 +512,13 @@
       "VIP": false
     },
     "CAR_19": {
-      "InternalUUID": "e81ecdaa-2c5f-4727-9211-9f69f571716e",
+      "InternalUUID": "53c4e62f-00bc-4fbe-82bc-3abf79a06af7",
       "PitBox": 19,
       "Name": "",
       "Team": "",
       "GUID": "",
       "Model": "gp_2026_cad26",
-      "Skin": "Perez",
+      "Skin": "INVITADO",
       "RaceNumber": 0,
       "ClassID": "00000000-0000-0000-0000-000000000000",
       "Ballast": 0,
@@ -566,43 +566,16 @@
         "allow_immediate_refuel": false
       },
       "VIP": false
-    },
-    "CAR_20": {
-      "InternalUUID": "69e40c86-cddb-4231-b5d7-a62fe3ccf9e7",
-      "PitBox": 20,
-      "Name": "Raul Becker",
-      "Team": "Haas",
-      "GUID": "76561199114326553",
-      "Model": "gp_2026_cad26",
-      "Skin": "Perez",
-      "RaceNumber": 0,
-      "ClassID": "00000000-0000-0000-0000-000000000000",
-      "Ballast": 0,
-      "SpectatorMode": 0,
-      "Restrictor": 0,
-      "FixedSetup": "",
-      "ConnectAsSpectator": false,
-      "IsPlaceHolder": false,
-      "CSPCarFlags": {
-        "block_keyboard": false,
-        "block_joystick": false,
-        "block_steering_wheel": false,
-        "force_headlights": false,
-        "allow_color_change": false,
-        "allow_teleporting": false,
-        "allow_immediate_repair": false,
-        "allow_immediate_refuel": false
-      },
-      "VIP": false
+    
     },
     "CAR_21": {
-      "InternalUUID": "ebd15d65-0049-48b4-947f-9ff46b8834b6",
+      "InternalUUID": "a116cf31-b86a-4165-b3d0-01ea20845308",
       "PitBox": 21,
-      "Name": "Sebastian Becker",
-      "Team": "Haas",
-      "GUID": "76561199021141165",
-      "Model": "gp_2026_cad26",
-      "Skin": "Perez",
+      "Name": "Matias Salcedo",
+      "Team": "",
+      "GUID": "76561198316147988",
+      "Model": "gp_2026_mcl40",
+      "Skin": "Piastri",
       "RaceNumber": 0,
       "ClassID": "00000000-0000-0000-0000-000000000000",
       "Ballast": 0,
@@ -622,7 +595,34 @@
         "allow_immediate_refuel": false
       },
       "VIP": false
-    
+    },
+    "CAR_22": {
+      "InternalUUID": "3e43a557-b411-4b71-950c-31a2b84b85a9",
+      "PitBox": 22,
+      "Name": "Matias daSilva",
+      "Team": "Mclaren",
+      "GUID": "76561198935125634",
+      "Model": "gp_2026_mcl40",
+      "Skin": "Norris",
+      "RaceNumber": 0,
+      "ClassID": "00000000-0000-0000-0000-000000000000",
+      "Ballast": 0,
+      "SpectatorMode": 0,
+      "Restrictor": 0,
+      "FixedSetup": "",
+      "ConnectAsSpectator": false,
+      "IsPlaceHolder": false,
+      "CSPCarFlags": {
+        "block_keyboard": false,
+        "block_joystick": false,
+        "block_steering_wheel": false,
+        "force_headlights": false,
+        "allow_color_change": false,
+        "allow_teleporting": false,
+        "allow_immediate_repair": false,
+        "allow_immediate_refuel": false
+      },
+      "VIP": false
     },
     "CAR_3": {
       "InternalUUID": "a9d0d408-0748-46a2-9209-57c603f2072f",
@@ -709,36 +709,8 @@
       "VIP": false
     },
     "CAR_6": {
-      "InternalUUID": "ab397a1e-67bc-4668-b754-596f459cd3ed",
-      "PitBox": 6,
-      "Name": "Alejandro Oppenlander",
-      "Team": "Audi",
-      "GUID": "76561198978892459",
-      "Model": "gp_2026_vcarb03",
-      "Skin": "Lindblad",
-      "RaceNumber": 0,
-      "ClassID": "00000000-0000-0000-0000-000000000000",
-      "Ballast": 0,
-      "SpectatorMode": 0,
-      "Restrictor": 0,
-      "FixedSetup": "",
-      "ConnectAsSpectator": false,
-      "IsPlaceHolder": false,
-      "CSPCarFlags": {
-        "block_keyboard": false,
-        "block_joystick": false,
-        "block_steering_wheel": false,
-        "force_headlights": false,
-        "allow_color_change": false,
-        "allow_teleporting": false,
-        "allow_immediate_repair": false,
-        "allow_immediate_refuel": false
-      },
-      "VIP": false
-    },
-    "CAR_7": {
       "InternalUUID": "abf890a0-39fb-44e2-b342-dd603d7a3b46",
-      "PitBox": 7,
+      "PitBox": 6,
       "Name": "Martin Bouhier",
       "Team": "Cadillac",
       "GUID": "76561198316300525",
@@ -764,9 +736,9 @@
       },
       "VIP": false
     },
-    "CAR_8": {
+    "CAR_7": {
       "InternalUUID": "16585b15-ee83-4e98-8d58-bbfbf5eac5b8",
-      "PitBox": 8,
+      "PitBox": 7,
       "Name": "Diego Aguirre",
       "Team": "Cadillac",
       "GUID": "76561198345241808",
@@ -792,14 +764,42 @@
       },
       "VIP": false
     },
-    "CAR_9": {
+    "CAR_8": {
       "InternalUUID": "5c4bc1f4-70aa-4328-a8db-84956ed272e1",
-      "PitBox": 9,
+      "PitBox": 8,
       "Name": "Fermin Pavioni",
       "Team": "Williams",
       "GUID": "76561199465430292",
       "Model": "gp_2026_cad26",
-      "Skin": "Bottas",
+      "Skin": "INVITADO",
+      "RaceNumber": 0,
+      "ClassID": "00000000-0000-0000-0000-000000000000",
+      "Ballast": 0,
+      "SpectatorMode": 0,
+      "Restrictor": 0,
+      "FixedSetup": "",
+      "ConnectAsSpectator": false,
+      "IsPlaceHolder": false,
+      "CSPCarFlags": {
+        "block_keyboard": false,
+        "block_joystick": false,
+        "block_steering_wheel": false,
+        "force_headlights": false,
+        "allow_color_change": false,
+        "allow_teleporting": false,
+        "allow_immediate_repair": false,
+        "allow_immediate_refuel": false
+      },
+      "VIP": false
+    },
+    "CAR_9": {
+      "InternalUUID": "e93ea816-0223-48e5-a582-117746e42012",
+      "PitBox": 9,
+      "Name": "Matias Roldan",
+      "Team": "Williams",
+      "GUID": "76561199859773251",
+      "Model": "gp_2026_cad26",
+      "Skin": "INVITADO",
       "RaceNumber": 0,
       "ClassID": "00000000-0000-0000-0000-000000000000",
       "Ballast": 0,
