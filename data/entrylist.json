@@ -622,34 +622,7 @@
         "allow_immediate_refuel": false
       },
       "VIP": false
-    },
-    "CAR_22": {
-      "InternalUUID": "d4e67749-7d3d-4dc9-9acb-2d33d972f31b",
-      "PitBox": 22,
-      "Name": "Jota Mossotto",
-      "Team": "Jotracks Crew",
-      "GUID": "76561198099278383",
-      "Model": "aston_vantage_safety_car",
-      "Skin": "F1",
-      "RaceNumber": 0,
-      "ClassID": "00000000-0000-0000-0000-000000000000",
-      "Ballast": 0,
-      "SpectatorMode": 0,
-      "Restrictor": 0,
-      "FixedSetup": "",
-      "ConnectAsSpectator": false,
-      "IsPlaceHolder": false,
-      "CSPCarFlags": {
-        "block_keyboard": false,
-        "block_joystick": false,
-        "block_steering_wheel": false,
-        "force_headlights": false,
-        "allow_color_change": false,
-        "allow_teleporting": false,
-        "allow_immediate_repair": false,
-        "allow_immediate_refuel": false
-      },
-      "VIP": false
+    
     },
     "CAR_3": {
       "InternalUUID": "a9d0d408-0748-46a2-9209-57c603f2072f",
