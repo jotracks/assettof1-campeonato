@@ -1,7 +1,7 @@
 {
   "meta": {
     "season": "Temporada 2026",
-    "updatedAt": "2026-03-09 11:22",
+    "updatedAt": "2026-03-09 11:41",
     "points": [
       20,
       17,
@@ -137,7 +137,7 @@
           "pos": 8,
           "driverName": "Diego Aguirre",
           "driverGuid": "76561198345241808",
-          "team": "",
+          "team": "Cadillac",
           "grid": 14,
           "laps": 16,
           "tyresUsed": [
@@ -152,7 +152,7 @@
           "pos": 9,
           "driverName": "Agustin Noya",
           "driverGuid": "76561198262804779",
-          "team": "",
+          "team": "Ferrari",
           "grid": 5,
           "laps": 15,
           "tyresUsed": [
@@ -167,7 +167,7 @@
           "pos": 10,
           "driverName": "Raul Becker",
           "driverGuid": "76561199114326553",
-          "team": "",
+          "team": "Haas",
           "grid": 4,
           "laps": 30,
           "tyresUsed": [
@@ -182,7 +182,7 @@
           "pos": 11,
           "driverName": "Alejandro Oppenlander",
           "driverGuid": "76561198978892459",
-          "team": "",
+          "team": "Audi",
           "grid": 8,
           "laps": 30,
           "tyresUsed": [
@@ -197,7 +197,7 @@
           "pos": 12,
           "driverName": "Horacio Oviedo",
           "driverGuid": "76561198334732590",
-          "team": "",
+          "team": "Mercedes",
           "grid": 6,
           "laps": 29,
           "tyresUsed": [
@@ -212,7 +212,7 @@
           "pos": 13,
           "driverName": "Sebastian Becker",
           "driverGuid": "76561199021141165",
-          "team": "",
+          "team": "Haas",
           "grid": 9,
           "laps": 15,
           "tyresUsed": [
@@ -227,7 +227,7 @@
           "pos": 14,
           "driverName": "Franco Indartt",
           "driverGuid": "76561198894980315",
-          "team": "",
+          "team": "Racing Bulls",
           "grid": 12,
           "laps": 9,
           "tyresUsed": [
@@ -242,7 +242,7 @@
           "pos": 15,
           "driverName": "Claudio Eberhart",
           "driverGuid": "76561198085972282",
-          "team": "",
+          "team": "Ferrari",
           "grid": 13,
           "laps": 4,
           "tyresUsed": [
