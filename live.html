@@ -1,107 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>F1 Assetto Corsa</title>
-  <link rel="icon" type="image/png" href="img/favicon.png">
-  <link href="css/style.css" rel="stylesheet"/>
-  <link href="css/tw.css" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Live Timing | AssettoF1</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
-<body>
-  <div class="wrap">
-    <header class="hero">
-      <div class="heroTop">
-        <img class="heroBanner" src="./img/banner.png" alt="AssettoF1 - Liga" width="718" height="85">
+<body class="bg-slate-950 text-white">
 
-        <h1 class="heroTitle" id="title">LIVE TIMING</h1>
+<!-- HEADER -->
+<header class="border-b border-slate-800 bg-slate-900">
+<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
-        <!-- keep in DOM for JS, hide visually via CSS -->
-        <span class="pill" id="seasonPill">Temporada</span>
+<div class="text-lg font-bold tracking-wide">
+AssettoF1 Campeonato
+</div>
 
-        <div class="heroLinks">
-          
-          <a class="pill pill--blue"
-             href="https://chat.whatsapp.com/Db5wf2PYOR4Do7m6kQv76M"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Sumate" title="Sumate">Sumate</a>
+<nav class="flex gap-4 text-sm">
 
-          <a class="pill pill--blue"
-             href="https://www.instagram.com/assetto.f1/"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Instagram AssettoF1" title="Instagram">Instagram</a>
+<a href="index.html" class="hover:text-red-400">Inicio</a>
+<a href="reglamento.html" class="hover:text-red-400">Reglamento</a>
+<a href="criterio-sanciones.html" class="hover:text-red-400">Sanciones</a>
+<a href="live.html" class="text-red-400 font-semibold">Live</a>
 
-          <a class="pill pill--blue"
-             href="http://181.231.189.90:8773/live-timing?server=0"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Live timing del server" title="Server">Server</a>
+</nav>
 
-          <a class="pill pill--blue"
-             href="./live.html"
-             aria-label="Live embebido" title="Live">Live</a>
+</div>
+</header>
 
-          <a class="pill pill--blue"
-             href="https://www.patreon.com/posts/jtrks-race-app-93369244"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Sistema de banderas" title="Sistema de banderas">Sistema de banderas</a>
 
-          <a class="pill pill--blue"
-             href="./criterio-sanciones.html"
-             aria-label="Criterio de sanciones" title="Criterio de sanciones">Sanciones</a>
+<!-- CONTENT -->
 
-          <a class="pill pill--lime" id="navPill"
-             href="./reglamento.html"
-             aria-label="Reglamento" title="Reglamento">Reglamento</a>
-        </div>
-      </div>
+<main class="max-w-7xl mx-auto px-6 py-10">
 
-      <p class="heroSub" id="subtitle"></p>
-    </header>
+<h1 class="text-3xl font-bold mb-6">
+Live Timing
+</h1>
 
-    <main class="panel">
-      <div class="card liveCard">
-        <div class="cardHeader liveCard__header">
-          <h2>Live Timing (embebido)</h2>
-          <a class="pill pill--blue" href="http://181.231.189.90:8773/live-timing?server=0" target="_blank" rel="noopener noreferrer">Abrir en pestaña</a>
-        </div>
+<p class="text-slate-400 mb-6 max-w-2xl">
+Intentamos mostrar el live timing directamente dentro de la página.
+Dependiendo de la configuración del servidor del simulador,
+puede que el contenido no permita ser embebido.
+</p>
 
-        <p class="muted" style="margin-top:10px">
-          Si no carga dentro de la página, suele ser por bloqueo del navegador (HTTPS → HTTP) o por headers anti-iframe del servidor.
-          Igual podés abrirlo con el botón de arriba.
-        </p>
 
-        <div class="iframeWrap liveIframeWrap">
-          <iframe src="http://181.231.189.90:8773/live-timing?server=0" title="Live Timing" loading="lazy"
-            referrerpolicy="no-referrer"
-            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-          ></iframe>
-        </div>
-      </div>
-    </main>
-  </div>
+<!-- LIVE FRAME -->
 
-<script>
-(() => {
-  const pill = document.getElementById("navPill");
-  if (!pill) return;
+<div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
 
-  const path = (location.pathname || "").toLowerCase();
-  const isRules = path.endsWith("reglamento.html");
-  const isLive  = path.endsWith("live.html");
+<iframe
+src="http://181.231.189.90:8773"
+class="w-full h-[700px] bg-black"
+loading="lazy">
+</iframe>
 
-  if (isRules || isLive) {
-    pill.href = "./index.html";
-    pill.textContent = "← Volver";
-    pill.setAttribute("aria-label", "Volver");
-    pill.title = "Volver";
-  } else {
-    pill.href = "./reglamento.html";
-    pill.textContent = "Reglamento";
-    pill.setAttribute("aria-label", "Reglamento");
-    pill.title = "Reglamento";
-  }
-})();
-</script>
+</div>
+
+
+<!-- FALLBACK -->
+
+<div class="mt-8 p-6 bg-slate-900 border border-slate-800 rounded-xl">
+
+<h2 class="text-xl font-semibold mb-3">
+¿No ves el Live Timing?
+</h2>
+
+<p class="text-slate-400 mb-5">
+Algunos servidores bloquean la visualización dentro de otras páginas.
+Si el live no aparece arriba, abrilo directamente desde el enlace.
+</p>
+
+<a
+href="http://181.231.189.90:8773"
+target="_blank"
+class="inline-block bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg font-semibold transition"
+>
+Abrir Live Timing
+</a>
+
+</div>
+
+</main>
+
 </body>
 </html>
