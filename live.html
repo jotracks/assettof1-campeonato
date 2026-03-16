@@ -1,90 +1,230 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Live Timing | AssettoF1</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Timing | AssettoF1</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
 <body class="bg-slate-950 text-white">
+  <div class="min-h-screen bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.16),transparent_30%),linear-gradient(180deg,#020617_0%,#0f172a_40%,#020617_100%)]">
+    
+    <header class="border-b border-white/10 bg-slate-900/80 backdrop-blur">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <a href="index.html" class="text-lg font-black tracking-wide text-white">
+          AssettoF1 Campeonato
+        </a>
 
-<!-- HEADER -->
-<header class="border-b border-slate-800 bg-slate-900">
-<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <nav class="flex flex-wrap items-center gap-2 text-sm font-semibold">
+          <a href="index.html" class="rounded-xl px-3 py-2 text-slate-300 transition hover:bg-white/5 hover:text-white">Inicio</a>
+          <a href="reglamento.html" class="rounded-xl px-3 py-2 text-slate-300 transition hover:bg-white/5 hover:text-white">Reglamento</a>
+          <a href="criterio-sanciones.html" class="rounded-xl px-3 py-2 text-slate-300 transition hover:bg-white/5 hover:text-white">Sanciones</a>
+          <a href="live.html" class="rounded-xl bg-red-600 px-3 py-2 text-white">Live</a>
+        </nav>
+      </div>
+    </header>
 
-<div class="text-lg font-bold tracking-wide">
-AssettoF1 Campeonato
-</div>
+    <main class="mx-auto max-w-7xl px-6 py-10">
+      <div class="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p class="text-xs font-black uppercase tracking-[0.25em] text-red-300">Live Timing</p>
+          <h1 class="mt-2 text-3xl font-black tracking-tight text-white sm:text-4xl">
+            Seguimiento en vivo
+          </h1>
+          <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-300 sm:text-base">
+            Esta sección intenta mostrar el live timing embebido. Si el servidor no permite iframe
+            o si el navegador bloquea contenido mixto, usá el acceso directo.
+          </p>
+        </div>
 
-<nav class="flex gap-4 text-sm">
+        <a
+          href="http://181.231.189.90:8773/live-timing?server=0"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center rounded-2xl bg-red-600 px-5 py-3 text-sm font-black text-white transition hover:bg-red-700"
+        >
+          Abrir Live Timing
+        </a>
+      </div>
 
-<a href="index.html" class="hover:text-red-400">Inicio</a>
-<a href="reglamento.html" class="hover:text-red-400">Reglamento</a>
-<a href="criterio-sanciones.html" class="hover:text-red-400">Sanciones</a>
-<a href="live.html" class="text-red-400 font-semibold">Live</a>
+      <section class="mb-6 rounded-3xl border border-white/10 bg-slate-900/70 p-5 shadow-2xl shadow-black/20">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <h2 class="text-lg font-black text-white">Estado del live</h2>
+            <p id="statusText" class="mt-2 text-sm leading-6 text-slate-300">
+              Verificando disponibilidad del visor...
+            </p>
+          </div>
 
-</nav>
+          <div id="statusBadge"
+            class="inline-flex w-fit items-center gap-2 rounded-full border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-bold text-slate-200">
+            <span id="statusDot" class="h-2.5 w-2.5 rounded-full bg-slate-400"></span>
+            <span id="statusLabel">Comprobando</span>
+          </div>
+        </div>
 
-</div>
-</header>
+        <div class="mt-4 grid gap-3 md:grid-cols-3">
+          <div class="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+            <p class="text-xs font-black uppercase tracking-wide text-slate-400">URL</p>
+            <p class="mt-2 break-all text-sm text-slate-200">http://181.231.189.90:8773/live-timing?server=0</p>
+          </div>
 
+          <div class="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+            <p class="text-xs font-black uppercase tracking-wide text-slate-400">Protocolo del sitio</p>
+            <p id="siteProtocol" class="mt-2 text-sm text-slate-200">-</p>
+          </div>
 
-<!-- CONTENT -->
+          <div class="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+            <p class="text-xs font-black uppercase tracking-wide text-slate-400">Modo de carga</p>
+            <p id="modeInfo" class="mt-2 text-sm text-slate-200">-</p>
+          </div>
+        </div>
+      </section>
 
-<main class="max-w-7xl mx-auto px-6 py-10">
+      <section class="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/70 shadow-2xl shadow-black/20">
+        <div class="border-b border-white/10 px-5 py-4">
+          <h2 class="text-base font-black text-white">Visor embebido</h2>
+        </div>
 
-<h1 class="text-3xl font-bold mb-6">
-Live Timing
-</h1>
+        <div id="iframeWrapper" class="relative min-h-[720px] bg-black">
+          <div id="loadingOverlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-slate-950/80 px-6 text-center">
+            <div class="h-10 w-10 animate-spin rounded-full border-4 border-slate-700 border-t-red-500"></div>
+            <p class="text-sm font-semibold text-slate-200">Intentando cargar el live timing...</p>
+            <p class="max-w-xl text-sm text-slate-400">
+              Si no aparece, probablemente el servidor no permite iframe o el navegador está bloqueando contenido mixto.
+            </p>
+          </div>
 
-<p class="text-slate-400 mb-6 max-w-2xl">
-Intentamos mostrar el live timing directamente dentro de la página.
-Dependiendo de la configuración del servidor del simulador,
-puede que el contenido no permita ser embebido.
-</p>
+          <iframe
+            id="liveFrame"
+            src="http://181.231.189.90:8773/live-timing?server=0"
+            class="h-[720px] w-full bg-black"
+            loading="lazy"
+            referrerpolicy="no-referrer"
+          ></iframe>
+        </div>
+      </section>
 
+      <section class="mt-6 rounded-3xl border border-amber-400/20 bg-amber-500/10 p-5">
+        <h2 class="text-lg font-black text-amber-200">Nota importante</h2>
+        <p class="mt-2 text-sm leading-6 text-amber-50/90">
+          Si esta web está publicada en HTTPS, los navegadores modernos bloquean iframes HTTP por seguridad.
+          En ese caso, aunque el servidor esté online, el visor embebido puede no mostrarse.
+        </p>
+        <p class="mt-2 text-sm leading-6 text-amber-50/90">
+          La solución real para que funcione bien dentro de la página es que el live timing esté servido también por HTTPS
+          o que pase por un proxy tuyo.
+        </p>
+      </section>
+    </main>
+  </div>
 
-<!-- LIVE FRAME -->
+  <script>
+    const LIVE_URL = "http://181.231.189.90:8773/live-timing?server=0";
+    const pageProtocol = window.location.protocol;
+    const liveProtocol = new URL(LIVE_URL).protocol;
 
-<div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+    const statusText = document.getElementById("statusText");
+    const statusBadge = document.getElementById("statusBadge");
+    const statusDot = document.getElementById("statusDot");
+    const statusLabel = document.getElementById("statusLabel");
+    const siteProtocol = document.getElementById("siteProtocol");
+    const modeInfo = document.getElementById("modeInfo");
+    const liveFrame = document.getElementById("liveFrame");
+    const loadingOverlay = document.getElementById("loadingOverlay");
 
-<iframe
-src="http://181.231.189.90:8773"
-class="w-full h-[700px] bg-black"
-loading="lazy">
-</iframe>
+    siteProtocol.textContent = pageProtocol.replace(":", "").toUpperCase();
+    modeInfo.textContent = "Iframe embebido con fallback externo";
 
-</div>
+    function setStatus(type, label, text) {
+      statusLabel.textContent = label;
+      statusText.textContent = text;
 
+      statusBadge.className = "inline-flex w-fit items-center gap-2 rounded-full px-4 py-2 text-sm font-bold border";
+      statusDot.className = "h-2.5 w-2.5 rounded-full";
 
-<!-- FALLBACK -->
+      if (type === "ok") {
+        statusBadge.classList.add("border-emerald-400/30", "bg-emerald-500/10", "text-emerald-200");
+        statusDot.classList.add("bg-emerald-400");
+      } else if (type === "warn") {
+        statusBadge.classList.add("border-amber-400/30", "bg-amber-500/10", "text-amber-200");
+        statusDot.classList.add("bg-amber-400");
+      } else if (type === "error") {
+        statusBadge.classList.add("border-red-400/30", "bg-red-500/10", "text-red-200");
+        statusDot.classList.add("bg-red-400");
+      } else {
+        statusBadge.classList.add("border-slate-600", "bg-slate-800", "text-slate-200");
+        statusDot.classList.add("bg-slate-400");
+      }
+    }
 
-<div class="mt-8 p-6 bg-slate-900 border border-slate-800 rounded-xl">
+    if (pageProtocol === "https:" && liveProtocol === "http:") {
+      setStatus(
+        "error",
+        "Bloqueado por HTTPS",
+        "Esta página corre por HTTPS y el live usa HTTP. El navegador probablemente va a bloquear el iframe por contenido mixto."
+      );
 
-<h2 class="text-xl font-semibold mb-3">
-¿No ves el Live Timing?
-</h2>
+      loadingOverlay.innerHTML = `
+        <div class="mx-auto max-w-2xl text-center">
+          <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-500/15 text-2xl">⚠️</div>
+          <h3 class="text-xl font-black text-white">El visor embebido está bloqueado</h3>
+          <p class="mt-3 text-sm leading-6 text-slate-300">
+            Tu sitio se está sirviendo por <strong>HTTPS</strong>, pero el live timing está en <strong>HTTP</strong>.
+            Los navegadores bloquean esta mezcla por seguridad.
+          </p>
+          <a
+            href="${LIVE_URL}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-5 inline-flex rounded-2xl bg-red-600 px-5 py-3 text-sm font-black text-white transition hover:bg-red-700"
+          >
+            Abrir Live Timing
+          </a>
+        </div>
+      `;
+    } else {
+      let loaded = false;
 
-<p class="text-slate-400 mb-5">
-Algunos servidores bloquean la visualización dentro de otras páginas.
-Si el live no aparece arriba, abrilo directamente desde el enlace.
-</p>
+      const failTimer = setTimeout(() => {
+        if (!loaded) {
+          setStatus(
+            "warn",
+            "No confirmado",
+            "No se pudo confirmar la carga del visor. El servidor puede estar offline o puede estar bloqueando el iframe."
+          );
 
-<a
-href="http://181.231.189.90:8773"
-target="_blank"
-class="inline-block bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg font-semibold transition"
->
-Abrir Live Timing
-</a>
+          loadingOverlay.innerHTML = `
+            <div class="mx-auto max-w-2xl text-center">
+              <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-amber-500/15 text-2xl">🟠</div>
+              <h3 class="text-xl font-black text-white">No se pudo cargar dentro de la página</h3>
+              <p class="mt-3 text-sm leading-6 text-slate-300">
+                Esto suele pasar cuando el servidor no permite ser embebido o cuando tarda demasiado en responder.
+              </p>
+              <a
+                href="${LIVE_URL}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-5 inline-flex rounded-2xl bg-red-600 px-5 py-3 text-sm font-black text-white transition hover:bg-red-700"
+              >
+                Abrir Live Timing
+              </a>
+            </div>
+          `;
+        }
+      }, 5000);
 
-</div>
-
-</main>
-
+      liveFrame.addEventListener("load", () => {
+        loaded = true;
+        clearTimeout(failTimer);
+        setStatus(
+          "ok",
+          "Visor cargado",
+          "El iframe respondió. Si ves el contenido abajo, el live timing está funcionando dentro de la página."
+        );
+        loadingOverlay.style.display = "none";
+      });
+    }
+  </script>
 </body>
 </html>
