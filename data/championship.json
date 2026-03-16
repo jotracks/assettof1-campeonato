@@ -1,7 +1,7 @@
 {
   "meta": {
     "season": "Temporada 2026",
-    "updatedAt": "2026-03-15 22:45",
+    "updatedAt": "2026-03-16 14:06",
     "points": [
       20,
       17,
@@ -367,8 +367,8 @@
             "H",
             "M"
           ],
-          "penaltyExtraMs": 0,
-          "finalTimeMs": 2822285,
+          "penaltyExtraMs": 5000,
+          "finalTimeMs": 2827285,
           "status": "OK"
         },
         {
