@@ -1,220 +1,388 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Live — AssettoF1</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>F1 Assetto Corsa</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link href="css/style.css" rel="stylesheet"/>
+  <link href="css/tw.css" rel="stylesheet"/>
+  <style>
+    .livePageTitle{
+      margin: 0 0 10px;
+      font-size: 28px;
+      line-height: 1.05;
+      font-weight: 1000;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .liveIntro{
+      margin: 0;
+      color: rgba(234,240,255,.82);
+      line-height: 1.5;
+    }
+    .liveGrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr .8fr;
+      gap:12px;
+      margin-top:14px;
+    }
+    .liveStat{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      padding:14px;
+      background: rgba(7,10,15,.24);
+    }
+    .liveStat__label{
+      margin:0 0 6px;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: rgba(234,240,255,.58);
+    }
+    .liveStat__value{
+      margin:0;
+      font-size:14px;
+      line-height:1.45;
+      color: rgba(234,240,255,.95);
+      word-break: break-word;
+    }
+    .liveStatusRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .statusPill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      color: rgba(234,240,255,.92);
+      font-size:12px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .statusDot{
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      background:#94a3b8;
+      flex:none;
+    }
+    .statusPill.ok{
+      background: rgba(34,197,94,.14);
+      border-color: rgba(34,197,94,.38);
+    }
+    .statusPill.warn{
+      background: rgba(245,158,11,.12);
+      border-color: rgba(245,158,11,.35);
+    }
+    .statusPill.error{
+      background: rgba(239,68,68,.12);
+      border-color: rgba(239,68,68,.35);
+    }
+    .liveFrameBox{
+      position:relative;
+      margin-top:14px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      overflow:hidden;
+      background:rgba(0,0,0,.45);
+      min-height:76vh;
+    }
+    .liveFrame{
+      width:100%;
+      height:76vh;
+      border:0;
+      display:block;
+      background:#000;
+    }
+    .liveOverlay{
+      position:absolute;
+      inset:0;
+      z-index:2;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      padding:24px;
+      text-align:center;
+      background:rgba(5,7,13,.84);
+      backdrop-filter: blur(3px);
+    }
+    .spinner{
+      width:38px;
+      height:38px;
+      border-radius:999px;
+      border:4px solid rgba(255,255,255,.12);
+      border-top-color:#60a5fa;
+      animation:spin 1s linear infinite;
+    }
+    .noticeCard{
+      border:1px solid rgba(245,158,11,.28);
+      background: rgba(245,158,11,.08);
+    }
+    .noticeCard h2{ margin-bottom:8px; }
+    @keyframes spin{
+      to { transform: rotate(360deg); }
+    }
+    @media (max-width:900px){
+      .liveGrid{ grid-template-columns:1fr; }
+      .livePageTitle{ font-size:24px; }
+      .liveFrameBox,
+      .liveFrame{ min-height:68vh; height:68vh; }
+    }
+  </style>
 </head>
-<body class="min-h-screen bg-slate-950 text-white">
-  <div class="min-h-screen bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.14),transparent_28%),linear-gradient(180deg,#020617_0%,#0f172a_45%,#020617_100%)]">
-    <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
 
-      <!-- Header estilo actual -->
-      <header class="mb-8 overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 shadow-2xl shadow-black/20 backdrop-blur">
-        <div class="border-b border-white/10 px-6 py-6">
-          <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <div class="flex items-center gap-3">
-                <img src="images/logo.png" alt="AssettoF1 - Liga" class="h-12 w-12 rounded-2xl object-cover ring-1 ring-white/10">
-                <div>
-                  <p class="text-xs font-black uppercase tracking-[0.26em] text-red-300">AssettoF1</p>
-                  <h1 class="text-2xl font-black tracking-tight text-white sm:text-3xl">TEMPORADA 2026 - Etapa 1</h1>
-                </div>
-              </div>
-              <p class="mt-4 text-sm font-semibold text-slate-300">Temporada</p>
-            </div>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="heroTop">
+        <img class="heroBanner" src="./img/banner.png" alt="AssettoF1 - Liga" width="718" height="85">
 
-            <nav class="flex flex-wrap gap-2 text-sm font-bold">
-              <a href="https://chat.whatsapp.com/" target="_blank" rel="noopener noreferrer" class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-slate-200 transition hover:bg-white/10 hover:text-white">Sumate</a>
-              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-slate-200 transition hover:bg-white/10 hover:text-white">Instagram</a>
-              <a href="http://181.231.189.90:8773" target="_blank" rel="noopener noreferrer" class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-slate-200 transition hover:bg-white/10 hover:text-white">Server</a>
-              <a href="live.html" class="rounded-xl bg-red-600 px-4 py-2 text-white shadow-lg shadow-red-950/40">Live</a>
-              <a href="https://www.patreon.com/" target="_blank" rel="noopener noreferrer" class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-slate-200 transition hover:bg-white/10 hover:text-white">Sistema de banderas</a>
-              <a href="reglamento.html" class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-slate-200 transition hover:bg-white/10 hover:text-white">Reglamento</a>
-            </nav>
-          </div>
+        <h1 class="heroTitle" id="title">TEMPORADA 2026 - Etapa 1</h1>
+
+        <span class="pill" id="seasonPill">Temporada</span>
+
+        <div class="heroLinks">
+          <a class="pill pill--blue"
+             href="https://chat.whatsapp.com/F0TufeBUgJC2opxrCMCdiD"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Sumate" title="Sumate">Sumate</a>
+
+          <a class="pill pill--blue"
+             href="https://www.instagram.com/assetto.f1/"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Instagram AssettoF1" title="Instagram">Instagram</a>
+
+          <a class="pill pill--blue"
+             href="http://181.231.189.90:8773/live-timing?server=0"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Live timing del server" title="Server">Server</a>
+
+          <a class="pill pill--lime"
+             href="./live.html"
+             aria-label="Live embebido" title="Live">Live</a>
+
+          <a class="pill pill--blue"
+             href="https://www.patreon.com/posts/jtrks-race-app-93369244"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Sistema de banderas" title="Sistema de banderas">Sistema de banderas</a>
+
+          <a class="pill pill--blue"
+             href="./criterio-sanciones.html"
+             aria-label="Criterio de sanciones" title="Sanciones">Sanciones</a>
+
+          <a class="pill pill--blue"
+             href="./reglamento.html"
+             aria-label="Reglamento" title="Reglamento">Reglamento</a>
         </div>
+      </div>
 
-        <div class="px-6 py-6">
-          <p class="text-xs font-black uppercase tracking-[0.25em] text-red-300">Live Timing</p>
-          <h2 class="mt-2 text-3xl font-black tracking-tight text-white">Seguimiento en vivo</h2>
-          <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-300 sm:text-base">
-            Esta sección intenta mostrar el live timing dentro de la página. Si no carga, podés abrirlo en una pestaña nueva.
-          </p>
-        </div>
-      </header>
+      <p class="heroSub" id="subtitle"></p>
+    </header>
 
-      <!-- Estado -->
-      <section class="mb-6 rounded-3xl border border-white/10 bg-slate-900/70 p-5 shadow-2xl shadow-black/20">
-        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <main>
+      <div class="card liveCard">
+        <div class="liveStatusRow">
           <div>
-            <h3 class="text-lg font-black text-white">Estado del live</h3>
-            <p id="statusText" class="mt-2 text-sm leading-6 text-slate-300">
-              Verificando disponibilidad del visor...
+            <div class="pill pill--blue" style="margin-bottom:10px;">Live Timing</div>
+            <h2 class="livePageTitle">SEGUIMIENTO EN VIVO</h2>
+            <p class="liveIntro">
+              Esta sección intenta mostrar el live timing dentro de la página. Si el servidor no permite iframe
+              o si el navegador bloquea contenido mixto, usá el acceso directo.
             </p>
           </div>
 
-          <div id="statusBadge"
-            class="inline-flex w-fit items-center gap-2 rounded-full border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-bold text-slate-200">
-            <span id="statusDot" class="h-2.5 w-2.5 rounded-full bg-slate-400"></span>
+          <a class="pill pill--blue"
+             href="http://181.231.189.90:8773/live-timing?server=0"
+             target="_blank" rel="noopener noreferrer">
+             Abrir Live Timing
+          </a>
+        </div>
+      </div>
+
+      <div class="card liveCard">
+        <div class="liveStatusRow">
+          <div>
+            <h2 style="margin:0 0 8px;">Estado del live</h2>
+            <p class="muted" id="statusText" style="margin:0;">Verificando disponibilidad del visor...</p>
+          </div>
+
+          <div id="statusBadge" class="statusPill">
+            <span id="statusDot" class="statusDot"></span>
             <span id="statusLabel">Comprobando</span>
           </div>
         </div>
 
-        <div class="mt-4 flex flex-wrap gap-3">
-          <a
-            href="http://181.231.189.90:8773/live-timing?server=0"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center justify-center rounded-2xl bg-red-600 px-5 py-3 text-sm font-black text-white transition hover:bg-red-700"
-          >
-            Abrir Live Timing
-          </a>
+        <div class="liveGrid">
+          <div class="liveStat">
+            <p class="liveStat__label">URL</p>
+            <p class="liveStat__value">http://181.231.189.90:8773/live-timing?server=0</p>
+          </div>
 
-          <div class="rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-slate-300">
-            URL: <span class="font-semibold text-slate-100">http://181.231.189.90:8773/live-timing?server=0</span>
+          <div class="liveStat">
+            <p class="liveStat__label">Protocolo del sitio</p>
+            <p class="liveStat__value" id="siteProtocol">-</p>
+          </div>
+
+          <div class="liveStat">
+            <p class="liveStat__label">Modo de carga</p>
+            <p class="liveStat__value" id="modeInfo">-</p>
           </div>
         </div>
-      </section>
+      </div>
 
-      <!-- Iframe -->
-      <section class="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/70 shadow-2xl shadow-black/20">
-        <div class="border-b border-white/10 px-5 py-4">
-          <h3 class="text-base font-black text-white">Visor embebido</h3>
+      <div class="card liveCard">
+        <div class="cardHeader liveCard__header">
+          <h2>Live Timing (embebido)</h2>
+          <a class="pill pill--blue"
+             href="http://181.231.189.90:8773/live-timing?server=0"
+             target="_blank" rel="noopener noreferrer">
+            Abrir en pestaña
+          </a>
         </div>
 
-        <div class="relative min-h-[760px] bg-black">
-          <div id="loadingOverlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-slate-950/85 px-6 text-center">
-            <div class="h-10 w-10 animate-spin rounded-full border-4 border-slate-700 border-t-red-500"></div>
-            <p class="text-sm font-semibold text-slate-200">Intentando cargar el live timing...</p>
-            <p class="max-w-xl text-sm text-slate-400">
-              Si no aparece, puede ser por bloqueo HTTPS → HTTP o por restricciones anti-iframe del servidor.
-            </p>
+        <div class="liveFrameBox">
+          <div id="loadingOverlay" class="liveOverlay">
+            <div class="spinner"></div>
+            <strong>Intentando cargar el live timing...</strong>
+            <span class="muted" style="max-width:700px;">
+              Si no aparece, probablemente el servidor no permite iframe o el navegador está bloqueando contenido mixto.
+            </span>
           </div>
 
           <iframe
             id="liveFrame"
+            class="liveFrame"
             src="http://181.231.189.90:8773/live-timing?server=0"
-            class="h-[760px] w-full bg-black"
+            title="Live Timing"
             loading="lazy"
             referrerpolicy="no-referrer"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
           ></iframe>
         </div>
-      </section>
+      </div>
 
-      <!-- Nota -->
-      <section class="mt-6 rounded-3xl border border-amber-400/20 bg-amber-500/10 p-5">
-        <h3 class="text-lg font-black text-amber-200">Nota importante</h3>
-        <p class="mt-2 text-sm leading-6 text-amber-50/90">
+      <div class="card liveCard noticeCard">
+        <h2>Nota importante</h2>
+        <p class="muted" style="margin:0 0 8px;">
           Si esta web está publicada en HTTPS, los navegadores modernos pueden bloquear iframes HTTP por seguridad.
           En ese caso, aunque el servidor esté online, el visor embebido puede no mostrarse.
         </p>
-      </section>
-
+        <p class="muted" style="margin:0;">
+          La solución real para que funcione perfecto dentro de la página es servir el live timing también por HTTPS
+          o pasarlo por un proxy tuyo.
+        </p>
+      </div>
     </main>
   </div>
 
-  <script>
-    const LIVE_URL = "http://181.231.189.90:8773/live-timing?server=0";
-    const pageProtocol = window.location.protocol;
-    const liveProtocol = new URL(LIVE_URL).protocol;
+  <footer class="pageFooter">
+    <div class="updatedFooter">
+      <span class="updatedText">Live Timing AssettoF1</span>
+    </div>
+  </footer>
 
-    const statusText = document.getElementById("statusText");
-    const statusBadge = document.getElementById("statusBadge");
-    const statusDot = document.getElementById("statusDot");
-    const statusLabel = document.getElementById("statusLabel");
-    const liveFrame = document.getElementById("liveFrame");
-    const loadingOverlay = document.getElementById("loadingOverlay");
+<script>
+(() => {
+  const LIVE_URL = "http://181.231.189.90:8773/live-timing?server=0";
+  const pageProtocol = window.location.protocol;
+  const liveProtocol = new URL(LIVE_URL).protocol;
 
-    function setStatus(type, label, text) {
-      statusLabel.textContent = label;
-      statusText.textContent = text;
+  const statusText = document.getElementById("statusText");
+  const statusBadge = document.getElementById("statusBadge");
+  const statusDot = document.getElementById("statusDot");
+  const statusLabel = document.getElementById("statusLabel");
+  const siteProtocol = document.getElementById("siteProtocol");
+  const modeInfo = document.getElementById("modeInfo");
+  const liveFrame = document.getElementById("liveFrame");
+  const loadingOverlay = document.getElementById("loadingOverlay");
 
-      statusBadge.className = "inline-flex w-fit items-center gap-2 rounded-full px-4 py-2 text-sm font-bold border";
-      statusDot.className = "h-2.5 w-2.5 rounded-full";
+  siteProtocol.textContent = pageProtocol.replace(":", "").toUpperCase();
+  modeInfo.textContent = "Iframe embebido con fallback externo";
 
-      if (type === "ok") {
-        statusBadge.classList.add("border-emerald-400/30", "bg-emerald-500/10", "text-emerald-200");
-        statusDot.classList.add("bg-emerald-400");
-      } else if (type === "warn") {
-        statusBadge.classList.add("border-amber-400/30", "bg-amber-500/10", "text-amber-200");
-        statusDot.classList.add("bg-amber-400");
-      } else if (type === "error") {
-        statusBadge.classList.add("border-red-400/30", "bg-red-500/10", "text-red-200");
-        statusDot.classList.add("bg-red-400");
-      } else {
-        statusBadge.classList.add("border-slate-600", "bg-slate-800", "text-slate-200");
-        statusDot.classList.add("bg-slate-400");
-      }
-    }
+  function setStatus(type, label, text) {
+    statusLabel.textContent = label;
+    statusText.textContent = text;
 
-    if (pageProtocol === "https:" && liveProtocol === "http:") {
-      setStatus(
-        "error",
-        "Bloqueado por HTTPS",
-        "Esta página corre por HTTPS y el live usa HTTP. El navegador probablemente bloquee el iframe por contenido mixto."
-      );
+    statusBadge.className = "statusPill";
+    if (type) statusBadge.classList.add(type);
 
-      loadingOverlay.innerHTML = `
-        <div class="mx-auto max-w-2xl text-center">
-          <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-500/15 text-2xl">⚠️</div>
-          <h3 class="text-xl font-black text-white">El visor embebido está bloqueado</h3>
-          <p class="mt-3 text-sm leading-6 text-slate-300">
-            Tu sitio se está sirviendo por <strong>HTTPS</strong>, pero el live timing está en <strong>HTTP</strong>.
-          </p>
-          <a
-            href="${LIVE_URL}"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="mt-5 inline-flex rounded-2xl bg-red-600 px-5 py-3 text-sm font-black text-white transition hover:bg-red-700"
-          >
-            Abrir Live Timing
-          </a>
-        </div>
-      `;
+    if (type === "ok") {
+      statusDot.style.background = "#22c55e";
+    } else if (type === "warn") {
+      statusDot.style.background = "#f59e0b";
+    } else if (type === "error") {
+      statusDot.style.background = "#ef4444";
     } else {
-      let loaded = false;
-
-      const failTimer = setTimeout(() => {
-        if (!loaded) {
-          setStatus(
-            "warn",
-            "No confirmado",
-            "No se pudo confirmar la carga del visor. El servidor puede estar offline o puede estar bloqueando el iframe."
-          );
-
-          loadingOverlay.innerHTML = `
-            <div class="mx-auto max-w-2xl text-center">
-              <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-amber-500/15 text-2xl">🟠</div>
-              <h3 class="text-xl font-black text-white">No se pudo cargar dentro de la página</h3>
-              <p class="mt-3 text-sm leading-6 text-slate-300">
-                Probablemente el servidor no permite iframe o tardó demasiado en responder.
-              </p>
-              <a
-                href="${LIVE_URL}"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="mt-5 inline-flex rounded-2xl bg-red-600 px-5 py-3 text-sm font-black text-white transition hover:bg-red-700"
-              >
-                Abrir Live Timing
-              </a>
-            </div>
-          `;
-        }
-      }, 5000);
-
-      liveFrame.addEventListener("load", () => {
-        loaded = true;
-        clearTimeout(failTimer);
-        setStatus(
-          "ok",
-          "Visor cargado",
-          "El iframe respondió. Si ves el contenido abajo, el live timing está funcionando dentro de la página."
-        );
-        loadingOverlay.style.display = "none";
-      });
+      statusDot.style.background = "#94a3b8";
     }
-  </script>
+  }
+
+  if (pageProtocol === "https:" && liveProtocol === "http:") {
+    setStatus(
+      "error",
+      "Bloqueado por HTTPS",
+      "Esta página corre por HTTPS y el live usa HTTP. El navegador probablemente bloquee el iframe por contenido mixto."
+    );
+
+    loadingOverlay.innerHTML = `
+      <strong>El visor embebido está bloqueado</strong>
+      <span class="muted" style="max-width:700px;">
+        Tu sitio se está sirviendo por HTTPS, pero el live timing está en HTTP.
+      </span>
+      <a class="pill pill--blue"
+         href="${LIVE_URL}"
+         target="_blank" rel="noopener noreferrer">
+         Abrir Live Timing
+      </a>
+    `;
+  } else {
+    let loaded = false;
+
+    const failTimer = setTimeout(() => {
+      if (!loaded) {
+        setStatus(
+          "warn",
+          "No confirmado",
+          "No se pudo confirmar la carga del visor. El servidor puede estar offline o puede estar bloqueando el iframe."
+        );
+
+        loadingOverlay.innerHTML = `
+          <strong>No se pudo cargar dentro de la página</strong>
+          <span class="muted" style="max-width:700px;">
+            Probablemente el servidor no permite iframe o tardó demasiado en responder.
+          </span>
+          <a class="pill pill--blue"
+             href="${LIVE_URL}"
+             target="_blank" rel="noopener noreferrer">
+             Abrir Live Timing
+          </a>
+        `;
+      }
+    }, 5000);
+
+    liveFrame.addEventListener("load", () => {
+      loaded = true;
+      clearTimeout(failTimer);
+      setStatus(
+        "ok",
+        "Visor cargado",
+        "El iframe respondió. Si ves el contenido abajo, el live timing está funcionando dentro de la página."
+      );
+      loadingOverlay.style.display = "none";
+    });
+  }
+})();
+</script>
 </body>
 </html>
