@@ -8,236 +8,55 @@
   <link href="css/style.css" rel="stylesheet"/>
   <link href="css/tw.css" rel="stylesheet"/>
   <style>
-    .livePageTitle{
-      margin:0 0 10px;
-      font-size:28px;
-      line-height:1.05;
-      font-weight:1000;
-      letter-spacing:.04em;
-      text-transform:uppercase;
-    }
-    .liveIntro{
-      margin:0;
-      color:rgba(234,240,255,.82);
-      line-height:1.5;
-    }
-    .liveGrid{
-      display:grid;
-      grid-template-columns:1.3fr .7fr .7fr;
-      gap:12px;
-      margin-top:14px;
-    }
-    .liveStat{
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:16px;
-      padding:14px;
-      background:rgba(7,10,15,.24);
-    }
-    .liveStat__label{
-      margin:0 0 6px;
-      font-size:11px;
-      font-weight:900;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:rgba(234,240,255,.58);
-    }
-    .liveStat__value{
-      margin:0;
-      font-size:14px;
-      line-height:1.45;
-      color:rgba(234,240,255,.95);
-      word-break:break-word;
-    }
-    .liveStatusRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    .statusPill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:7px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.05);
-      color:rgba(234,240,255,.92);
-      font-size:12px;
-      font-weight:900;
-      white-space:nowrap;
-    }
-    .statusDot{
-      width:10px;
-      height:10px;
-      border-radius:999px;
-      background:#94a3b8;
-      flex:none;
-    }
-    .statusPill.ok{
-      background:rgba(34,197,94,.14);
-      border-color:rgba(34,197,94,.38);
-    }
-    .statusPill.warn{
-      background:rgba(245,158,11,.12);
-      border-color:rgba(245,158,11,.35);
-    }
-    .statusPill.error{
-      background:rgba(239,68,68,.12);
-      border-color:rgba(239,68,68,.35);
-    }
-    .liveControlRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:14px;
-    }
-    .liveTableWrap{
-      margin-top:14px;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:16px;
-      overflow:hidden;
-      background:rgba(0,0,0,.24);
-    }
-    .liveTable{
-      width:100%;
-      border-collapse:collapse;
-      min-width:820px;
-    }
-    .liveTable thead th{
-      padding:12px 14px;
-      text-align:left;
-      font-size:11px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:rgba(234,240,255,.62);
-      background:rgba(255,255,255,.04);
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-    .liveTable tbody td{
-      padding:12px 14px;
-      border-bottom:1px solid rgba(255,255,255,.06);
-      color:rgba(241,245,249,.96);
-      vertical-align:middle;
-    }
-    .liveTable tbody tr:hover{
-      background:rgba(255,255,255,.03);
-    }
-    .liveTable tbody tr:last-child td{
-      border-bottom:none;
-    }
-    .posCell{
-      font-weight:1000;
-      width:64px;
-    }
-    .driverCell strong{
-      display:block;
-      font-size:14px;
-      color:#fff;
-      line-height:1.2;
-    }
-    .driverCell span{
-      display:block;
-      font-size:12px;
-      color:rgba(234,240,255,.62);
-      margin-top:3px;
-    }
-    .bestLap{
-      font-weight:900;
-      color:#c4b5fd;
-    }
-    .isFastest{
-      box-shadow:inset 3px 0 0 #a855f7;
-      background:rgba(168,85,247,.08);
-    }
-    .sessionBadge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      background:rgba(96,165,250,.12);
-      color:#dbeafe;
-      border:1px solid rgba(96,165,250,.28);
-      font-size:12px;
-      font-weight:900;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-    }
-    .mutedMini{
-      color:rgba(234,240,255,.58);
-      font-size:12px;
-    }
-    .emptyState{
-      padding:34px 18px;
-      text-align:center;
-      color:rgba(234,240,255,.68);
-    }
-    .noticeCard{
-      border:1px solid rgba(245,158,11,.28);
-      background:rgba(245,158,11,.08);
-    }
-    .noticeCard h2{ margin-bottom:8px; }
-    @media (max-width:900px){
-      .liveGrid{ grid-template-columns:1fr; }
-      .livePageTitle{ font-size:24px; }
-    }
+    .livePageTitle{margin:0 0 10px;font-size:28px;line-height:1.05;font-weight:1000;letter-spacing:.04em;text-transform:uppercase}
+    .liveIntro{margin:0;color:rgba(234,240,255,.82);line-height:1.5}
+    .liveGrid{display:grid;grid-template-columns:1.3fr .7fr .7fr;gap:12px;margin-top:14px}
+    .liveStat{border:1px solid rgba(255,255,255,.10);border-radius:16px;padding:14px;background:rgba(7,10,15,.24)}
+    .liveStat__label{margin:0 0 6px;font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:rgba(234,240,255,.58)}
+    .liveStat__value{margin:0;font-size:14px;line-height:1.45;color:rgba(234,240,255,.95);word-break:break-word}
+    .liveStatusRow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .statusPill{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);color:rgba(234,240,255,.92);font-size:12px;font-weight:900;white-space:nowrap}
+    .statusDot{width:10px;height:10px;border-radius:999px;background:#94a3b8;flex:none}
+    .statusPill.ok{background:rgba(34,197,94,.14);border-color:rgba(34,197,94,.38)}
+    .statusPill.warn{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.35)}
+    .statusPill.error{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.35)}
+    .liveTableWrap{margin-top:14px;border:1px solid rgba(255,255,255,.10);border-radius:16px;overflow:hidden;background:rgba(0,0,0,.24)}
+    .liveTable{width:100%;border-collapse:collapse;min-width:860px}
+    .liveTable thead th{padding:12px 14px;text-align:left;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(234,240,255,.62);background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.08)}
+    .liveTable tbody td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);color:rgba(241,245,249,.96);vertical-align:middle}
+    .liveTable tbody tr:hover{background:rgba(255,255,255,.03)}
+    .liveTable tbody tr:last-child td{border-bottom:none}
+    .posCell{font-weight:1000;width:64px}
+    .driverCell strong{display:block;font-size:14px;color:#fff;line-height:1.2}
+    .driverCell span{display:block;font-size:12px;color:rgba(234,240,255,.62);margin-top:3px}
+    .bestLap{font-weight:900;color:#c4b5fd}
+    .isFastest{box-shadow:inset 3px 0 0 #a855f7;background:rgba(168,85,247,.08)}
+    .sessionBadge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(96,165,250,.12);color:#dbeafe;border:1px solid rgba(96,165,250,.28);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+    .mutedMini{color:rgba(234,240,255,.58);font-size:12px}
+    .emptyState{padding:34px 18px;text-align:center;color:rgba(234,240,255,.68)}
+    .noticeCard{border:1px solid rgba(245,158,11,.28);background:rgba(245,158,11,.08)}
+    .noticeCard h2{margin-bottom:8px}
+    @media (max-width:900px){.liveGrid{grid-template-columns:1fr}.livePageTitle{font-size:24px}}
   </style>
 </head>
-
 <body>
   <div class="wrap">
     <header class="hero">
       <div class="heroTop">
         <img class="heroBanner" src="./img/banner.png" alt="AssettoF1 - Liga" width="718" height="85">
-
         <h1 class="heroTitle" id="title">TEMPORADA 2026 - Etapa 1</h1>
-
         <span class="pill" id="seasonPill">Temporada</span>
-
         <div class="heroLinks">
-          <a class="pill pill--blue"
-             href="./index.html"
-             aria-label="Inicio"
-             title="Inicio">Inicio</a>
-
-          <a class="pill pill--blue"
-             href="https://chat.whatsapp.com/F0TufeBUgJC2opxrCMCdiD"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Sumate" title="Sumate">Sumate</a>
-
-          <a class="pill pill--blue"
-             href="https://www.instagram.com/assetto.f1/"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Instagram AssettoF1" title="Instagram">Instagram</a>
-
-          <a class="pill pill--blue"
-             href="http://181.231.189.90:8773/live-timing?server=0"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Live timing del server" title="Server">Server</a>
-
-          <a class="pill pill--lime"
-             href="./live.html"
-             aria-label="Live embebido" title="Live">Live</a>
-
-          <a class="pill pill--blue"
-             href="https://www.patreon.com/posts/jtrks-race-app-93369244"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Sistema de banderas" title="Sistema de banderas">Sistema de banderas</a>
-
-          <a class="pill pill--blue"
-             href="./criterio-sanciones.html"
-             aria-label="Criterio de sanciones" title="Sanciones">Sanciones</a>
-
-          <a class="pill pill--blue"
-             href="./reglamento.html"
-             aria-label="Reglamento" title="Reglamento">Reglamento</a>
+          <a class="pill pill--blue" href="./index.html">Inicio</a>
+          <a class="pill pill--blue" href="https://chat.whatsapp.com/F0TufeBUgJC2opxrCMCdiD" target="_blank" rel="noopener noreferrer">Sumate</a>
+          <a class="pill pill--blue" href="https://www.instagram.com/assetto.f1/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a class="pill pill--blue" href="http://181.231.189.90:8773/live-timing?server=0" target="_blank" rel="noopener noreferrer">Server</a>
+          <a class="pill pill--lime" href="./live.html">Live</a>
+          <a class="pill pill--blue" href="https://www.patreon.com/posts/jtrks-race-app-93369244" target="_blank" rel="noopener noreferrer">Sistema de banderas</a>
+          <a class="pill pill--blue" href="./criterio-sanciones.html">Sanciones</a>
+          <a class="pill pill--blue" href="./reglamento.html">Reglamento</a>
         </div>
       </div>
-
       <p class="heroSub" id="subtitle"></p>
     </header>
 
@@ -247,18 +66,10 @@
           <div>
             <div class="pill pill--blue" style="margin-bottom:10px;">Live Timing</div>
             <h2 class="livePageTitle">SEGUIMIENTO EN VIVO</h2>
-            <p class="liveIntro">
-              Esta pestaña toma los datos del proxy WebSocket del server y arma un timing propio dentro de la web,
-              sin iframe y con actualización en tiempo real.
-            </p>
+            <p class="liveIntro">Esta pestaña toma los datos del proxy del server y arma un timing propio dentro de la web.</p>
           </div>
-
           <div class="liveStatusRow" style="gap:10px;">
-            <a class="pill pill--blue"
-               href="http://181.231.189.90:8773/live-timing?server=0"
-               target="_blank" rel="noopener noreferrer">
-               Abrir ACSM
-            </a>
+            <a class="pill pill--blue" href="http://181.231.189.90:8773/live-timing?server=0" target="_blank" rel="noopener noreferrer">Abrir ACSM</a>
             <button class="pill pill--blue" id="reconnectBtn" type="button">Reconectar</button>
           </div>
         </div>
@@ -270,24 +81,20 @@
             <h2 style="margin:0 0 8px;">Estado del live</h2>
             <p class="muted" id="statusText" style="margin:0;">Conectando al proxy del server...</p>
           </div>
-
           <div id="statusBadge" class="statusPill">
             <span id="statusDot" class="statusDot"></span>
             <span id="statusLabel">Conectando</span>
           </div>
         </div>
-
         <div class="liveGrid">
           <div class="liveStat">
             <p class="liveStat__label">WebSocket</p>
-            <p class="liveStat__value" id="wsUrl">ws://181.231.189.90:3001</p>
+            <p class="liveStat__value">ws://181.231.189.90:3001</p>
           </div>
-
           <div class="liveStat">
             <p class="liveStat__label">Sesión</p>
             <p class="liveStat__value"><span id="sessionName" class="sessionBadge">Esperando datos</span></p>
           </div>
-
           <div class="liveStat">
             <p class="liveStat__label">Pilotos visibles</p>
             <p class="liveStat__value" id="driversCount">0</p>
@@ -301,31 +108,16 @@
             <h2>Tabla en vivo</h2>
             <div class="mutedMini" id="lastUpdate">Sin actualizaciones todavía</div>
           </div>
-
-          <div class="liveStatusRow" style="gap:10px;">
-            <span class="pill" id="connectionMode">WS Proxy</span>
-          </div>
+          <div class="liveStatusRow" style="gap:10px;"><span class="pill">WS Proxy</span></div>
         </div>
-
         <div class="liveTableWrap">
           <div style="overflow:auto;">
             <table class="liveTable">
               <thead>
-                <tr>
-                  <th>Pos</th>
-                  <th>Piloto</th>
-                  <th>Auto</th>
-                  <th>Vuelta</th>
-                  <th>Última</th>
-                  <th>Mejor</th>
-                  <th>Gap</th>
-                  <th>Estado</th>
-                </tr>
+                <tr><th>Pos</th><th>Piloto</th><th>Auto</th><th>Vuelta</th><th>Última</th><th>Mejor</th><th>Gap</th><th>Estado</th></tr>
               </thead>
               <tbody id="liveTableBody">
-                <tr>
-                  <td colspan="8" class="emptyState">Esperando datos del server...</td>
-                </tr>
+                <tr><td colspan="8" class="emptyState">Esperando datos del server...</td></tr>
               </tbody>
             </table>
           </div>
@@ -334,27 +126,17 @@
 
       <div class="card liveCard noticeCard">
         <h2>Nota</h2>
-        <p class="muted" style="margin:0 0 8px;">
-          Esta versión usa el proxy local del server. Para que funcione, el archivo <strong>2-iniciar-proxy.bat</strong>
-          tiene que estar corriendo junto con ACSM.
-        </p>
-        <p class="muted" style="margin:0;">
-          Si el proxy no está levantado, la página va a seguir cargando pero se va a quedar sin datos en vivo.
-        </p>
+        <p class="muted" style="margin:0 0 8px;">Para que esto funcione, <strong>2-iniciar-proxy.bat</strong> tiene que estar corriendo junto con ACSM.</p>
+        <p class="muted" style="margin:0;">Si el proxy no está levantado, la página carga pero no recibe datos.</p>
       </div>
     </main>
   </div>
 
-  <footer class="pageFooter">
-    <div class="updatedFooter">
-      <span class="updatedText">Live Timing AssettoF1</span>
-    </div>
-  </footer>
+  <footer class="pageFooter"><div class="updatedFooter"><span class="updatedText">Live Timing AssettoF1</span></div></footer>
 
 <script>
 (() => {
   const WS_URL = "ws://181.231.189.90:3001";
-
   const statusText = document.getElementById("statusText");
   const statusBadge = document.getElementById("statusBadge");
   const statusDot = document.getElementById("statusDot");
@@ -368,35 +150,17 @@
   let ws = null;
   let reconnectTimer = null;
   let manuallyClosed = false;
-
-  const state = {
-    session: "Esperando datos",
-    cars: new Map(),
-    fastestLapMs: null,
-  };
+  const state = { session: "Esperando datos", cars: new Map(), fastestLapMs: null };
 
   function setStatus(type, label, text) {
     statusLabel.textContent = label;
     statusText.textContent = text;
-
     statusBadge.className = "statusPill";
     if (type) statusBadge.classList.add(type);
-
-    if (type === "ok") {
-      statusDot.style.background = "#22c55e";
-    } else if (type === "warn") {
-      statusDot.style.background = "#f59e0b";
-    } else if (type === "error") {
-      statusDot.style.background = "#ef4444";
-    } else {
-      statusDot.style.background = "#94a3b8";
-    }
+    statusDot.style.background = type === "ok" ? "#22c55e" : type === "warn" ? "#f59e0b" : type === "error" ? "#ef4444" : "#94a3b8";
   }
 
-  function nowLabel() {
-    const d = new Date();
-    return d.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-  }
+  function nowLabel() { return new Date().toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit", second: "2-digit" }); }
 
   function formatMs(ms) {
     if (ms == null || ms === 0 || Number.isNaN(Number(ms))) return "—";
@@ -414,48 +178,17 @@
     return String(value);
   }
 
-  function getDriverName(car) {
-    return car.driverName || car.name || car.driver_name || car.DriverName || "Piloto";
-  }
-
-  function getTeamName(car) {
-    return car.team || car.Team || car.carModel || car.model || "";
-  }
-
-  function getPosition(car) {
-    return Number(
-      car.position ??
-      car.Position ??
-      car.pos ??
-      car.place ??
-      999
-    );
-  }
-
-  function getLap(car) {
-    return car.lap ?? car.currentLap ?? car.laps ?? car.Lap ?? 0;
-  }
-
-  function getLastLap(car) {
-    return car.lastLap ?? car.last_lap ?? car.LastLap ?? car.lastLapTime ?? null;
-  }
-
-  function getBestLap(car) {
-    return car.bestLap ?? car.best_lap ?? car.BestLap ?? car.bestLapTime ?? null;
-  }
-
-  function getGap(car) {
-    return car.gap ?? car.Gap ?? car.interval ?? car.delta ?? "";
-  }
-
-  function getStatus(car) {
-    return car.status ?? car.State ?? car.state ?? car.location ?? "En pista";
+  function guessStatus(car) {
+    if (car.IsInPitLane || car.InPitlane || car.InPit) return "Pits";
+    if (car.IsInPitBox) return "Box";
+    if (car.Connected === false) return "Desconectado";
+    return "En pista";
   }
 
   function updateFastest() {
     let best = null;
     for (const car of state.cars.values()) {
-      const lap = Number(getBestLap(car));
+      const lap = Number(car.BestLap);
       if (!lap) continue;
       if (best == null || lap < best) best = lap;
     }
@@ -463,11 +196,12 @@
   }
 
   function renderTable() {
-    const rows = Array.from(state.cars.values())
-      .sort((a, b) => getPosition(a) - getPosition(b));
+    const rows = Array.from(state.cars.values()).sort((a, b) => {
+      if (Number(a.Position) && Number(b.Position)) return Number(a.Position) - Number(b.Position);
+      return 0;
+    });
 
     driversCount.textContent = rows.length;
-
     if (!rows.length) {
       liveTableBody.innerHTML = '<tr><td colspan="8" class="emptyState">Esperando datos del server...</td></tr>';
       return;
@@ -475,126 +209,91 @@
 
     updateFastest();
 
-    liveTableBody.innerHTML = rows.map((car) => {
-      const pos = getPosition(car);
-      const driver = getDriverName(car);
-      const team = car.team || car.Team || car.skin || "";
-      const model = car.model || car.carModel || car.Model || "—";
-      const lap = getLap(car);
-      const lastLap = Number(getLastLap(car));
-      const bestLap = Number(getBestLap(car));
-      const gap = getGap(car);
-      const status = getStatus(car);
+    liveTableBody.innerHTML = rows.map((car, index) => {
+      const pos = Number(car.Position) || (index + 1);
+      const driver = car.DriverName || "Piloto";
+      const team = car.Team || car.CarSkin || "—";
+      const model = car.CarModel || "—";
+      const lap = car.LapCount ?? car.CurrentLap ?? 0;
+      const lastLap = Number(car.LastLap);
+      const bestLap = Number(car.BestLap);
+      const gap = car.Gap ?? car.IntervalToAhead ?? "";
+      const status = guessStatus(car);
       const isFastest = state.fastestLapMs && bestLap && bestLap === state.fastestLapMs;
 
-      return `
-        <tr class="${isFastest ? "isFastest" : ""}">
-          <td class="posCell">${pos === 999 ? "—" : pos}</td>
-          <td class="driverCell">
-            <strong>${driver}</strong>
-            <span>${team || "—"}</span>
-          </td>
-          <td>${model}</td>
-          <td>${lap}</td>
-          <td>${formatMs(lastLap)}</td>
-          <td class="${isFastest ? "bestLap" : ""}">${formatMs(bestLap)}</td>
-          <td>${formatGap(gap)}</td>
-          <td>${status || "—"}</td>
-        </tr>
-      `;
+      return `<tr class="${isFastest ? "isFastest" : ""}">
+        <td class="posCell">${pos}</td>
+        <td class="driverCell"><strong>${driver}</strong><span>${team}</span></td>
+        <td>${model}</td>
+        <td>${lap}</td>
+        <td>${formatMs(lastLap)}</td>
+        <td class="${isFastest ? "bestLap" : ""}">${formatMs(bestLap)}</td>
+        <td>${formatGap(gap)}</td>
+        <td>${status}</td>
+      </tr>`;
     }).join("");
+  }
+
+  function ingestEvent200(message) {
+    if (!message) return;
+    const sessionInfo = message.SessionInfo || {};
+    const realtime = message.RealtimeCarUpdate || message.RealtimeUpdate || message.Cars || message.CarInfo || [];
+    const entryList = message.EntryList || [];
+
+    if (sessionInfo.Name) state.session = sessionInfo.Name;
+    else if (sessionInfo.CurrentSessionName) state.session = sessionInfo.CurrentSessionName;
+    else if (sessionInfo.SessionName) state.session = sessionInfo.SessionName;
+    else if (Array.isArray(sessionInfo.Sessions) && sessionInfo.CurrentSessionIndex != null) {
+      const s = sessionInfo.Sessions[sessionInfo.CurrentSessionIndex];
+      if (s && s.Name) state.session = s.Name;
+    }
+    sessionName.textContent = state.session;
+
+    const entryMap = new Map();
+    if (Array.isArray(entryList)) {
+      entryList.forEach(item => {
+        const key = item.CarIndex ?? item.CarId ?? item.CarID ?? item.CarIndexInSession;
+        if (key != null) entryMap.set(String(key), item);
+      });
+    }
+
+    if (Array.isArray(realtime)) {
+      realtime.forEach((item, idx) => {
+        const key = String(item.CarIndex ?? item.CarId ?? item.CarID ?? idx);
+        const prev = state.cars.get(key) || {};
+        const entry = entryMap.get(key) || {};
+        state.cars.set(key, {
+          ...prev, ...entry, ...item,
+          DriverName: item.DriverName || entry.DriverName || entry.Name || prev.DriverName,
+          Team: item.Team || entry.Team || entry.CarSkin || prev.Team,
+          CarModel: item.CarModel || entry.CarModel || entry.Model || prev.CarModel
+        });
+      });
+    }
+
+    renderTable();
   }
 
   function handlePayload(payload) {
     lastUpdate.textContent = `Última actualización: ${nowLabel()}`;
-
-    if (Array.isArray(payload)) {
-      payload.forEach(handlePayload);
-      return;
-    }
-
     if (!payload || typeof payload !== "object") return;
-
-    if (payload.session || payload.session_name || payload.currentSession || payload.type === "session") {
-      const candidate =
-        payload.session_name ??
-        payload.currentSession ??
-        payload.session?.name ??
-        payload.session?.type ??
-        payload.session ??
-        state.session;
-
-      state.session = String(candidate);
-      sessionName.textContent = state.session;
-    }
-
-    const carId =
-      payload.car_id ??
-      payload.carId ??
-      payload.id ??
-      payload.entry_id;
-
-    const looksLikeCarUpdate =
-      carId != null ||
-      payload.driver_name != null ||
-      payload.best_lap != null ||
-      payload.last_lap != null ||
-      payload.position != null ||
-      payload.model != null;
-
-    if (looksLikeCarUpdate) {
-      const id = String(carId ?? getDriverName(payload));
-      const prev = state.cars.get(id) || {};
-      state.cars.set(id, { ...prev, ...payload });
-      renderTable();
-      return;
-    }
-
-    if (Array.isArray(payload.cars)) {
-      payload.cars.forEach((item, index) => {
-        const id = String(item.car_id ?? item.carId ?? item.id ?? index);
-        const prev = state.cars.get(id) || {};
-        state.cars.set(id, { ...prev, ...item });
-      });
-      renderTable();
-    }
+    if (payload.EventType === 200) return ingestEvent200(payload.Message);
+    if (payload.Message && payload.EventType != null) return ingestEvent200(payload.Message);
   }
 
   function connect() {
     clearTimeout(reconnectTimer);
     manuallyClosed = false;
-
-    try {
-      ws = new WebSocket(WS_URL);
-    } catch (err) {
-      setStatus("error", "Error", "No se pudo crear el WebSocket.");
-      return;
-    }
-
+    ws = new WebSocket(WS_URL);
     setStatus("warn", "Conectando", "Intentando conectar al proxy del server...");
     sessionName.textContent = state.session;
 
-    ws.onopen = () => {
-      setStatus("ok", "Conectado", "Proxy conectado. Esperando datos del live timing...");
-    };
-
+    ws.onopen = () => setStatus("ok", "Conectado", "Proxy conectado. Esperando datos del live timing...");
     ws.onmessage = (event) => {
       setStatus("ok", "En vivo", "Recibiendo datos del server en tiempo real.");
-      let payload = event.data;
-
-      try {
-        payload = JSON.parse(event.data);
-      } catch (_) {
-        return;
-      }
-
-      handlePayload(payload);
+      try { handlePayload(JSON.parse(event.data)); } catch (_) {}
     };
-
-    ws.onerror = () => {
-      setStatus("error", "Error", "Falló la conexión con el proxy del server.");
-    };
-
+    ws.onerror = () => setStatus("error", "Error", "Falló la conexión con el proxy del server.");
     ws.onclose = () => {
       if (manuallyClosed) return;
       setStatus("warn", "Reconectando", "Se perdió la conexión. Reintentando en 3 segundos...");
