@@ -42,74 +42,81 @@
 <body>
   <div class="wrap">
     <header class="hero">
-      <div class="heroTop">
+      <div class="heroBannerWrap">
         <img class="heroBanner" src="./img/banner.png" alt="AssettoF1 - Liga" width="718" height="85">
-        <h1 class="heroTitle" id="title">TEMPORADA 2026 - Etapa 1</h1>
-        <span class="pill" id="seasonPill">Temporada</span>
-        <div class="heroLinks">
-          <a class="pill pill--blue" href="./index.html">Inicio</a>
-          <a class="pill pill--blue" href="https://chat.whatsapp.com/F0TufeBUgJC2opxrCMCdiD" target="_blank" rel="noopener noreferrer">Sumate</a>
-          <a class="pill pill--blue" href="https://www.instagram.com/assetto.f1/" target="_blank" rel="noopener noreferrer">Instagram</a>
-          <a class="pill pill--blue" href="http://181.231.189.90:8773/live-timing?server=0" target="_blank" rel="noopener noreferrer">Server</a>
-          <a class="pill pill--lime" href="./live.html">Live</a>
-          <a class="pill pill--blue" href="https://www.patreon.com/posts/jtrks-race-app-93369244" target="_blank" rel="noopener noreferrer">Sistema de banderas</a>
-          <a class="pill pill--blue" href="./criterio-sanciones.html">Sanciones</a>
-          <a class="pill pill--blue" href="./reglamento.html">Reglamento</a>
+      </div>
+      <div class="heroBottom">
+        <div>
+          <div class="heroTitleSub">Temporada 2026</div>
+          <h1 class="heroTitle" id="title">LIVE TIMING</h1>
         </div>
       </div>
-      <p class="heroSub" id="subtitle"></p>
+      <nav class="siteNav" aria-label="Navegación">
+        <a class="navBack" href="./index.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          Volver
+        </a>
+        <div class="navDivider"></div>
+        <a class="navLink" href="./reglamento.html">Reglamento</a>
+        <a class="navLink" href="./calendario.html">Calendario</a>
+        <a class="navLink" href="https://server.jotracks.com/live-timing?server=0" target="_blank" rel="noopener noreferrer">Server</a>
+        <div class="navSocial">
+          <a class="navLink navLink--social" href="https://chat.whatsapp.com/F0TufeBUgJC2opxrCMCdiD" target="_blank" rel="noopener noreferrer">Sumate</a>
+          <a class="navLink navLink--social" href="https://www.instagram.com/assetto.f1/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
+      </nav>
     </header>
 
     <main>
       <div class="card liveCard">
         <div class="liveStatusRow">
           <div>
-            <div class="pill pill--blue" style="margin-bottom:10px;">Live Timing</div>
+            <div class="pill pill--blue" style="margin-bottom:10px;">Live Timing</nav>
             <h2 class="livePageTitle">SEGUIMIENTO EN VIVO</h2>
             <p class="liveIntro">Esta pestaña toma los datos del proxy del server y arma un timing propio dentro de la web.</p>
-          </div>
+          </nav>
           <div class="liveStatusRow" style="gap:10px;">
-            <a class="pill pill--blue" href="http://181.231.189.90:8773/live-timing?server=0" target="_blank" rel="noopener noreferrer">Abrir ACSM</a>
+            <a class="pill pill--blue" href="https://server.jotracks.com/live-timing?server=0" target="_blank" rel="noopener noreferrer">Abrir ACSM</a>
             <button class="pill pill--blue" id="reconnectBtn" type="button">Reconectar</button>
-          </div>
-        </div>
-      </div>
+          </nav>
+        </nav>
+      </nav>
 
       <div class="card liveCard">
         <div class="liveStatusRow">
           <div>
             <h2 style="margin:0 0 8px;">Estado del live</h2>
             <p class="muted" id="statusText" style="margin:0;">Conectando al proxy del server...</p>
-          </div>
+          </nav>
           <div id="statusBadge" class="statusPill">
             <span id="statusDot" class="statusDot"></span>
             <span id="statusLabel">Conectando</span>
-          </div>
-        </div>
+          </nav>
+        </nav>
         <div class="liveGrid">
           <div class="liveStat">
             <p class="liveStat__label">WebSocket</p>
             <p class="liveStat__value">ws://181.231.189.90:3001</p>
-          </div>
+          </nav>
           <div class="liveStat">
             <p class="liveStat__label">Sesión</p>
             <p class="liveStat__value"><span id="sessionName" class="sessionBadge">Esperando datos</span></p>
-          </div>
+          </nav>
           <div class="liveStat">
             <p class="liveStat__label">Pilotos visibles</p>
             <p class="liveStat__value" id="driversCount">0</p>
-          </div>
-        </div>
-      </div>
+          </nav>
+        </nav>
+      </nav>
 
       <div class="card liveCard">
         <div class="cardHeader liveCard__header">
           <div>
             <h2>Tabla en vivo</h2>
-            <div class="mutedMini" id="lastUpdate">Sin actualizaciones todavía</div>
-          </div>
-          <div class="liveStatusRow" style="gap:10px;"><span class="pill">WS Proxy</span></div>
-        </div>
+            <div class="mutedMini" id="lastUpdate">Sin actualizaciones todavía</nav>
+          </nav>
+          <div class="liveStatusRow" style="gap:10px;"><span class="pill">WS Proxy</span></nav>
+        </nav>
         <div class="liveTableWrap">
           <div style="overflow:auto;">
             <table class="liveTable">
@@ -120,17 +127,17 @@
                 <tr><td colspan="8" class="emptyState">Esperando datos del server...</td></tr>
               </tbody>
             </table>
-          </div>
-        </div>
-      </div>
+          </nav>
+        </nav>
+      </nav>
 
       <div class="card liveCard noticeCard">
         <h2>Nota</h2>
         <p class="muted" style="margin:0 0 8px;">Para que esto funcione, <strong>2-iniciar-proxy.bat</strong> tiene que estar corriendo junto con ACSM.</p>
         <p class="muted" style="margin:0;">Si el proxy no está levantado, la página carga pero no recibe datos.</p>
-      </div>
+      </nav>
     </main>
-  </div>
+  </nav>
 
   <footer class="pageFooter"><div class="updatedFooter"><span class="updatedText">Live Timing AssettoF1</span></div></footer>
 

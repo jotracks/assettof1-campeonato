@@ -6,349 +6,183 @@
   <title>Criterio de sanciones — AssettoF1</title>
   <link rel="icon" type="image/png" href="img/favicon.png">
   <link href="css/style.css" rel="stylesheet"/>
-  <link href="css/tw.css" rel="stylesheet"/>
   <style>
-    body.pageSanctions .filterBar{
-      display:grid;
-      grid-template-columns:minmax(0,1.2fr) minmax(220px,.5fr);
-      gap:12px;
-      align-items:end;
-    }
-    body.pageSanctions .inputLike,
-    body.pageSanctions .selectLike{
-      width:100%;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(7,10,15,.34);
-      color:var(--text);
-      padding:12px 14px;
-      font-size:14px;
-      font-weight:700;
-      outline:none;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
-    }
-    body.pageSanctions .inputLike::placeholder{ color:rgba(234,240,255,.42); }
-    body.pageSanctions .inputLike:focus,
-    body.pageSanctions .selectLike:focus{
-      border-color:rgba(96,165,250,.48);
-      box-shadow:0 0 0 3px rgba(56,189,248,.12);
-    }
-    body.pageSanctions .helperMuted{ color:rgba(234,240,255,.68); font-size:12px; }
-    body.pageSanctions .sanctionInfoGrid{
-      display:grid;
-      grid-template-columns:1.25fr .95fr;
-      gap:14px;
-    }
-    body.pageSanctions .noteBox{
-      border:1px solid rgba(245,158,11,.26);
-      background:linear-gradient(180deg, rgba(245,158,11,.10), rgba(18,28,47,.55));
-      border-radius:18px;
-      padding:16px;
-    }
-    body.pageSanctions .scaleBox{
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(7,10,15,.22);
-      border-radius:18px;
-      padding:16px;
-    }
-    body.pageSanctions .scaleList{ display:grid; gap:10px; margin-top:10px; }
-    body.pageSanctions .scaleItem{ display:flex; gap:10px; align-items:flex-start; }
-    body.pageSanctions .pill--amber{ background:rgba(245,158,11,.15); border-color:rgba(245,158,11,.32); color:#fde68a; }
-    body.pageSanctions .pill--orange{ background:rgba(249,115,22,.15); border-color:rgba(249,115,22,.34); color:#fdba74; }
-    body.pageSanctions .pill--red{ background:rgba(239,68,68,.15); border-color:rgba(239,68,68,.34); color:#fca5a5; }
-    body.pageSanctions .pill--rose{ background:rgba(244,63,94,.15); border-color:rgba(244,63,94,.32); color:#fda4af; }
-    body.pageSanctions .tabsScroller{ overflow-x:auto; margin-bottom:12px; }
-    body.pageSanctions .tabsBar{ min-width:max-content; }
-    body.pageSanctions .tableWrap{
-      overflow:auto;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:18px;
-      background:rgba(7,10,15,.18);
-    }
-    body.pageSanctions .sanctionsTable{
-      width:100%;
-      min-width:980px;
-      border-collapse:separate;
-      border-spacing:0;
-      font-size:14px;
-      line-height:1.45;
-    }
-    body.pageSanctions .sanctionsTable thead th{
-      position:sticky;
-      top:0;
-      z-index:1;
-      text-align:left;
-      padding:13px 14px;
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      color:rgba(234,240,255,.92);
-      background:rgba(7,10,15,.92);
-      border-bottom:1px solid rgba(255,255,255,.08);
-      backdrop-filter:blur(8px);
-    }
-    body.pageSanctions .sanctionsTable tbody td{
-      padding:13px 14px;
-      border-bottom:1px solid rgba(255,255,255,.07);
-      vertical-align:top;
-    }
-    body.pageSanctions .sanctionsTable tbody tr:hover td{ background:rgba(255,255,255,.03); }
-    body.pageSanctions .categoryText{ font-weight:1000; color:rgba(255,255,255,.96); white-space:nowrap; }
-    body.pageSanctions .countText{ color:rgba(234,240,255,.66); font-size:12px; }
-    body.pageSanctions .emptyState{
-      display:none;
-      text-align:center;
-      padding:26px 14px;
-      color:rgba(234,240,255,.70);
-    }
-    body.pageSanctions .pill.isActiveTab{
-      filter:brightness(1.06);
-      box-shadow:0 0 0 1px rgba(255,255,255,.14) inset, 0 12px 28px rgba(0,0,0,.20);
-    }
-    @media (max-width: 980px){
-      body.pageSanctions .sanctionInfoGrid,
-      body.pageSanctions .filterBar{ grid-template-columns:1fr; }
-    }
+    .filterBar{ display:grid; grid-template-columns:minmax(0,1.2fr) minmax(200px,.5fr); gap:12px; align-items:end; }
+    .inputLike, .selectLike{ width:100%; border-radius:14px; border:1px solid rgba(255,255,255,.12); background:rgba(7,10,15,.34); color:var(--text); padding:12px 14px; font-size:14px; font-weight:700; outline:none; }
+    .inputLike::placeholder{ color:rgba(234,240,255,.42); }
+    .inputLike:focus, .selectLike:focus{ border-color:rgba(96,165,250,.48); box-shadow:0 0 0 3px rgba(56,189,248,.12); }
+    .helperMuted{ color:rgba(234,240,255,.68); font-size:12px; }
+    .sanctionInfoGrid{ display:grid; grid-template-columns:1.25fr .95fr; gap:14px; }
+    .noteBox{ border:1px solid rgba(245,158,11,.26); background:linear-gradient(180deg, rgba(245,158,11,.10), rgba(18,28,47,.55)); border-radius:18px; padding:16px; }
+    .scaleBox{ border:1px solid rgba(255,255,255,.10); background:rgba(7,10,15,.22); border-radius:18px; padding:16px; }
+    .scaleList{ display:grid; gap:10px; margin-top:10px; }
+    .scaleItem{ display:flex; gap:10px; align-items:flex-start; }
+    .pill--amber{ background:rgba(245,158,11,.15); border-color:rgba(245,158,11,.32); color:#fde68a; }
+    .pill--orange{ background:rgba(249,115,22,.15); border-color:rgba(249,115,22,.34); color:#fdba74; }
+    .pill--red{ background:rgba(239,68,68,.15); border-color:rgba(239,68,68,.34); color:#fca5a5; }
+    .pill--rose{ background:rgba(244,63,94,.15); border-color:rgba(244,63,94,.32); color:#fda4af; }
+    .catTabsRow{ display:flex; gap:6px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; -ms-overflow-style:none; }
+    .catTabsRow::-webkit-scrollbar{ display:none; }
+    .catTabsRow .tabBtn{ flex:0 0 auto; white-space:nowrap; padding:7px 14px; font-size:12px; border-radius:999px; border:1px solid rgba(255,255,255,.10); background:rgba(7,10,15,.30); color:rgba(234,240,255,.80); cursor:pointer; transition:background .14s, border-color .14s; }
+    .catTabsRow .tabBtn:hover{ background:rgba(255,255,255,.08); }
+    .catTabsRow .tabBtn.isActive{ background:rgba(60,120,255,.20); border-color:rgba(120,170,255,.40); color:rgba(235,245,255,.95); }
+    .sanctionsTable{ width:100%; min-width:900px; border-collapse:separate; border-spacing:0; font-size:14px; line-height:1.45; }
+    .sanctionsTable thead th{ position:sticky; top:0; z-index:1; text-align:left; padding:13px 14px; font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:rgba(234,240,255,.92); background:rgba(7,10,15,.92); border-bottom:1px solid rgba(255,255,255,.08); backdrop-filter:blur(8px); }
+    .sanctionsTable tbody td{ padding:13px 14px; border-bottom:1px solid rgba(255,255,255,.07); vertical-align:top; }
+    .sanctionsTable tbody tr:hover td{ background:rgba(255,255,255,.03); }
+    .categoryText{ font-weight:1000; color:rgba(255,255,255,.96); white-space:nowrap; }
+    .emptyState{ display:none; text-align:center; padding:26px 14px; color:rgba(234,240,255,.70); }
+    .filtersRow{ display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap; margin-top:12px; }
+    @media (max-width:980px){ .sanctionInfoGrid, .filterBar{ grid-template-columns:1fr; } }
   </style>
 </head>
-<body class="pageSanctions">
-  <div class="wrap">
-    <header class="hero">
-      <div class="heroTop">
-        <img class="heroBanner" src="./img/banner.png" alt="AssettoF1 - Liga" width="718" height="85">
+<body>
+<div class="wrap">
 
-        <h1 class="heroTitle" id="title">CRITERIO DE SANCIONES</h1>
-
-        <span class="pill" id="seasonPill">Temporada</span>
-
-        <div class="heroLinks">
-          <a class="pill pill--lime" id="navPill"
-             href="./index.html"
-             aria-label="Volver" title="Volver">← Volver</a>
-
-          <a class="pill pill--blue"
-             href="https://chat.whatsapp.com/F0TufeBUgJC2opxrCMCdiD"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Sumate" title="Sumate">Sumate</a>
-
-          <a class="pill pill--blue"
-             href="https://www.instagram.com/assetto.f1/"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Instagram AssettoF1" title="Instagram">Instagram</a>
-
-          <a class="pill pill--blue"
-             href="http://181.231.189.90:8773/live-timing?server=0"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Live timing del server" title="Server">Server</a>
-
-          <a class="pill pill--blue"
-             href="./live.html"
-             aria-label="Live embebido" title="Live">Live</a>
-
-          <a class="pill pill--blue"
-             href="https://www.patreon.com/posts/jtrks-race-app-93369244"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Sistema de banderas" title="Sistema de banderas">Sistema de banderas</a>
-
-          <a class="pill pill--blue"
-             href="./reglamento.html"
-             aria-label="Reglamento" title="Reglamento">Reglamento</a>
-        </div>
-      </div>
-
-      <p class="heroSub" id="subtitle"></p>
-    </header>
-
-    <section class="card">
-      <div class="sanctionInfoGrid">
-        <div class="noteBox">
-          <div class="row" style="margin-bottom:8px">
-            <span class="pill pill--warn">Criterio interpretativo</span>
-          </div>
-          <h2 style="font-size:18px; margin-bottom:8px">Base orientativa para comisarios</h2>
-          <p style="margin:0 0 10px; color:rgba(234,240,255,.86); line-height:1.6">
-            La presente tabla tiene carácter orientativo y establece parámetros básicos de sanción.
-            Los ejemplos aquí expuestos no son taxativos ni limitativos, y no implican que todas las
-            maniobras deban resolverse de manera automática por analogía directa con alguno de ellos.
-          </p>
-          <p style="margin:0; color:rgba(234,240,255,.72); line-height:1.6">
-            La resolución final de cada incidente queda sujeta a la valoración integral de los Comisarios,
-            considerando secuencia completa, contexto, perjuicio ocasionado, devolución de posición,
-            reincidencia y cualquier circunstancia agravante o atenuante.
-          </p>
-        </div>
-
-        <div class="scaleBox">
-          <div class="row">
-            <span class="pill">Escala post-carrera</span>
-          </div>
-          <div class="scaleList">
-            <div class="scaleItem"><span class="pill pill--amber">+5s</span><div><strong>Error leve</strong><br><span class="helperMuted">Perjuicio menor o riesgo controlado.</span></div></div>
-            <div class="scaleItem"><span class="pill pill--orange">+10s</span><div><strong>Error claro</strong><br><span class="helperMuted">Daño deportivo real o pérdida relevante.</span></div></div>
-            <div class="scaleItem"><span class="pill pill--red">+20s</span><div><strong>Error grave</strong><br><span class="helperMuted">Incidente fuerte, trompo claro o carrera comprometida.</span></div></div>
-            <div class="scaleItem"><span class="pill pill--rose">+30s</span><div><strong>Muy grave / antideportiva</strong><br><span class="helperMuted">Conducción temeraria, deliberada o extremadamente peligrosa.</span></div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="card">
-      <div class="row" style="justify-content:space-between; margin-bottom:10px">
-        <h2 style="margin:0; font-size:18px">Tabla de referencia</h2>
-        <span class="pill" id="resultsCount">0 criterios</span>
-      </div>
-
-      <div class="filterBar">
-        <label>
-          <div class="helperMuted" style="margin-bottom:6px">Buscar maniobra, consecuencia o criterio</div>
-          <input id="searchInput" class="inputLike" type="text" placeholder="Ej: trompo, error no forzado, bandera azul...">
-        </label>
-        <label>
-          <div class="helperMuted" style="margin-bottom:6px">Filtrar por sanción base</div>
-          <select id="penaltyFilter" class="selectLike">
-            <option value="">Todas</option>
-            <option value="+5s">+5s</option>
-            <option value="+10s">+10s</option>
-            <option value="+20s">+20s</option>
-            <option value="+30s">+30s</option>
-            <option value="Sin sanción / advertencia">Sin sanción / advertencia</option>
-          </select>
-        </label>
-      </div>
-
-      <div class="row" style="margin-top:12px; justify-content:space-between; gap:12px">
-        <div class="tabsScroller" style="flex:1 1 auto">
-          <div class="tabsBar" id="categoryTabs" role="tablist" aria-label="Filtrar por categoría">
-            <button class="tabBtn isActive" type="button" data-category="">Todas</button>
-            <button class="tabBtn" type="button" data-category="Colisiones">Colisiones</button>
-            <button class="tabBtn" type="button" data-category="Adelantamientos">Adelantamientos</button>
-            <button class="tabBtn" type="button" data-category="Defensa">Defensa</button>
-            <button class="tabBtn" type="button" data-category="Reincorporación">Reincorporación</button>
-            <button class="tabBtn" type="button" data-category="Límites de pista">Límites de pista</button>
-            <button class="tabBtn" type="button" data-category="Banderas azules">Banderas azules</button>
-            <button class="tabBtn" type="button" data-category="Conducta">Conducta</button>
-          </div>
-        </div>
-
-        <button id="clearFilters" class="pill pill--blue" type="button">Limpiar filtros</button>
-      </div>
-
-      <div class="tableWrap" style="margin-top:12px">
-        <table class="sanctionsTable">
-          <thead>
-            <tr>
-              <th>Categoría</th>
-              <th>Maniobra / incidente</th>
-              <th>Consecuencia</th>
-              <th>Sanción base</th>
-              <th>Escalada / criterio</th>
-            </tr>
-          </thead>
-          <tbody id="sanctionsBody"></tbody>
-        </table>
-        <div class="emptyState" id="emptyState">No hay criterios que coincidan con los filtros actuales.</div>
-      </div>
-    </section>
-  </div>
-
-  <footer class="pageFooter">
-    <div class="updatedFooter">
-      <span class="updatedText">Criterio básico de sanciones post-carrera</span>
+  <header class="hero">
+    <div class="heroBannerWrap">
+      <img class="heroBanner" src="./img/banner.png" alt="AssettoF1 - Liga" width="718" height="85">
     </div>
-  </footer>
+    <div class="heroBottom">
+      <div>
+        <div class="heroTitleSub">Temporada 2026</div>
+        <h1 class="heroTitle">CRITERIO DE SANCIONES</h1>
+      </div>
+    </div>
+  
+    <nav class="siteNav" aria-label="Navegación">
+        <a class="navBack" href="./index.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          Volver
+        </a>
+        <div class="navDivider"></div>
+        <a class="navTab" href="./index.html">Inicio</a>
+        <a class="navTab" href="./reglamento.html">Reglamento</a>
+        <a class="navTab" href="./calendario.html">Calendario</a>
+        <a class="navTab isActive" href="./criterio-sanciones.html">Sanciones</a>
+        <div class="navSpacer"></div>
+        <div class="navExt">
+          <a class="navExtLink navExtLink--server" href="https://server.jotracks.com/live-timing?server=0" target="_blank" rel="noopener noreferrer" title="Server de juego">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 010 8.49m-8.48-.01a6 6 0 010-8.49m11.31-2.82a10 10 0 010 14.14m-14.14 0a10 10 0 010-14.14"/></svg>
+            <span class="navExtLabel">Server</span>
+          </a>
+          <a class="navExtLink navExtLink--join" href="https://chat.whatsapp.com/F0TufeBUgJC2opxrCMCdiD" target="_blank" rel="noopener noreferrer" title="Sumate al grupo">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span class="navExtLabel">Sumate</span>
+          </a>
+          <a class="navExtLink navExtLink--ig" href="https://www.instagram.com/assetto.f1/" target="_blank" rel="noopener noreferrer" title="Instagram">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <span class="navExtLabel">Instagram</span>
+          </a>
+        </div>
+    </nav>
+  </header>
 
-  <script>
-    const SANCTIONS = [
-      { category: "Colisiones", incident: "Contacto leve con pérdida de 1 posición", consequence: "Perjuicio menor", sanction: "+5s", escalation: "+10s si no devuelve posición o si el rival pierde tiempo adicional", tone: "amber" },
-      { category: "Colisiones", incident: "Colisión por error no forzado", consequence: "Pérdida de varias posiciones", sanction: "+10s", escalation: "+20s si genera trompo o daño fuerte", tone: "orange" },
-      { category: "Colisiones", incident: "Golpe que provoca trompo", consequence: "Perjuicio importante", sanction: "+10s", escalation: "+20s si arruina la carrera del rival", tone: "orange" },
-      { category: "Colisiones", incident: "Choque fuerte por mala frenada", consequence: "Daño severo o carrera comprometida", sanction: "+20s", escalation: "+30s si además hay múltiples afectados", tone: "red" },
-      { category: "Colisiones", incident: "Accidente múltiple por maniobra irresponsable", consequence: "Perjuicio grave para varios autos", sanction: "+20s", escalation: "+30s si la maniobra fue temeraria", tone: "red" },
+  <section class="card">
+    <div class="sanctionInfoGrid">
+      <div class="noteBox">
+        <div class="row" style="margin-bottom:8px"><span class="pill pill--warn">Criterio interpretativo</span></div>
+        <h2 style="font-size:18px; margin-bottom:8px">Base orientativa para comisarios</h2>
+        <p style="margin:0 0 10px; color:rgba(234,240,255,.86); line-height:1.6">La presente tabla tiene carácter orientativo y establece parámetros básicos de sanción. Los ejemplos aquí expuestos no son taxativos ni limitativos, y no implican que todas las maniobras deban resolverse de manera automática por analogía directa con alguno de ellos.</p>
+        <p style="margin:0; color:rgba(234,240,255,.72); line-height:1.6">La resolución final de cada incidente queda sujeta a la valoración integral de los Comisarios, considerando secuencia completa, contexto, perjuicio ocasionado, devolución de posición, reincidencia y cualquier circunstancia agravante o atenuante.</p>
+      </div>
+      <div class="scaleBox">
+        <div class="row"><span class="pill">Escala post-carrera</span></div>
+        <div class="scaleList">
+          <div class="scaleItem"><span class="pill pill--amber">+5s</span><div><strong>Error leve</strong><br><span class="helperMuted">Perjuicio menor o riesgo controlado.</span></div></div>
+          <div class="scaleItem"><span class="pill pill--orange">+10s</span><div><strong>Error claro</strong><br><span class="helperMuted">Daño deportivo real o pérdida relevante.</span></div></div>
+          <div class="scaleItem"><span class="pill pill--red">+20s</span><div><strong>Error grave</strong><br><span class="helperMuted">Incidente fuerte, trompo claro o carrera comprometida.</span></div></div>
+          <div class="scaleItem"><span class="pill pill--rose">+30s</span><div><strong>Muy grave / antideportiva</strong><br><span class="helperMuted">Conducción temeraria, deliberada o extremadamente peligrosa.</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      { category: "Adelantamientos", incident: "Divebomb tardío con contacto", consequence: "Ganancia ilegítima o perjuicio claro", sanction: "+10s", escalation: "+20s si causa trompo o daño severo", tone: "orange" },
-      { category: "Adelantamientos", incident: "Adelantamiento imposible que termina en choque fuerte", consequence: "Incidente grave", sanction: "+20s", escalation: "+30s si era claramente evitable", tone: "red" },
-      { category: "Adelantamientos", incident: "Ganar posición fuera de pista y no devolverla", consequence: "Ventaja deportiva ilícita", sanction: "+10s", escalation: "+20s si mantiene una ventaja clara o gana varias posiciones", tone: "orange" },
-      { category: "Adelantamientos", incident: "Ganar posición fuera de pista y devolverla de inmediato", consequence: "Ventaja corregida", sanction: "Sin sanción / advertencia", escalation: "Queda sujeto al contexto de la maniobra", tone: "slate" },
+  <section class="card">
+    <div class="row" style="justify-content:space-between; margin-bottom:12px">
+      <h2 style="margin:0; font-size:18px">Tabla de referencia</h2>
+      <span class="pill" id="resultsCount">0 criterios</span>
+    </div>
+    <div class="filterBar">
+      <label><div class="helperMuted" style="margin-bottom:6px">Buscar maniobra, consecuencia o criterio</div><input id="searchInput" class="inputLike" type="text" placeholder="Ej: trompo, error no forzado, bandera azul..."></label>
+      <label><div class="helperMuted" style="margin-bottom:6px">Filtrar por sanción base</div>
+        <select id="penaltyFilter" class="selectLike">
+          <option value="">Todas</option><option value="+5s">+5s</option><option value="+10s">+10s</option><option value="+20s">+20s</option><option value="+30s">+30s</option><option value="Sin sanción / advertencia">Sin sanción / advertencia</option>
+        </select>
+      </label>
+    </div>
+    <div class="filtersRow">
+      <div class="catTabsRow" id="categoryTabs" role="tablist">
+        <button class="tabBtn isActive" type="button" data-category="">Todas</button>
+        <button class="tabBtn" type="button" data-category="Colisiones">Colisiones</button>
+        <button class="tabBtn" type="button" data-category="Adelantamientos">Adelantamientos</button>
+        <button class="tabBtn" type="button" data-category="Defensa">Defensa</button>
+        <button class="tabBtn" type="button" data-category="Reincorporación">Reincorporación</button>
+        <button class="tabBtn" type="button" data-category="Límites de pista">Límites de pista</button>
+        <button class="tabBtn" type="button" data-category="Banderas azules">Banderas azules</button>
+        <button class="tabBtn" type="button" data-category="Conducta">Conducta</button>
+      </div>
+      <button id="clearFilters" class="pill pill--blue" type="button" style="white-space:nowrap; cursor:pointer; flex-shrink:0">Limpiar filtros</button>
+    </div>
+    <div class="tableWrap" style="margin-top:12px">
+      <table class="sanctionsTable">
+        <thead><tr><th>Categoría</th><th>Maniobra / incidente</th><th>Consecuencia</th><th>Sanción base</th><th>Escalada / criterio</th></tr></thead>
+        <tbody id="sanctionsBody"></tbody>
+      </table>
+      <div class="emptyState" id="emptyState">No hay criterios que coincidan con los filtros actuales.</div>
+    </div>
+  </section>
 
-      { category: "Defensa", incident: "Cerrar trayectoria sin dejar espacio", consequence: "Contacto o maniobra evasiva del rival", sanction: "+5s", escalation: "+10s si hay pérdida de posición del rival", tone: "amber" },
-      { category: "Defensa", incident: "Más de un cambio de línea para defender", consequence: "Bloqueo antirreglamentario", sanction: "+10s", escalation: "+20s si provoca incidente", tone: "orange" },
-      { category: "Defensa", incident: "Bloqueo reiterado o muy peligroso", consequence: "Riesgo alto", sanction: "+20s", escalation: "+30s si es deliberado o reincidente", tone: "red" },
+</div>
+<footer class="pageFooter"><div class="updatedFooter"><span class="updatedText">Criterio básico de sanciones post-carrera</span></div></footer>
 
-      { category: "Reincorporación", incident: "Reincorporación peligrosa sin contacto", consequence: "Riesgo claro", sanction: "+5s", escalation: "+10s si obliga a frenar o esquivar", tone: "amber" },
-      { category: "Reincorporación", incident: "Reincorporación peligrosa con contacto", consequence: "Perjuicio directo", sanction: "+10s", escalation: "+20s si genera accidente serio", tone: "orange" },
-      { category: "Reincorporación", incident: "Reincorporación causando accidente grave", consequence: "Choque fuerte o múltiple", sanction: "+20s", escalation: "+30s si la maniobra fue temeraria", tone: "red" },
-
-      { category: "Límites de pista", incident: "Ganar tiempo o posición excediendo límites", consequence: "Ventaja deportiva", sanction: "+5s", escalation: "+10s si mantiene la ventaja o reincide", tone: "amber" },
-
-      { category: "Banderas azules", incident: "Ignorar bandera azul y molestar al líder", consequence: "Pérdida de tiempo relevante", sanction: "+5s", escalation: "+10s si provoca incidente", tone: "amber" },
-
-      { category: "Conducta", incident: "Maniobra claramente imprudente", consequence: "Riesgo alto o perjuicio importante", sanction: "+20s", escalation: "+30s si hay varios afectados", tone: "red" },
-      { category: "Conducta", incident: "Acción antideportiva o deliberada", consequence: "Conducta grave", sanction: "+30s", escalation: "Posible sanción adicional de liga", tone: "rose" }
-    ];
-
-    const badgeClass = {
-      amber: "pill pill--amber",
-      orange: "pill pill--orange",
-      red: "pill pill--red",
-      rose: "pill pill--rose",
-      slate: "pill"
-    };
-
-    const bodyEl = document.getElementById("sanctionsBody");
-    const emptyEl = document.getElementById("emptyState");
-    const searchInput = document.getElementById("searchInput");
-    const penaltyFilter = document.getElementById("penaltyFilter");
-    const resultsCount = document.getElementById("resultsCount");
-    const clearFilters = document.getElementById("clearFilters");
-    const categoryTabs = Array.from(document.querySelectorAll("#categoryTabs .tabBtn"));
-
-    let activeCategory = "";
-
-    function renderTable(){
-      const q = (searchInput.value || "").trim().toLowerCase();
-      const penalty = penaltyFilter.value;
-
-      const rows = SANCTIONS.filter(item => {
-        const haystack = [item.category, item.incident, item.consequence, item.sanction, item.escalation].join(" ").toLowerCase();
-        const okSearch = !q || haystack.includes(q);
-        const okCategory = !activeCategory || item.category === activeCategory;
-        const okPenalty = !penalty || item.sanction === penalty;
-        return okSearch && okCategory && okPenalty;
-      });
-
-      bodyEl.innerHTML = rows.map(item => `
-        <tr>
-          <td class="categoryText">${item.category}</td>
-          <td>${item.incident}</td>
-          <td style="color:rgba(234,240,255,.72)">${item.consequence}</td>
-          <td><span class="${badgeClass[item.tone] || 'pill'}">${item.sanction}</span></td>
-          <td style="color:rgba(234,240,255,.78)">${item.escalation}</td>
-        </tr>
-      `).join("");
-
-      emptyEl.style.display = rows.length ? "none" : "block";
-      resultsCount.textContent = `${rows.length} criterio${rows.length === 1 ? '' : 's'}`;
-    }
-
-    categoryTabs.forEach(btn => {
-      btn.addEventListener("click", () => {
-        activeCategory = btn.dataset.category || "";
-        categoryTabs.forEach(b => b.classList.toggle("isActive", b === btn));
-        renderTable();
-      });
+<script>
+  const SANCTIONS = [
+    { category: "Colisiones", incident: "Contacto leve con pérdida de 1 posición", consequence: "Perjuicio menor", sanction: "+5s", escalation: "+10s si no devuelve posición o si el rival pierde tiempo adicional", tone: "amber" },
+    { category: "Colisiones", incident: "Colisión por error no forzado", consequence: "Pérdida de varias posiciones", sanction: "+10s", escalation: "+20s si genera trompo o daño fuerte", tone: "orange" },
+    { category: "Colisiones", incident: "Golpe que provoca trompo", consequence: "Perjuicio importante", sanction: "+10s", escalation: "+20s si arruina la carrera del rival", tone: "orange" },
+    { category: "Colisiones", incident: "Choque fuerte por mala frenada", consequence: "Daño severo o carrera comprometida", sanction: "+20s", escalation: "+30s si además hay múltiples afectados", tone: "red" },
+    { category: "Colisiones", incident: "Accidente múltiple por maniobra irresponsable", consequence: "Perjuicio grave para varios autos", sanction: "+20s", escalation: "+30s si la maniobra fue temeraria", tone: "red" },
+    { category: "Adelantamientos", incident: "Divebomb tardío con contacto", consequence: "Ganancia ilegítima o perjuicio claro", sanction: "+10s", escalation: "+20s si causa trompo o daño severo", tone: "orange" },
+    { category: "Adelantamientos", incident: "Adelantamiento imposible que termina en choque fuerte", consequence: "Incidente grave", sanction: "+20s", escalation: "+30s si era claramente evitable", tone: "red" },
+    { category: "Adelantamientos", incident: "Ganar posición fuera de pista y no devolverla", consequence: "Ventaja deportiva ilícita", sanction: "+10s", escalation: "+20s si mantiene una ventaja clara o gana varias posiciones", tone: "orange" },
+    { category: "Adelantamientos", incident: "Ganar posición fuera de pista y devolverla de inmediato", consequence: "Ventaja corregida", sanction: "Sin sanción / advertencia", escalation: "Queda sujeto al contexto de la maniobra", tone: "slate" },
+    { category: "Defensa", incident: "Cerrar trayectoria sin dejar espacio", consequence: "Contacto o maniobra evasiva del rival", sanction: "+5s", escalation: "+10s si hay pérdida de posición del rival", tone: "amber" },
+    { category: "Defensa", incident: "Más de un cambio de línea para defender", consequence: "Bloqueo antirreglamentario", sanction: "+10s", escalation: "+20s si provoca incidente", tone: "orange" },
+    { category: "Defensa", incident: "Bloqueo reiterado o muy peligroso", consequence: "Riesgo alto", sanction: "+20s", escalation: "+30s si es deliberado o reincidente", tone: "red" },
+    { category: "Reincorporación", incident: "Reincorporación peligrosa sin contacto", consequence: "Riesgo claro", sanction: "+5s", escalation: "+10s si obliga a frenar o esquivar", tone: "amber" },
+    { category: "Reincorporación", incident: "Reincorporación peligrosa con contacto", consequence: "Perjuicio directo", sanction: "+10s", escalation: "+20s si genera accidente serio", tone: "orange" },
+    { category: "Reincorporación", incident: "Reincorporación causando accidente grave", consequence: "Choque fuerte o múltiple", sanction: "+20s", escalation: "+30s si la maniobra fue temeraria", tone: "red" },
+    { category: "Límites de pista", incident: "Ganar tiempo o posición excediendo límites", consequence: "Ventaja deportiva", sanction: "+5s", escalation: "+10s si mantiene la ventaja o reincide", tone: "amber" },
+    { category: "Banderas azules", incident: "Ignorar bandera azul y molestar al líder", consequence: "Pérdida de tiempo relevante", sanction: "+5s", escalation: "+10s si provoca incidente", tone: "amber" },
+    { category: "Conducta", incident: "Maniobra claramente imprudente", consequence: "Riesgo alto o perjuicio importante", sanction: "+20s", escalation: "+30s si hay varios afectados", tone: "red" },
+    { category: "Conducta", incident: "Acción antideportiva o deliberada", consequence: "Conducta grave", sanction: "+30s", escalation: "Posible sanción adicional de liga", tone: "rose" }
+  ];
+  const badgeClass = { amber:"pill pill--amber", orange:"pill pill--orange", red:"pill pill--red", rose:"pill pill--rose", slate:"pill" };
+  const bodyEl = document.getElementById("sanctionsBody");
+  const emptyEl = document.getElementById("emptyState");
+  const searchInput = document.getElementById("searchInput");
+  const penaltyFilter = document.getElementById("penaltyFilter");
+  const resultsCount = document.getElementById("resultsCount");
+  const clearFilters = document.getElementById("clearFilters");
+  const categoryTabs = Array.from(document.querySelectorAll("#categoryTabs .tabBtn"));
+  let activeCategory = "";
+  function renderTable(){
+    const q = (searchInput.value || "").trim().toLowerCase();
+    const penalty = penaltyFilter.value;
+    const rows = SANCTIONS.filter(item => {
+      const h = [item.category, item.incident, item.consequence, item.sanction, item.escalation].join(" ").toLowerCase();
+      return (!q || h.includes(q)) && (!activeCategory || item.category === activeCategory) && (!penalty || item.sanction === penalty);
     });
-
-    searchInput.addEventListener("input", renderTable);
-    penaltyFilter.addEventListener("change", renderTable);
-    clearFilters.addEventListener("click", () => {
-      searchInput.value = "";
-      penaltyFilter.value = "";
-      activeCategory = "";
-      categoryTabs.forEach((b, i) => b.classList.toggle("isActive", i === 0));
-      renderTable();
-    });
-
-    renderTable();
-  </script>
+    bodyEl.innerHTML = rows.map(item => `<tr><td class="categoryText">${item.category}</td><td>${item.incident}</td><td style="color:rgba(234,240,255,.72)">${item.consequence}</td><td><span class="${badgeClass[item.tone]||'pill'}">${item.sanction}</span></td><td style="color:rgba(234,240,255,.78)">${item.escalation}</td></tr>`).join("");
+    emptyEl.style.display = rows.length ? "none" : "block";
+    resultsCount.textContent = `${rows.length} criterio${rows.length===1?'':'s'}`;
+  }
+  categoryTabs.forEach(btn => { btn.addEventListener("click", () => { activeCategory = btn.dataset.category||""; categoryTabs.forEach(b => b.classList.toggle("isActive", b===btn)); renderTable(); }); });
+  searchInput.addEventListener("input", renderTable);
+  penaltyFilter.addEventListener("change", renderTable);
+  clearFilters.addEventListener("click", () => { searchInput.value=""; penaltyFilter.value=""; activeCategory=""; categoryTabs.forEach((b,i)=>b.classList.toggle("isActive",i===0)); renderTable(); });
+  renderTable();
+</script>
 </body>
 </html>

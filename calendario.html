@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Calendario F1 2026 — AssettoF1</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .calHero { margin-top:14px; padding:18px 20px; border-radius:var(--br); border:1px solid var(--border); background: radial-gradient(900px 280px at 20% 0%, rgba(20,184,166,.18), transparent 55%), radial-gradient(800px 240px at 80% 0%, rgba(56,189,248,.12), transparent 55%), linear-gradient(180deg, rgba(18,28,47,.90), rgba(18,28,47,.55)); box-shadow:var(--shadow); animation:cardIn .5s cubic-bezier(.22,.68,0,1.1) both; }
+    .calKicker { display:inline-flex; align-items:center; gap:10px; font-weight:900; letter-spacing:.10em; text-transform:uppercase; font-size:12px; color:rgba(234,240,255,.85); margin-bottom:8px; }
+    .calDot { width:10px; height:10px; border-radius:999px; background:radial-gradient(circle at 30% 30%, #5eead4, #0d9488); box-shadow:0 0 14px rgba(20,184,166,.40); }
+    .calTitle { margin:0 0 6px; font-size:clamp(20px,4vw,28px); line-height:1.1; }
+    .calLead { margin:0; color:rgba(234,240,255,.75); font-size:14px; line-height:1.6; max-width:70ch; }
+    .calMeta { margin-top:12px; display:flex; flex-wrap:wrap; gap:10px; font-size:13px; color:rgba(234,240,255,.80); }
+    .calMeta span b { color:rgba(234,240,255,.95); }
+
+    .etapasGrid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:14px; margin-top:14px; }
+
+    .etapaCard { border:1px solid var(--border); border-radius:var(--br); background:linear-gradient(180deg, rgba(18,28,47,.92), rgba(18,28,47,.72)); box-shadow:0 14px 45px rgba(0,0,0,.30); overflow:hidden; animation:cardIn .5s cubic-bezier(.22,.68,0,1.1) both; }
+    .etapaCard:nth-child(1){ animation-delay:.08s }
+    .etapaCard:nth-child(2){ animation-delay:.16s }
+    .etapaCard:nth-child(3){ animation-delay:.24s }
+    .etapaCard:nth-child(4){ animation-delay:.32s }
+
+    .etapaHeader { padding:14px 16px 10px; border-bottom:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .etapaHeader h2 { margin:0; font-size:15px; letter-spacing:.05em; }
+    .etapaBadge { font-size:11px; font-weight:900; padding:4px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.07); color:rgba(234,240,255,.80); white-space:nowrap; }
+
+    .raceList { display:flex; flex-direction:column; }
+    .raceRow { display:grid; grid-template-columns:32px 1fr auto; align-items:center; gap:10px; padding:10px 14px; border-bottom:1px solid rgba(255,255,255,.06); transition:background .14s; }
+    .raceRow:last-child { border-bottom:none; }
+    .raceRow:hover { background:rgba(255,255,255,.03); }
+    .raceRow.recovered .raceNum { background:rgba(20,184,166,.16); border-color:rgba(20,184,166,.30); color:#5eead4; }
+
+    .raceNum { width:32px; height:32px; display:flex; align-items:center; justify-content:center; border-radius:10px; background:rgba(7,10,15,.60); border:1px solid rgba(255,255,255,.10); font-weight:900; font-size:13px; color:rgba(234,240,255,.80); }
+    .raceInfo { min-width:0; }
+    .raceName { font-weight:900; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .raceCircuit { font-size:11px; color:rgba(234,240,255,.60); margin-top:2px; }
+    .raceDate { font-family:var(--mono); font-size:11px; color:rgba(234,240,255,.65); white-space:nowrap; text-align:right; }
+    .ourRaceTag { font-size:10px; font-weight:900; padding:2px 7px; border-radius:999px; border:1px solid rgba(20,184,166,.35); background:rgba(20,184,166,.12); color:#5eead4; margin-top:3px; display:inline-block; }
+
+    .etapaCard[data-etapa="1"] .etapaHeader { background:radial-gradient(600px 120px at 0% 50%, rgba(225,29,46,.15), transparent 55%); }
+    .etapaCard[data-etapa="2"] .etapaHeader { background:radial-gradient(600px 120px at 0% 50%, rgba(56,189,248,.12), transparent 55%); }
+    .etapaCard[data-etapa="3"] .etapaHeader { background:radial-gradient(600px 120px at 0% 50%, rgba(168,85,247,.12), transparent 55%); }
+    .etapaCard[data-etapa="4"] .etapaHeader { background:radial-gradient(600px 120px at 0% 50%, rgba(34,197,94,.10), transparent 55%); }
+    .etapaCard[data-etapa="1"] .etapaBadge { border-color:rgba(225,29,46,.40); background:rgba(225,29,46,.12); color:#fca5a5; }
+    .etapaCard[data-etapa="2"] .etapaBadge { border-color:rgba(56,189,248,.40); background:rgba(56,189,248,.10); color:#bae6fd; }
+    .etapaCard[data-etapa="3"] .etapaBadge { border-color:rgba(168,85,247,.40); background:rgba(168,85,247,.10); color:#d8b4fe; }
+    .etapaCard[data-etapa="4"] .etapaBadge { border-color:rgba(34,197,94,.40); background:rgba(34,197,94,.10); color:#86efac; }
+
+    @media (max-width:640px){ .etapasGrid{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="heroBannerWrap">
+      <img class="heroBanner" src="./img/banner.png" alt="AssettoF1 - Liga" width="718" height="85">
+    </div>
+    <div class="heroBottom">
+      <div>
+        <div class="heroTitleSub">Temporada 2026</div>
+        <h1 class="heroTitle">CALENDARIO</h1>
+      </div>
+    </div>
+  
+    <nav class="siteNav" aria-label="Navegación">
+        <a class="navBack" href="./index.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          Volver
+        </a>
+        <div class="navDivider"></div>
+        <a class="navTab" href="./index.html">Inicio</a>
+        <a class="navTab" href="./reglamento.html">Reglamento</a>
+        <a class="navTab isActive" href="./calendario.html">Calendario</a>
+        <a class="navTab" href="./criterio-sanciones.html">Sanciones</a>
+        <div class="navSpacer"></div>
+        <div class="navExt">
+          <a class="navExtLink navExtLink--server" href="https://server.jotracks.com/live-timing?server=0" target="_blank" rel="noopener noreferrer" title="Server de juego">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 010 8.49m-8.48-.01a6 6 0 010-8.49m11.31-2.82a10 10 0 010 14.14m-14.14 0a10 10 0 010-14.14"/></svg>
+            <span class="navExtLabel">Server</span>
+          </a>
+          <a class="navExtLink navExtLink--join" href="https://chat.whatsapp.com/F0TufeBUgJC2opxrCMCdiD" target="_blank" rel="noopener noreferrer" title="Sumate al grupo">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span class="navExtLabel">Sumate</span>
+          </a>
+          <a class="navExtLink navExtLink--ig" href="https://www.instagram.com/assetto.f1/" target="_blank" rel="noopener noreferrer" title="Instagram">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <span class="navExtLabel">Instagram</span>
+          </a>
+        </div>
+    </nav>
+  </header>
+
+  <div class="calHero">
+    <div class="calKicker"><span class="calDot"></span>Calendario oficial</div>
+    <h1 class="calTitle">F1 AssettoCorsa 2026 — 24 Fechas</h1>
+    <p class="calLead">Las 24 fechas del campeonato divididas en 4 etapas de 6 carreras. Bahrain y Arabia Saudita fueron canceladas en la F1 real, pero las corremos igual. Domingos 21:00 ARG.</p>
+    <div class="calMeta">
+      <span><b>24</b> fechas</span>
+      <span><b>4</b> etapas de 6</span>
+      <span><b>Domingos</b> 21:00 ARG</span>
+      <span style="color:#5eead4"><b>✦</b> 2 recuperadas por nosotros</span>
+    </div>
+  </div>
+
+  <div class="etapasGrid">
+    <div class="etapaCard" data-etapa="1">
+      <div class="etapaHeader"><h2>Etapa 1</h2><span class="etapaBadge">Rondas 1–6</span></div>
+      <div class="raceList">
+        <div class="raceRow"><div class="raceNum">1</div><div class="raceInfo"><div class="raceName">🇦🇺 Australia</div><div class="raceCircuit">Albert Park, Melbourne</div></div><div class="raceDate">08 MAR</div></div>
+        <div class="raceRow"><div class="raceNum">2</div><div class="raceInfo"><div class="raceName">🇨🇳 China</div><div class="raceCircuit">Shanghai International Circuit</div></div><div class="raceDate">15 MAR</div></div>
+        <div class="raceRow"><div class="raceNum">3</div><div class="raceInfo"><div class="raceName">🇯🇵 Japón</div><div class="raceCircuit">Suzuka Circuit</div></div><div class="raceDate">29 MAR</div></div>
+        <div class="raceRow"><div class="raceNum">4</div><div class="raceInfo"><div class="raceName">🇺🇸 Miami</div><div class="raceCircuit">Miami International Autodrome</div></div><div class="raceDate">03 MAY</div></div>
+        <div class="raceRow recovered"><div class="raceNum">5</div><div class="raceInfo"><div class="raceName">🇧🇭 Bahrain</div><div class="raceCircuit">Bahrain International Circuit</div><span class="ourRaceTag">✦ La corremos igual</span></div><div class="raceDate">ABR</div></div>
+        <div class="raceRow recovered"><div class="raceNum">6</div><div class="raceInfo"><div class="raceName">🇸🇦 Arabia Saudita</div><div class="raceCircuit">Jeddah Corniche Circuit</div><span class="ourRaceTag">✦ La corremos igual</span></div><div class="raceDate">ABR</div></div>
+      </div>
+    </div>
+
+    <div class="etapaCard" data-etapa="2">
+      <div class="etapaHeader"><h2>Etapa 2</h2><span class="etapaBadge">Rondas 7–12</span></div>
+      <div class="raceList">
+        <div class="raceRow"><div class="raceNum">7</div><div class="raceInfo"><div class="raceName">🇨🇦 Canadá</div><div class="raceCircuit">Circuit Gilles Villeneuve</div></div><div class="raceDate">24 MAY</div></div>
+        <div class="raceRow"><div class="raceNum">8</div><div class="raceInfo"><div class="raceName">🇲🇨 Mónaco</div><div class="raceCircuit">Circuit de Monaco</div></div><div class="raceDate">07 JUN</div></div>
+        <div class="raceRow"><div class="raceNum">9</div><div class="raceInfo"><div class="raceName">🇪🇸 España</div><div class="raceCircuit">Circuit de Barcelona-Catalunya</div></div><div class="raceDate">14 JUN</div></div>
+        <div class="raceRow"><div class="raceNum">10</div><div class="raceInfo"><div class="raceName">🇦🇹 Austria</div><div class="raceCircuit">Red Bull Ring, Spielberg</div></div><div class="raceDate">28 JUN</div></div>
+        <div class="raceRow"><div class="raceNum">11</div><div class="raceInfo"><div class="raceName">🇬🇧 Gran Bretaña</div><div class="raceCircuit">Silverstone Circuit</div></div><div class="raceDate">05 JUL</div></div>
+        <div class="raceRow"><div class="raceNum">12</div><div class="raceInfo"><div class="raceName">🇧🇪 Bélgica</div><div class="raceCircuit">Circuit de Spa-Francorchamps</div></div><div class="raceDate">26 JUL</div></div>
+      </div>
+    </div>
+
+    <div class="etapaCard" data-etapa="3">
+      <div class="etapaHeader"><h2>Etapa 3</h2><span class="etapaBadge">Rondas 13–18</span></div>
+      <div class="raceList">
+        <div class="raceRow"><div class="raceNum">13</div><div class="raceInfo"><div class="raceName">🇭🇺 Hungría</div><div class="raceCircuit">Hungaroring, Budapest</div></div><div class="raceDate">02 AGO</div></div>
+        <div class="raceRow"><div class="raceNum">14</div><div class="raceInfo"><div class="raceName">🇳🇱 Países Bajos</div><div class="raceCircuit">Circuit Zandvoort</div></div><div class="raceDate">30 AGO</div></div>
+        <div class="raceRow"><div class="raceNum">15</div><div class="raceInfo"><div class="raceName">🇮🇹 Italia</div><div class="raceCircuit">Autodromo Nazionale Monza</div></div><div class="raceDate">06 SEP</div></div>
+        <div class="raceRow"><div class="raceNum">16</div><div class="raceInfo"><div class="raceName">🇪🇸 Madrid</div><div class="raceCircuit">Madring, Madrid</div></div><div class="raceDate">13 SEP</div></div>
+        <div class="raceRow"><div class="raceNum">17</div><div class="raceInfo"><div class="raceName">🇸🇬 Singapur</div><div class="raceCircuit">Marina Bay Street Circuit</div></div><div class="raceDate">20 SEP</div></div>
+        <div class="raceRow"><div class="raceNum">18</div><div class="raceInfo"><div class="raceName">🇺🇸 Austin</div><div class="raceCircuit">Circuit of the Americas</div></div><div class="raceDate">18 OCT</div></div>
+      </div>
+    </div>
+
+    <div class="etapaCard" data-etapa="4">
+      <div class="etapaHeader"><h2>Etapa 4</h2><span class="etapaBadge">Rondas 19–24</span></div>
+      <div class="raceList">
+        <div class="raceRow"><div class="raceNum">19</div><div class="raceInfo"><div class="raceName">🇲🇽 México</div><div class="raceCircuit">Autodromo Hermanos Rodriguez</div></div><div class="raceDate">25 OCT</div></div>
+        <div class="raceRow"><div class="raceNum">20</div><div class="raceInfo"><div class="raceName">🇧🇷 Brasil</div><div class="raceCircuit">Autodromo Jose Carlos Pace</div></div><div class="raceDate">08 NOV</div></div>
+        <div class="raceRow"><div class="raceNum">21</div><div class="raceInfo"><div class="raceName">🇺🇸 Las Vegas</div><div class="raceCircuit">Las Vegas Street Circuit</div></div><div class="raceDate">21 NOV</div></div>
+        <div class="raceRow"><div class="raceNum">22</div><div class="raceInfo"><div class="raceName">🇦🇿 Azerbaiyán</div><div class="raceCircuit">Baku City Circuit</div></div><div class="raceDate">29 NOV</div></div>
+        <div class="raceRow"><div class="raceNum">23</div><div class="raceInfo"><div class="raceName">🇶🇦 Qatar</div><div class="raceCircuit">Lusail International Circuit</div></div><div class="raceDate">NOV/DIC</div></div>
+        <div class="raceRow"><div class="raceNum">24</div><div class="raceInfo"><div class="raceName">🇦🇪 Abu Dhabi</div><div class="raceCircuit">Yas Marina Circuit</div></div><div class="raceDate">06 DIC</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<footer class="pageFooter"><div class="updatedFooter"><span class="updatedText">Calendario F1 2026 · 24 fechas · 4 etapas</span></div></footer>
+</body>
+</html>
