@@ -78,72 +78,303 @@ hr{border:none; height:1px; background:rgba(255,255,255,.08); margin:12px 0}
 /* =========================================================
    Hero / header
    ========================================================= */
+/* =========================================================
+   HERO — F1 broadcast aesthetic
+   ========================================================= */
 .hero{
   position:relative;
-  padding:14px 16px;
+  padding:0;
   border-radius:var(--br);
-  border:1px solid var(--border);
+  border:1px solid rgba(255,255,255,.10);
   background:
-    radial-gradient(1000px 280px at 15% 0%, rgba(225,29,41,.20), transparent 55%),
-    radial-gradient(900px 260px at 85% 0%, rgba(56,189,248,.14), transparent 55%),
-    linear-gradient(180deg, rgba(18,28,47,.86), rgba(18,28,47,.52));
-  box-shadow:var(--shadow);
+    radial-gradient(1100px 300px at 10% 0%, rgba(225,29,41,.22), transparent 52%),
+    radial-gradient(800px 240px at 90% 0%, rgba(56,189,248,.10), transparent 52%),
+    linear-gradient(180deg, rgba(12,20,38,.96) 0%, rgba(10,16,30,.88) 100%);
+  box-shadow: 0 24px 70px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
   margin-bottom:14px;
+  overflow:hidden;
+  /* Entrance animation */
+  animation: heroIn .55s cubic-bezier(.22,.68,0,1.2) both;
+}
+@keyframes heroIn {
+  from { opacity:0; transform:translateY(-12px); }
+  to   { opacity:1; transform:translateY(0); }
 }
 
-.heroTop{
-  display:grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas:
-    "banner banner"
-    "title  links";
-  align-items:end;
-  gap:10px 16px;
+/* Red racing stripe at top */
+.hero::before {
+  content:"";
+  position:absolute;
+  top:0; left:0; right:0;
+  height:3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(225,29,41,.0) 5%,
+    rgba(225,29,41,.90) 25%,
+    rgba(255,60,60,1) 50%,
+    rgba(225,29,41,.90) 75%,
+    rgba(225,29,41,.0) 95%,
+    transparent 100%
+  );
+  z-index:2;
 }
-.heroBanner{grid-area:banner; margin:0}
+
+/* Subtle animated shimmer */
+.hero::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(105deg,
+    transparent 40%,
+    rgba(255,255,255,.018) 50%,
+    transparent 60%
+  );
+  background-size:200% 100%;
+  animation: heroShimmer 5s ease infinite;
+  pointer-events:none;
+  z-index:1;
+}
+@keyframes heroShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.heroBannerWrap {
+  padding:14px 18px 10px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  position:relative;
+  z-index:2;
+}
+.heroBanner{ margin:0; max-height:80px; width:auto; }
+
+.heroBottom {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 18px 14px;
+  position:relative;
+  z-index:2;
+  flex-wrap:wrap;
+}
+
 .heroTitle{
-  grid-area:title;
   margin:0;
-  font-size:20px;
+  font-size:17px;
   font-weight:1000;
-  letter-spacing:.08em;
+  letter-spacing:.10em;
   text-transform:uppercase;
   line-height:1.15;
+  color:rgba(234,240,255,.95);
 }
-@media (max-width:720px){
-  .heroLinks{
-    width:100%;
-    display:grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap:10px;
-    justify-self:stretch;
-  }
-  .heroLinks .pill{
-    justify-content:center;   /* texto centrado dentro del pill */
-    width:100%;
-  }
+.heroTitleSub {
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(225,29,41,.90);
+  margin-bottom:3px;
 }
 
-#seasonPill{ display:none !important; } /* keep in DOM for JS */
-#pointsPill, #racesPill{ display:none !important; } /* keep in DOM */
+/* =========================================================
+   NAV BAR
+   Layout: [← Volver] [divider] [Tab Tab Tab] ··· [Ext Ext Ext]
+   Tabs = páginas internas (siempre visibles, activo resaltado)
+   Ext  = links que salen de la web (Server, Sumate, Instagram)
+   ========================================================= */
+.siteNav {
+  display:flex;
+  align-items:center;
+  gap:4px;
+  padding:8px 18px;
+  border-top:1px solid rgba(255,255,255,.06);
+  background: rgba(7,10,18,.60);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  position:relative;
+  z-index:2;
+  /* no flex-wrap: nav always one line, scrollable on mobile */
+  overflow-x:auto;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+.siteNav::-webkit-scrollbar{ display:none; }
 
-/* Mobile: links bajan prolijo */
+/* ── Back button ────────────────────── */
+.navBack {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 11px 6px 8px;
+  border-radius:9px;
+  border:1px solid rgba(225,29,41,.28);
+  background:rgba(225,29,41,.08);
+  color:rgba(255,185,185,.88) !important;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.03em;
+  text-decoration:none;
+  white-space:nowrap;
+  flex-shrink:0;
+  transition: background .15s, border-color .15s, transform .12s;
+}
+.navBack:hover {
+  background:rgba(225,29,41,.18);
+  border-color:rgba(225,29,41,.48);
+  text-decoration:none;
+  transform:translateX(-2px);
+}
+.navBack svg { flex-shrink:0; }
+
+/* ── Vertical divider ───────────────── */
+.navDivider {
+  width:1px;
+  height:20px;
+  background:rgba(255,255,255,.10);
+  flex-shrink:0;
+  margin:0 6px;
+}
+
+/* ── Section tabs (internal pages) ─── */
+.navTab {
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:6px 13px;
+  border-radius:9px;
+  border:1px solid transparent;
+  background:transparent;
+  color:rgba(234,240,255,.58) !important;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.03em;
+  text-decoration:none;
+  white-space:nowrap;
+  flex-shrink:0;
+  transition: background .15s, border-color .15s, color .15s;
+  position:relative;
+}
+.navTab:hover {
+  background:rgba(255,255,255,.07);
+  border-color:rgba(255,255,255,.12);
+  color:rgba(234,240,255,.90) !important;
+  text-decoration:none;
+}
+/* Active tab — red underline accent */
+.navTab.isActive {
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.10);
+  color:rgba(234,240,255,.96) !important;
+}
+.navTab.isActive::after {
+  content:"";
+  position:absolute;
+  bottom:-1px; left:20%; right:20%;
+  height:2px;
+  border-radius:2px;
+  background:rgba(225,29,41,.85);
+}
+
+/* ── Spacer pushes ext links right ─── */
+.navSpacer { flex:1 1 0; min-width:8px; }
+
+/* ── External links group ─────────── */
+.navExt {
+  display:flex;
+  align-items:center;
+  gap:4px;
+  flex-shrink:0;
+}
+.navExtLink {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:9px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+  color:rgba(234,240,255,.50) !important;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.03em;
+  text-decoration:none;
+  white-space:nowrap;
+  flex-shrink:0;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.navExtLink:hover {
+  background:rgba(255,255,255,.09);
+  border-color:rgba(255,255,255,.16);
+  color:rgba(234,240,255,.90) !important;
+  text-decoration:none;
+}
+.navExtLink svg { flex-shrink:0; opacity:.80; }
+
+/* Server link — slight cyan tint */
+.navExtLink--server {
+  border-color:rgba(56,189,248,.16);
+  color:rgba(186,230,253,.60) !important;
+}
+.navExtLink--server:hover {
+  background:rgba(56,189,248,.10);
+  border-color:rgba(56,189,248,.30);
+  color:rgba(186,230,253,.95) !important;
+}
+
+/* Sumate — green tint */
+.navExtLink--join {
+  border-color:rgba(34,197,94,.18);
+  color:rgba(187,247,208,.60) !important;
+}
+.navExtLink--join:hover {
+  background:rgba(34,197,94,.12);
+  border-color:rgba(34,197,94,.35);
+  color:rgba(187,247,208,.95) !important;
+}
+
+/* Instagram — pink tint */
+.navExtLink--ig {
+  border-color:rgba(244,114,182,.14);
+  color:rgba(251,207,232,.55) !important;
+}
+.navExtLink--ig:hover {
+  background:rgba(244,114,182,.10);
+  border-color:rgba(244,114,182,.30);
+  color:rgba(251,207,232,.95) !important;
+}
+
+/* Mobile */
 @media (max-width:720px){
-  .wrap{ padding:12px; }
-  .heroTop{
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "banner"
-      "title"
-      "links";
-    gap:10px;
-  }
-  .heroLinks{
-    width:100%;
-    justify-content:flex-end;
-    flex-wrap:wrap;
-    gap:10px;
-  }
+  .wrap{ padding:10px; }
+  .siteNav { padding:8px 12px; }
+  .heroBottom { padding:8px 14px 12px; }
+  .heroTitle { font-size:14px; }
+  .heroBannerWrap { padding:12px 14px 8px; }
+  /* hide text labels on ext links on very small screens, keep icons */
+  .navExtLink .navExtLabel { display:none; }
+  .navExtLink { padding:6px 8px; }
+}
+
+#seasonPill{ display:none !important; }
+#pointsPill, #racesPill{ display:none !important; }
+
+/* Staggered nav link entrance */
+.siteNav .navBack,
+.siteNav .navLink {
+  animation: navLinkIn .4s cubic-bezier(.22,.68,0,1.2) both;
+}
+.siteNav > *:nth-child(1) { animation-delay:.08s }
+.siteNav > *:nth-child(2) { animation-delay:.12s }
+.siteNav > *:nth-child(3) { animation-delay:.16s }
+.siteNav > *:nth-child(4) { animation-delay:.20s }
+.siteNav > *:nth-child(5) { animation-delay:.24s }
+.siteNav > *:nth-child(6) { animation-delay:.28s }
+.siteNav > *:nth-child(7) { animation-delay:.32s }
+.siteNav > *:nth-child(8) { animation-delay:.36s }
+.siteNav > *:nth-child(9) { animation-delay:.40s }
+@keyframes navLinkIn {
+  from { opacity:0; transform:translateY(6px); }
+  to   { opacity:1; transform:translateY(0); }
 }
 
 /* =========================================================
@@ -156,10 +387,18 @@ hr{border:none; height:1px; background:rgba(255,255,255,.08); margin:12px 0}
   padding:14px;
   box-shadow:0 14px 45px rgba(0,0,0,.35);
   margin-bottom:14px;
+  animation: cardIn .5s cubic-bezier(.22,.68,0,1.1) both;
+}
+.card:nth-child(1){ animation-delay:.05s }
+.card:nth-child(2){ animation-delay:.12s }
+.card:nth-child(3){ animation-delay:.20s }
+@keyframes cardIn {
+  from { opacity:0; transform:translateY(14px); }
+  to   { opacity:1; transform:translateY(0); }
 }
 
 /* =========================================================
-   Pills (new approach)
+   Pills (legacy, kept for inner page use)
    ========================================================= */
 .pill{
   display:inline-flex;
@@ -181,8 +420,6 @@ hr{border:none; height:1px; background:rgba(255,255,255,.08); margin:12px 0}
   background: rgba(60, 120, 255, 0.16);
   border-color: rgba(120, 170, 255, 0.32);
   color: rgba(235, 245, 255, 0.95);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
 }
 .pill--blue:hover{
   background: rgba(60, 120, 255, 0.22);
@@ -196,11 +433,21 @@ hr{border:none; height:1px; background:rgba(255,255,255,.08); margin:12px 0}
   box-shadow: 0 10px 22px rgba(190,242,100,.18);
 }
 
+.pill--teal{
+  background: linear-gradient(135deg, rgba(20,184,166,.80), rgba(13,148,136,.80));
+  border-color: rgba(94,234,212,.40);
+  color: #f0fdfa !important;
+  box-shadow: 0 8px 18px rgba(20,184,166,.20);
+}
+.pill--teal:hover{
+  background: linear-gradient(135deg, rgba(20,184,166,.92), rgba(13,148,136,.92));
+}
+
 .pill--ok{ background:rgba(34,197,94,.14); border-color:rgba(34,197,94,.38) }
 .pill--warn{ background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.35) }
 
 /* =========================================================
-   Standings
+   Cards — with entrance animation
    ========================================================= */
 .standings{display:flex; flex-direction:column; gap:10px}
 
@@ -219,6 +466,7 @@ hr{border:none; height:1px; background:rgba(255,255,255,.08); margin:12px 0}
 
   position:relative;
   overflow:hidden;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 
   background-image:
     linear-gradient(90deg, rgba(10,20,40,.50), rgba(10,20,40,.28) 40%, rgba(10,20,40,.50)),
@@ -226,6 +474,11 @@ hr{border:none; height:1px; background:rgba(255,255,255,.08); margin:12px 0}
   background-size: cover, 100% 100%;
   background-repeat:no-repeat,no-repeat;
   background-position:center, bottom;
+}
+.standRow:hover {
+  transform: translateY(-2px) translateX(2px);
+  box-shadow: 0 8px 28px rgba(0,0,0,.40);
+  border-color:rgba(255,255,255,.18);
 }
 .standRow::before{
   content:"";
