@@ -1,7 +1,7 @@
 {
   "meta": {
     "season": "Temporada 2026",
-    "updatedAt": "2026-03-30 11:31",
+    "updatedAt": "2026-04-14 15:18",
     "points": [
       20,
       17,
@@ -742,6 +742,199 @@
           ],
           "penaltyExtraMs": 0,
           "finalTimeMs": 2303479,
+          "status": "DSQ",
+          "points": 0
+        }
+      ]
+    },
+    {
+      "round": "",
+      "date": "2026-04-12T22:04:00-03:00",
+      "trackName": "fn_bahrain",
+      "fastestLap": {
+        "driverName": "Jonathan Monzon",
+        "time": "1:26.681",
+        "lapTimeMs": 86681,
+        "tyre": "S"
+      },
+      "results": [
+        {
+          "pos": 1,
+          "driverName": "Jonathan Monzon",
+          "driverGuid": "76561199557580783",
+          "team": "Aston Martin",
+          "grid": 1,
+          "laps": 29,
+          "tyresUsed": [
+            "M",
+            "S"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2605646,
+          "status": "OK"
+        },
+        {
+          "pos": 2,
+          "driverName": "Sebastian Becker",
+          "driverGuid": "76561199021141165",
+          "team": "Haas",
+          "grid": 3,
+          "laps": 29,
+          "tyresUsed": [
+            "M",
+            "S"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2686464,
+          "status": "OK"
+        },
+        {
+          "pos": 3,
+          "driverName": "Lucas Dionicio",
+          "driverGuid": "76561198141428723",
+          "team": "Alpine",
+          "grid": 2,
+          "laps": 29,
+          "tyresUsed": [
+            "H",
+            "M"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2689341,
+          "status": "OK"
+        },
+        {
+          "pos": 4,
+          "driverName": "Matias Zuloaga",
+          "driverGuid": "76561199093694587",
+          "team": "Mclaren",
+          "grid": 4,
+          "laps": 28,
+          "tyresUsed": [
+            "M",
+            "S"
+          ],
+          "penaltyExtraMs": 10000,
+          "finalTimeMs": 2611977,
+          "status": "OK"
+        },
+        {
+          "pos": 5,
+          "driverName": "Agustin Noya",
+          "driverGuid": "76561198262804779",
+          "team": "Ferrari",
+          "grid": 6,
+          "laps": 28,
+          "tyresUsed": [
+            "M",
+            "S"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2633026,
+          "status": "OK"
+        },
+        {
+          "pos": 6,
+          "driverName": "Alejandro Oppenlander",
+          "driverGuid": "76561198978892459",
+          "team": "Audi",
+          "grid": 9,
+          "laps": 28,
+          "tyresUsed": [
+            "H",
+            "M"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2634208,
+          "status": "OK"
+        },
+        {
+          "pos": 7,
+          "driverName": "Federico Paternó",
+          "driverGuid": "76561198317504479",
+          "team": "Mercedes",
+          "grid": 8,
+          "laps": 28,
+          "tyresUsed": [
+            "H",
+            "M"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2657470,
+          "status": "OK"
+        },
+        {
+          "pos": 8,
+          "driverName": "Sebastian Sanchez",
+          "driverGuid": "76561199778180071",
+          "team": "Red Bull",
+          "grid": 5,
+          "laps": 28,
+          "tyresUsed": [
+            "H",
+            "M"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2667812,
+          "status": "OK"
+        },
+        {
+          "pos": 9,
+          "driverName": "Matias daSilva",
+          "driverGuid": "76561198935125634",
+          "team": "Mclaren",
+          "grid": 10,
+          "laps": 28,
+          "tyresUsed": [
+            "H",
+            "M"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2691242,
+          "status": "OK"
+        },
+        {
+          "pos": 10,
+          "driverName": "Diego Aguirre",
+          "driverGuid": "76561198345241808",
+          "team": "Cadillac",
+          "grid": 11,
+          "laps": 27,
+          "tyresUsed": [
+            "H",
+            "M"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2633142,
+          "status": "OK"
+        },
+        {
+          "pos": 11,
+          "driverName": "Claudio Eberhart",
+          "driverGuid": "76561198085972282",
+          "team": "Ferrari",
+          "grid": 12,
+          "laps": 25,
+          "tyresUsed": [
+            "H",
+            "S"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2495787,
+          "status": "OK"
+        },
+        {
+          "pos": 12,
+          "driverName": "Ariel Plaza",
+          "driverGuid": "76561199783138379",
+          "team": "Aston Martin",
+          "grid": 7,
+          "laps": 28,
+          "tyresUsed": [
+            "M"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2670425,
           "status": "DSQ",
           "points": 0
         }
