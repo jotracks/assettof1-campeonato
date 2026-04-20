@@ -158,6 +158,8 @@ function computeDriversFromRaces(races) {
 
   for (const race of races) {
     const results = Array.isArray(race?.results) ? race.results : [];
+    const multiplier = Number(race?.pointsMultiplier) || 1;
+    
     for (const r of results) {
       const name = String(r?.driverName || "").trim();
       if (!name) continue;
@@ -170,7 +172,7 @@ function computeDriversFromRaces(races) {
       if (!d.team && (r.team || r.constructor)) d.team = r.team || r.constructor;
 
       const pts = Number(r?.points ?? 0);
-      if (Number.isFinite(pts)) d.points += pts;
+      if (Number.isFinite(pts)) d.points += pts * multiplier;
 
       const st = String(r?.status || "OK").toUpperCase();
       if (Number(r?.pos) === 1 && st !== "DSQ") d.wins += 1;
@@ -519,12 +521,20 @@ function raceCard(race) {
   const round = race.round ?? "?";
   const date = race.date ? String(race.date) : "";
   const track = race.trackName || "";
+  const multiplier = Number(race.pointsMultiplier) || 1;
 
-  const head = el("div", { class: "row" }, [
+  const pillItems = [
     el("span", { class: "pill" }, [`Fecha ${round}`]),
     track ? el("span", { class: "pill" }, [track]) : null,
-    el("span", { class: "pill right mono" }, [date]),
-  ]);
+  ];
+  
+  if (multiplier > 1) {
+    pillItems.push(el("span", { class: "pill pill--warn", style: "font-weight:600" }, [`⚡ ${multiplier}X PUNTOS`]));
+  }
+  
+  pillItems.push(el("span", { class: "pill right mono" }, [date]));
+
+  const head = el("div", { class: "row" }, pillItems);
 
   const winner = winnerFromRace(race);
   const winnerLine = el("div", { class: "winnerLine", style: "margin-top:10px" }, [
