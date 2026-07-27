@@ -1,7 +1,7 @@
 {
   "meta": {
     "season": "Temporada 2026",
-    "updatedAt": "2026-07-06 17:18",
+    "updatedAt": "2026-07-26 22:18",
     "points": [
       20,
       17,
@@ -1002,6 +1002,109 @@
           ],
           "penaltyExtraMs": 0,
           "finalTimeMs": 1775187,
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "round": "",
+      "date": "2026-07-26T22:10:00-03:00",
+      "trackName": "spa",
+      "fastestLap": {
+        "driverName": "Lucas Dionicio",
+        "time": "1:44.865",
+        "lapTimeMs": 104865,
+        "tyre": "S"
+      },
+      "results": [
+        {
+          "pos": 1,
+          "driverName": "Jonathan Monzon",
+          "driverGuid": "76561199557580783",
+          "team": "Red Bull",
+          "grid": 1,
+          "laps": 22,
+          "tyresUsed": [
+            "M",
+            "S"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2430681,
+          "status": "OK"
+        },
+        {
+          "pos": 2,
+          "driverName": "Sebastian Sanchez",
+          "driverGuid": "76561199778180071",
+          "team": "Mclaren",
+          "grid": 7,
+          "laps": 22,
+          "tyresUsed": [
+            "M",
+            "S"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2506098,
+          "status": "OK"
+        },
+        {
+          "pos": 3,
+          "driverName": "Juan Scocozza",
+          "driverGuid": "76561199778294845",
+          "team": "Audi",
+          "grid": 2,
+          "laps": 21,
+          "tyresUsed": [
+            "M",
+            "S"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2443152,
+          "status": "OK"
+        },
+        {
+          "pos": 4,
+          "driverName": "Matias daSilva",
+          "driverGuid": "76561198935125634",
+          "team": "Williams",
+          "grid": 5,
+          "laps": 21,
+          "tyresUsed": [
+            "M",
+            "S"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2493822,
+          "status": "OK"
+        },
+        {
+          "pos": 5,
+          "driverName": "Lucas Dionicio",
+          "driverGuid": "76561198141428723",
+          "team": "Red Bull",
+          "grid": 3,
+          "laps": 21,
+          "tyresUsed": [
+            "M",
+            "S"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2664113,
+          "status": "OK"
+        },
+        {
+          "pos": 6,
+          "driverName": "Claudio Eberhart",
+          "driverGuid": "76561198085972282",
+          "team": "Aston Martin",
+          "grid": 6,
+          "laps": 7,
+          "tyresUsed": [
+            "M",
+            "S"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 830806,
           "status": "OK"
         }
       ]
