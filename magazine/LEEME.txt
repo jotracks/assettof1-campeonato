@@ -1,0 +1,19 @@
+REVISTA ASSETTO F1
+
+Para sumar páginas nuevas, guardalas en esta carpeta con nombres correlativos:
+
+mag_pag_1.png
+mag_pag_2.png
+mag_pag_3.png
+
+También admite WEBP, JPG, JPEG y SVG. La página busca automáticamente la siguiente numeración y se detiene cuando encuentra el primer número faltante.
+
+IMPORTANTE:
+- Los archivos tienen que estar dentro de la carpeta magazine.
+- Los nombres deben ir en minúsculas y sin espacios.
+- No puede faltar un número intermedio.
+- Se pueden mezclar formatos: mag_pag_1.png, mag_pag_2.jpg, mag_pag_3.webp.
+
+El detector funciona tanto en GitHub Pages como al abrir index.html directamente desde la PC. No hace falta modificar el HTML, JavaScript ni JSON.
+
+El lector permite ampliar cada página hasta 300% con los controles − y +, doble clic o Ctrl + rueda del mouse.

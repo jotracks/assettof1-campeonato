@@ -1,0 +1,143 @@
+{
+  "seasonLabel": "TEMPORADA 2026",
+  "stageLabel": "ETAPA 3",
+  "registration": {
+    "open": true,
+    "price": "$15.000 ARS",
+    "races": 6,
+    "totalSlots": 20,
+    "availableSlots": 20,
+    "paymentAlias": "JOTRACKS",
+    "paymentUrl": "https://mpago.la/1AcqJZA",
+    "paymentQrAsset": "img/payment/mercado-pago-qr.png",
+    "whatsappNumber": "5491169593888",
+    "whatsappMessage": "Hola Jota, me inscribí para Assetto F1.\n\nNombre y apellido:\nSteam ID:\n\nAdjunto el comprobante.",
+    "pageUrl": "inscripcion.html",
+    "rulesUrl": "reglamento.html#s6"
+  },
+  "links": {
+    "youtube": "https://www.youtube.com/@jotracks-ac/streams",
+    "server": "https://server.jotracks.com/live-timing?server=0",
+    "instagram": "https://www.instagram.com/assetto.f1/"
+  },
+  "media": {
+    "carousel": {
+      "lastRace": {
+        "src": "img/media/pack-battle-wide.webp",
+        "alt": "Pelotón de monoplazas peleando posiciones durante una carrera de Assetto F1"
+      },
+      "nextRace": {
+        "src": "img/media/mercedes-overhead-wide.webp",
+        "alt": "Monoplaza fotografiado desde arriba junto al piano"
+      },
+      "youtube": {
+        "src": "img/media/mercedes-sunset-wide.webp",
+        "alt": "Dos monoplazas corriendo lado a lado al atardecer"
+      },
+      "youtubeWindow": {
+        "src": "img/media/youtube-broadcast.webp",
+        "alt": "Captura de una transmisión oficial de Assetto F1"
+      },
+      "registration": {
+        "src": "img/media/pack-straight-wide.webp",
+        "alt": "Pelotón de monoplazas recorriendo una recta a gran velocidad"
+      }
+    }
+  },
+  "nextRace": {
+    "name": "GP DE HUNGRÍA",
+    "country": "Hungría",
+    "circuit": "Hungaroring · Budapest",
+    "date": "2026-08-16T21:00:00-03:00",
+    "trackAsset": "img/tracks/hungaroring.svg"
+  },
+  "trackAliases": {
+    "montreal": {
+      "name": "Canadá",
+      "circuit": "Circuit Gilles Villeneuve",
+      "trackAsset": "img/tracks/montreal.svg"
+    },
+    "monaco_2020": {
+      "name": "Mónaco",
+      "circuit": "Circuit de Monaco",
+      "trackAsset": "img/tracks/monaco.svg"
+    },
+    "fn_barcelona": {
+      "name": "España",
+      "circuit": "Barcelona-Catalunya",
+      "trackAsset": "img/tracks/barcelona.svg"
+    },
+    "fn_redbullring": {
+      "name": "Austria",
+      "circuit": "Red Bull Ring",
+      "trackAsset": "img/tracks/red-bull-ring.svg"
+    },
+    "ks_silverstone": {
+      "name": "Gran Bretaña",
+      "circuit": "Silverstone",
+      "trackAsset": "img/tracks/silverstone.svg"
+    },
+    "spa": {
+      "name": "Spa-Francorchamps",
+      "circuit": "Circuit de Spa-Francorchamps",
+      "trackAsset": "img/tracks/spa-francorchamps.svg"
+    }
+  },
+  "teams": {
+    "Red Bull": {
+      "asset": "img/Red Bull.png",
+      "color": "#e11d3b"
+    },
+    "Ferrari": {
+      "asset": "img/Ferrari.png",
+      "color": "#ef233c"
+    },
+    "Mercedes": {
+      "asset": "img/Mercedes.png",
+      "color": "#12b8a6"
+    },
+    "Mclaren": {
+      "asset": "img/Mclaren.png",
+      "color": "#ff8700"
+    },
+    "Audi": {
+      "asset": "img/Audi.png",
+      "color": "#d7d9de"
+    },
+    "Williams": {
+      "asset": "img/Williams.png",
+      "color": "#5a86ff"
+    },
+    "Aston Martin": {
+      "asset": "img/Aston Martin.png",
+      "color": "#229971"
+    },
+    "Alpine": {
+      "asset": "img/Alpine.png",
+      "color": "#e770b9"
+    },
+    "Haas": {
+      "asset": "img/Haas.png",
+      "color": "#b9bcc3"
+    },
+    "Cadillac": {
+      "asset": "img/Cadillac.png",
+      "color": "#d7d9de"
+    },
+    "Racing Bulls": {
+      "asset": "img/Racing Bulls.png",
+      "color": "#7b8cff"
+    }
+  },
+  "magazine": {
+    "title": "REVISTA ASSETTO F1",
+    "directory": "magazine",
+    "prefix": "mag_pag_",
+    "extensions": ["webp", "png", "jpg", "jpeg", "svg"],
+    "maxPages": 60,
+    "fallbackPages": [
+      "magazine/mag_pag_1.png",
+      "magazine/mag_pag_2.jpg"
+    ]
+  }
+}

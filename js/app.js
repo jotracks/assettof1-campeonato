@@ -55,6 +55,8 @@ function formatDriverDisplayName(full) {
   return `${initial}. ${last.toUpperCase()}`;
 }
 
+let SITE_CONFIG = {};
+
 /* Color opcional por equipo */
 function hashColor(slug) {
   let h = 0;
@@ -70,17 +72,23 @@ function hashColor(slug) {
 function teamBannerCandidates(team) {
   const raw = String(team || "").trim();
   if (!raw) return [];
+  const configured = SITE_CONFIG?.teams?.[raw]?.asset;
   const safe = raw.replace(/\.\.[/\\]/g, "").replace(/[/\\]/g, "_");
   const base = safe.replace(/\.(png|webp|jpg|jpeg)$/i, "");
   const enc = encodeURIComponent(base);
 
   const rel = [
+    configured,
     `img/${enc}.png`,
     `img/${enc}.webp`,
     `img/${enc}.jpg`,
     `img/${enc}.jpeg`,
-  ];
-  return rel.map((p) => new URL(p, document.baseURI).toString());
+  ].filter(Boolean);
+  return [...new Set(rel)].map((p) => new URL(p, document.baseURI).toString());
+}
+
+function teamColor(team, slug) {
+  return SITE_CONFIG?.teams?.[team]?.color || (slug ? hashColor(slug) : "rgba(255,255,255,.18)");
 }
 
 function setRowTeamBanner(rowEl, team) {
@@ -233,7 +241,7 @@ function renderStandingsBroadcast(drivers) {
     const row = document.createElement("div");
     row.className = "standRow";
 
-    row.style.setProperty("--teamColor", slug ? hashColor(slug) : "rgba(255,255,255,.18)");
+    row.style.setProperty("--teamColor", teamColor(team, slug));
     setRowTeamBanner(row, team);
 
     const pos = document.createElement("div");
@@ -338,7 +346,7 @@ function renderTeamsStandingsBroadcast(teams, opts = {}) {
     const row = document.createElement("div");
     row.className = "standRow";
 
-    row.style.setProperty("--teamColor", slug ? hashColor(slug) : "rgba(255,255,255,.18)");
+    row.style.setProperty("--teamColor", teamColor(t.team, slug));
     setRowTeamBanner(row, t.team);
 
     const pos = document.createElement("div");
@@ -757,7 +765,13 @@ function hasAnyStandingsOrRaces(data) {
 }
 
 async function tryFetch() {
-  return await tryFetchAny(CHAMPIONSHIP_URL_CANDIDATES);
+  try {
+    return await tryFetchAny(CHAMPIONSHIP_URL_CANDIDATES);
+  } catch (error) {
+    const snapshot = window.ASSETTO_F1_SNAPSHOT?.championship;
+    if (snapshot) return snapshot;
+    throw error;
+  }
 }
 
 function enableOfflinePicker() {
@@ -777,6 +791,14 @@ function enableOfflinePicker() {
 
 (async function main() {
   try {
+    try {
+      SITE_CONFIG = await tryFetchAny(["data/site.json", "site.json"]);
+      window.assettoF1SiteConfig = SITE_CONFIG;
+    } catch (siteError) {
+      SITE_CONFIG = window.ASSETTO_F1_SNAPSHOT?.site || {};
+      window.assettoF1SiteConfig = SITE_CONFIG;
+      if (!Object.keys(SITE_CONFIG).length) console.warn("site config fetch failed", siteError);
+    }
     let data = await tryFetch();
 
     // If the fetched file is actually an EntryList JSON, render it as a 0-points "pre-season" standings.
