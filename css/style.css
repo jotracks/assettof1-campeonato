@@ -2184,3 +2184,149 @@ body.pageSanctions .sanctionsIntro .noteBox,body.pageSanctions .sanctionsIntro .
   body.pageRules .rulesHero{min-height:280px;padding:24px 20px}
   body.pageSanctions .sanctionsIntro{padding:16px}
 }
+
+/* =========================================================
+   JOTRACKS telemetry integration
+   ========================================================= */
+.carouselTabs{grid-template-columns:repeat(5,1fr)}
+.carouselTabs button:nth-child(5){--tab-image:url("../img/media/jotracks-telemetry-analyzer.png")}
+.carouselTabs button:nth-child(5).isActive{
+  border-color:rgba(78,255,99,.42);
+  background-image:linear-gradient(135deg,rgba(21,139,54,.94),rgba(83,24,128,.84)),var(--tab-image);
+  box-shadow:0 10px 25px rgba(42,209,77,.18);
+}
+.carouselSlide--telemetry{background:linear-gradient(110deg,#082112 0%,#111318 56%,#25132e 100%)}
+.carouselSlide--telemetry::before{
+  background-image:
+    linear-gradient(90deg,rgba(4,7,6,.97) 0%,rgba(5,8,8,.88) 48%,rgba(9,8,13,.56) 100%),
+    radial-gradient(rgba(78,255,99,.08) 1px,transparent 1px);
+}
+.carouselSlide--telemetry .carouselBackdrop{opacity:.42;filter:saturate(.8) contrast(1.12)}
+.telemetryEyebrow{color:#4eff63}
+.primaryButton--telemetry{
+  border-color:rgba(113,255,130,.42);
+  background:linear-gradient(135deg,#50ff68,#20b849);
+  color:#061009!important;
+  box-shadow:0 14px 34px rgba(31,191,70,.22);
+}
+.carouselVisual--telemetry{padding:34px;background:linear-gradient(145deg,rgba(8,13,10,.34),rgba(42,17,53,.30))}
+.telemetryCarouselFrame{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:22px;
+  background:#080a0d;
+  box-shadow:0 26px 58px rgba(0,0,0,.58),0 0 0 7px rgba(255,255,255,.025);
+  transform:perspective(1100px) rotateY(-5deg);
+}
+.telemetryCarouselFrame>img:first-child{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center}
+.telemetryCarouselBrand{
+  position:absolute;
+  left:16px;
+  top:15px;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  max-width:62%;
+  padding:8px 10px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:10px;
+  background:rgba(4,6,7,.76);
+  backdrop-filter:blur(8px);
+}
+.telemetryCarouselBrand img{width:116px;height:auto}
+.telemetryCarouselBrand span{color:#858d99;font-size:8px;font-weight:950;letter-spacing:.12em;white-space:nowrap}
+
+.telemetryWrap{max-width:1720px}
+.telemetryPage{display:grid;gap:18px}
+.telemetryIntro{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,.92fr) minmax(480px,1.08fr);
+  min-height:520px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:28px;
+  background:
+    radial-gradient(700px 420px at 8% 8%,rgba(47,255,82,.11),transparent 66%),
+    radial-gradient(760px 500px at 96% 100%,rgba(182,103,255,.12),transparent 68%),
+    linear-gradient(135deg,#101317,#090b0e);
+  box-shadow:var(--shadow);
+}
+.telemetryIntro::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:30px 30px;
+  mask-image:linear-gradient(90deg,#000,transparent 68%);
+}
+.telemetryIntroCopy{position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:54px 56px}
+.telemetryBrandLockup{display:flex;align-items:center;gap:14px;margin-bottom:34px}
+.telemetryBrandLockup img{width:min(270px,60vw);height:auto}
+.telemetryBrandLockup span{padding-left:14px;border-left:1px solid rgba(255,255,255,.18);color:#81868f;font-size:9px;font-weight:950;letter-spacing:.20em;white-space:nowrap}
+.telemetryIntro h2{margin:18px 0 16px;color:#fff;font-size:clamp(42px,4.8vw,74px);line-height:.92;letter-spacing:-.05em;font-style:italic;font-weight:1000;text-transform:uppercase}
+.telemetryIntroCopy>p{max-width:680px;margin:0;color:#aeb4bd;font-size:15px;font-weight:700;line-height:1.65}
+.telemetryTags{display:flex;flex-wrap:wrap;gap:7px;margin-top:24px}
+.telemetryTags span{padding:8px 11px;border:1px solid rgba(255,255,255,.10);border-radius:999px;background:rgba(255,255,255,.035);color:#d8dbe0;font-size:9px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+.telemetryActions{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.telemetryDownload{background:#202329;box-shadow:none}
+.telemetryIntroVisual{position:relative;z-index:2;min-width:0;display:grid;place-items:center;padding:44px 44px 44px 0}
+.telemetryIntroVisual>img{width:100%;max-height:430px;object-fit:cover;object-position:center;border:1px solid rgba(255,255,255,.17);border-radius:22px;box-shadow:0 32px 70px rgba(0,0,0,.55),0 0 0 8px rgba(255,255,255,.02);transform:perspective(1400px) rotateY(-3deg)}
+.telemetryIdealBadge{position:absolute;right:60px;bottom:64px;display:flex;align-items:center;gap:10px;padding:10px 13px;border:1px solid rgba(182,103,255,.38);border-radius:11px;background:rgba(15,9,20,.86);box-shadow:0 12px 28px rgba(0,0,0,.35)}
+.telemetryIdealBadge small{color:#a887bd;font-size:8px;font-weight:950;letter-spacing:.16em}
+.telemetryIdealBadge strong{color:#c477ff;font-size:10px;letter-spacing:.08em}
+.telemetrySteps{display:grid;grid-template-columns:repeat(3,1fr);overflow:hidden;border:1px solid rgba(255,255,255,.11);border-radius:20px;background:#111318}
+.telemetrySteps article{display:flex;align-items:center;gap:16px;min-height:112px;padding:22px 24px;border-right:1px solid rgba(255,255,255,.09)}
+.telemetrySteps article:last-child{border-right:0}
+.telemetrySteps b{flex:0 0 44px;width:44px;height:44px;display:grid;place-items:center;border:1px solid rgba(77,255,224,.35);border-radius:50%;color:#4dffe0;font-size:12px}
+.telemetrySteps div{display:grid;gap:6px}
+.telemetrySteps strong{color:#fff;font-size:11px;letter-spacing:.08em}
+.telemetrySteps span{color:#8f969f;font-size:11px;line-height:1.45}
+.telemetryAnalyzerShell{overflow:hidden;border:1px solid rgba(255,255,255,.14);border-radius:24px;background:#080a0d;box-shadow:0 28px 80px rgba(0,0,0,.48);scroll-margin-top:18px}
+.telemetryAnalyzerHeader{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.10);background:linear-gradient(90deg,#101419,#121018)}
+.telemetryAnalyzerHeader>div{display:flex;align-items:center;gap:12px}
+.telemetryOnlineDot{width:10px;height:10px;border-radius:50%;background:#4eff63;box-shadow:0 0 0 7px rgba(78,255,99,.10)}
+.telemetryAnalyzerHeader small{display:block;color:#4eff63;font-size:8px;font-weight:1000;letter-spacing:.16em}
+.telemetryAnalyzerHeader h2{margin:3px 0 0;color:#fff;font-size:13px;letter-spacing:.12em}
+.telemetryAnalyzerActions span{color:#717984;font-size:9px;font-weight:900;letter-spacing:.08em}
+.telemetryAnalyzerActions a{padding:8px 11px;border:1px solid rgba(255,255,255,.12);border-radius:9px;color:#d9dce1;font-size:9px;font-weight:950;letter-spacing:.08em;text-decoration:none}
+.telemetryAnalyzerActions a:hover{border-color:rgba(78,255,99,.38);color:#4eff63}
+.telemetryAnalyzerShell iframe{display:block;width:100%;height:max(850px,calc(100vh - 54px));border:0;background:#080a0d}
+
+@media (max-width:1100px){
+  .telemetryIntro{grid-template-columns:1fr;min-height:0}
+  .telemetryIntroCopy{padding-bottom:28px}
+  .telemetryIntroVisual{padding:0 38px 42px}
+  .telemetryIntroVisual>img{max-height:none;transform:none}
+  .telemetryIdealBadge{right:54px;bottom:56px}
+}
+
+@media (max-width:720px){
+  .carouselVisual--telemetry{width:220px;height:180px;padding:10px;opacity:.72}
+  .telemetryCarouselFrame{transform:none;border-radius:14px}
+  .telemetryCarouselBrand{left:8px;top:8px;padding:5px 6px}
+  .telemetryCarouselBrand img{width:82px}
+  .telemetryCarouselBrand span{display:none}
+  .telemetryIntro{border-radius:20px}
+  .telemetryIntroCopy{padding:32px 22px 24px}
+  .telemetryBrandLockup{align-items:flex-start;flex-direction:column;gap:10px;margin-bottom:26px}
+  .telemetryBrandLockup span{padding:0;border:0}
+  .telemetryIntro h2{font-size:clamp(42px,13vw,58px)}
+  .telemetryIntroCopy>p{font-size:13px}
+  .telemetryActions{width:100%}
+  .telemetryActions a{width:100%}
+  .telemetryIntroVisual{padding:0 16px 28px}
+  .telemetryIntroVisual>img{border-radius:14px}
+  .telemetryIdealBadge{right:25px;bottom:38px;padding:7px 9px}
+  .telemetrySteps{grid-template-columns:1fr}
+  .telemetrySteps article{min-height:92px;border-right:0;border-bottom:1px solid rgba(255,255,255,.09)}
+  .telemetrySteps article:last-child{border-bottom:0}
+  .telemetryAnalyzerHeader{align-items:flex-start;flex-direction:column}
+  .telemetryAnalyzerActions{width:100%;justify-content:space-between}
+  .telemetryAnalyzerActions span{display:none}
+  .telemetryAnalyzerShell iframe{height:900px}
+}

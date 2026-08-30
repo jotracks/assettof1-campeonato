@@ -29,6 +29,7 @@
         <a class="navTab" href="./reglamento.html">Reglamento</a>
         <a class="navTab" href="./calendario.html">Calendario</a>
         <a class="navTab" href="./criterio-sanciones.html">Sanciones</a>
+        <a class="navTab" href="./telemetria.html">Telemetría</a>
         <div class="navSpacer"></div>
         <div class="navExt">
           <a class="navExtLink navExtLink--server" data-link="server" href="https://server.jotracks.com/live-timing?server=0" target="_blank" rel="noopener noreferrer" title="Server de juego">
@@ -107,7 +108,7 @@
             </div>
           </article>
 
-          <article class="carouselSlide carouselSlide--registration isActive" data-slide-index="3" aria-hidden="false">
+          <article class="carouselSlide carouselSlide--registration" data-slide-index="3" aria-hidden="true">
             <img class="carouselBackdrop" id="registrationBackdrop" src="img/media/pack-straight-wide.webp" alt="" aria-hidden="true" decoding="async"/>
             <div class="carouselCopy carouselCopy--registration">
               <span class="eyebrow eyebrow--filled">INSCRIPCIONES ABIERTAS</span>
@@ -126,6 +127,23 @@
               <strong>2026</strong>
             </div>
           </article>
+
+          <article class="carouselSlide carouselSlide--telemetry isActive" data-slide-index="4" aria-hidden="false">
+            <img class="carouselBackdrop" id="telemetryBackdrop" src="img/media/jotracks-telemetry-analyzer.png" alt="" aria-hidden="true" decoding="async"/>
+            <div class="carouselCopy">
+              <span class="eyebrow telemetryEyebrow">NUEVA HERRAMIENTA JOTRACKS</span>
+              <h2>MEJORÁ CADA<br/>VUELTA.</h2>
+              <p class="carouselLead">PEDALES, VOLANTE, COMBUSTIBLE, NEUMÁTICOS, ENERGÍA Y TU IDEAL COMBINADO.</p>
+              <div class="heroStatLine"><span>IDEAL</span><strong style="color:#c477ff">SIEMPRE VIOLETA</strong></div>
+              <a class="primaryButton primaryButton--telemetry" data-link="telemetry" href="telemetria.html">ABRIR ANALIZADOR <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="carouselVisual carouselVisual--telemetry" aria-hidden="true">
+              <div class="telemetryCarouselFrame">
+                <img src="img/media/jotracks-telemetry-analyzer.png" alt="" decoding="async"/>
+                <div class="telemetryCarouselBrand"><img src="img/jotracks-logo.png" alt=""/><span>SESSION ANALYZER</span></div>
+              </div>
+            </div>
+          </article>
         </div>
 
         <div class="carouselControls">
@@ -133,11 +151,12 @@
             <button type="button" role="tab" aria-selected="false" data-carousel-go="0"><small>01</small><span id="lastRaceTabLabel">RESUMEN SPA</span></button>
             <button type="button" role="tab" aria-selected="false" data-carousel-go="1"><small>02</small><span>PRÓXIMA FECHA</span></button>
             <button type="button" role="tab" aria-selected="false" data-carousel-go="2"><small>03</small><span>YOUTUBE</span></button>
-            <button class="isActive" type="button" role="tab" aria-selected="true" data-carousel-go="3"><small>04 · ACTIVO</small><span>INSCRIPCIÓN</span></button>
+            <button type="button" role="tab" aria-selected="false" data-carousel-go="3"><small>04</small><span>INSCRIPCIÓN</span></button>
+            <button class="isActive" type="button" role="tab" aria-selected="true" data-carousel-go="4"><small>05 · ACTIVO</small><span>TELEMETRÍA</span></button>
           </div>
           <button class="carouselArrow" type="button" data-carousel-next aria-label="Siguiente destacado">›</button>
         </div>
-        <p class="srOnly" id="carouselStatus" aria-live="polite">Inscripción</p>
+        <p class="srOnly" id="carouselStatus" aria-live="polite">Analizador de telemetría</p>
       </section>
 
       <div class="card" id="loadCard" style="display:none">

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content="Analizador de telemetría JOTRACKS para Assetto Corsa: vueltas, inputs, combustible, neumáticos, energía, mapa e ideal combinado."/>
+  <title>Analizador de telemetría — Assetto F1 × JOTRACKS</title>
+  <link rel="icon" type="image/png" href="img/favicon.png"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="pageTelemetry">
+  <div class="wrap telemetryWrap">
+    <header class="hero">
+      <div class="heroBannerWrap">
+        <img class="heroBanner" src="./img/banner.png" alt="Assetto F1 — Liga de Assetto Corsa" width="718" height="85"/>
+      </div>
+
+      <div class="heroBottom">
+        <div>
+          <div class="heroTitleSub">Assetto F1 × JOTRACKS</div>
+          <h1 class="heroTitle">TELEMETRÍA</h1>
+        </div>
+      </div>
+
+      <nav class="siteNav" aria-label="Navegación principal">
+        <a class="navBack" href="./index.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          Volver
+        </a>
+        <div class="navDivider"></div>
+        <a class="navTab" href="./index.html">Inicio</a>
+        <a class="navTab" href="./reglamento.html">Reglamento</a>
+        <a class="navTab" href="./calendario.html">Calendario</a>
+        <a class="navTab" href="./criterio-sanciones.html">Sanciones</a>
+        <a class="navTab isActive" href="./telemetria.html" aria-current="page">Telemetría</a>
+        <div class="navSpacer"></div>
+        <div class="navExt">
+          <a class="navExtLink navExtLink--server" href="https://server.jotracks.com/live-timing?server=0" target="_blank" rel="noopener noreferrer" title="Server de juego">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 010 8.49m-8.48-.01a6 6 0 010-8.49m11.31-2.82a10 10 0 010 14.14m-14.14 0a10 10 0 010-14.14"/></svg>
+            <span class="navExtLabel">Server</span>
+          </a>
+          <a class="navExtLink navExtLink--join" href="./inscripcion.html" title="Inscripción al campeonato">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            <span class="navExtLabel">Inscribite</span>
+          </a>
+          <a class="navExtLink navExtLink--youtube" href="https://www.youtube.com/@jotracks-ac/streams" target="_blank" rel="noopener noreferrer" title="Transmisiones en YouTube">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 00.5 6.2 31 31 0 000 12a31 31 0 00.5 5.8 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 12a31 31 0 00-.5-5.8zM9.6 15.6V8.4L15.8 12z"/></svg>
+            <span class="navExtLabel">YouTube</span>
+          </a>
+          <a class="navExtLink navExtLink--ig" href="https://www.instagram.com/assetto.f1/" target="_blank" rel="noopener noreferrer" title="Instagram">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.2.1 4.7 1.7 4.9 4.9.1 1.3.1.1 1.6.1 4.8s0 3.6-.1 4.9c-.2 3.2-1.7 4.7-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.2-.2-4.7-1.7-4.9-4.9C2 15.6 2 15.2 2 12s0-3.6.1-4.8C2.3 4 3.8 2.4 7 2.3c1.3-.1 1.7-.1 5-.1zm0 3.6A6.2 6.2 0 1012 18a6.2 6.2 0 000-12.2zm0 10.2a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.4 1.4 0 100 2.9 1.4 1.4 0 000-2.9z"/></svg>
+            <span class="navExtLabel">Instagram</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="telemetryPage">
+      <section class="telemetryIntro" aria-labelledby="telemetryTitle">
+        <div class="telemetryIntroCopy">
+          <div class="telemetryBrandLockup">
+            <img src="img/jotracks-logo.png" alt="JOTRACKS"/>
+            <span>RACING DATA LAB</span>
+          </div>
+          <span class="eyebrow telemetryEyebrow">HERRAMIENTA GRATUITA PARA ASSETTO CORSA</span>
+          <h2 id="telemetryTitle">CONVERTÍ CADA VUELTA<br/>EN INFORMACIÓN.</h2>
+          <p>Compará vueltas completas, encontrá dónde frenaste de más y recorré cada metro del circuito junto a tu ideal combinado.</p>
+          <div class="telemetryTags" aria-label="Datos disponibles">
+            <span>Pedales</span><span>Volante</span><span>Marchas</span><span>Combustible</span><span>Neumáticos</span><span>ERS/KERS</span>
+          </div>
+          <div class="telemetryActions">
+            <a class="primaryButton primaryButton--telemetry" href="#analizador">ABRIR ANALIZADOR <span aria-hidden="true">↓</span></a>
+            <a class="secondaryButton telemetryDownload" href="downloads/JOTRACKS_Telemetry_v0.3.0.zip" download>DESCARGAR APP v0.3 <span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+        <div class="telemetryIntroVisual">
+          <img src="img/media/jotracks-telemetry-analyzer.png" alt="Analizador JOTRACKS mostrando gráficos, mapa y comparación de una tanda"/>
+          <div class="telemetryIdealBadge"><small>IDEAL</small><strong>SIEMPRE VIOLETA</strong></div>
+        </div>
+      </section>
+
+      <section class="telemetrySteps" aria-label="Cómo usar el analizador">
+        <article><b>01</b><div><strong>INSTALÁ LA APP</strong><span>Copiala dentro de Assetto Corsa y abrila desde la barra de CSP.</span></div></article>
+        <article><b>02</b><div><strong>COMPLETÁ TU TANDA</strong><span>Cada vuelta se guarda automáticamente en un archivo de sesión.</span></div></article>
+        <article><b>03</b><div><strong>CARGÁ Y COMPARÁ</strong><span>Arrastrá el archivo al analizador. Todo se procesa localmente.</span></div></article>
+      </section>
+
+      <section class="telemetryAnalyzerShell" id="analizador" aria-labelledby="analyzerHeading">
+        <div class="telemetryAnalyzerHeader">
+          <div>
+            <span class="telemetryOnlineDot" aria-hidden="true"></span>
+            <div><small>JOTRACKS</small><h2 id="analyzerHeading">SESSION ANALYZER</h2></div>
+          </div>
+          <div class="telemetryAnalyzerActions">
+            <span>PROCESAMIENTO LOCAL · TUS DATOS NO SE SUBEN</span>
+            <a href="tools/JOTRACKS_Telemetry_Analyzer.html" target="_blank" rel="noopener noreferrer">PANTALLA COMPLETA ↗</a>
+          </div>
+        </div>
+        <iframe src="tools/JOTRACKS_Telemetry_Analyzer.html" title="JOTRACKS Session Analyzer" loading="eager"></iframe>
+      </section>
+    </main>
+  </div>
+
+  <footer class="pageFooter">
+    <div class="updatedFooter"><span class="updatedText">Assetto F1 × JOTRACKS · Telemetría para mejorar cada vuelta</span></div>
+  </footer>
+</body>
+</html>

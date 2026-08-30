@@ -18,7 +18,8 @@
   "links": {
     "youtube": "https://www.youtube.com/@jotracks-ac/streams",
     "server": "https://server.jotracks.com/live-timing?server=0",
-    "instagram": "https://www.instagram.com/assetto.f1/"
+    "instagram": "https://www.instagram.com/assetto.f1/",
+    "telemetry": "telemetria.html"
   },
   "media": {
     "carousel": {
@@ -41,6 +42,10 @@
       "registration": {
         "src": "img/media/pack-straight-wide.webp",
         "alt": "Pelotón de monoplazas recorriendo una recta a gran velocidad"
+      },
+      "telemetry": {
+        "src": "img/media/jotracks-telemetry-analyzer.png",
+        "alt": "Analizador JOTRACKS con gráficos de inputs, mapa, combustible y energía"
       }
     }
   },
