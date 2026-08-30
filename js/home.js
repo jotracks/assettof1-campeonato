@@ -105,6 +105,7 @@
       server: site?.links?.server,
       youtube: site?.links?.youtube,
       instagram: site?.links?.instagram,
+      telemetry: site?.links?.telemetry || "telemetria.html",
       registration: site?.registration?.pageUrl || "inscripcion.html"
     };
 
@@ -131,7 +132,8 @@
       nextRace: "#nextRaceBackdrop",
       youtube: "#youtubeBackdrop",
       youtubeWindow: "#youtubeWindowImage",
-      registration: "#registrationBackdrop"
+      registration: "#registrationBackdrop",
+      telemetry: "#telemetryBackdrop"
     };
 
     Object.entries(images).forEach(([key, selector]) => {
@@ -190,7 +192,7 @@
     if (!carousel) return;
     const slides = $$(".carouselSlide", carousel);
     const tabs = $$('[data-carousel-go]', carousel);
-    const labels = ["Resumen de la última carrera", "Próxima fecha", "Transmisión en YouTube", "Inscripción"];
+    const labels = ["Resumen de la última carrera", "Próxima fecha", "Transmisión en YouTube", "Inscripción", "Analizador de telemetría"];
     let current = Math.max(0, slides.findIndex((slide) => slide.classList.contains("isActive")));
     let timer = null;
 

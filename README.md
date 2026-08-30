@@ -78,6 +78,26 @@ Para reemplazar un fondo, guardá la imagen en esa carpeta y modificá su `src`.
 
 La revista incluye zoom de 100% a 300% mediante los botones `−` y `+`. También admite doble clic, `Ctrl` + rueda del mouse y las teclas `+`, `−` y `0`.
 
+### Analizador de telemetría JOTRACKS
+
+La página pública del analizador es `telemetria.html`. La portada y la navegación enlazan automáticamente a esa página mediante `data/site.json > links > telemetry`.
+
+Para publicar una versión nueva del analizador web, reemplazá solamente:
+
+```text
+tools/JOTRACKS_Telemetry_Analyzer.html
+```
+
+`telemetria.html` lo carga dentro de un iframe y también ofrece el acceso en pantalla completa. No hace falta volver a editar la portada, el carrusel ni el resto del sitio.
+
+El instalador descargable de la app queda en:
+
+```text
+downloads/JOTRACKS_Telemetry_v0.3.0.zip
+```
+
+Si cambia la versión o el nombre del ZIP, actualizá también el enlace de descarga dentro de `telemetria.html`.
+
 ### Circuitos
 
 Los outlines se guardan en `img/tracks/`. El calendario ya incluye los SVG correctos de sus 23 circuitos distintos. Para los datos del campeonato, asigná el archivo correspondiente mediante `trackAsset` en `data/site.json`.

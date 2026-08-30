@@ -1,0 +1,1150 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JOTRACKS Session Analyzer</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080a0d;
+      --panel: #101318;
+      --panel-2: #151920;
+      --line: rgba(255,255,255,.09);
+      --line-strong: rgba(255,255,255,.16);
+      --text: #f4f6f8;
+      --muted: #858d99;
+      --green: #48ff61;
+      --red: #ff4438;
+      --blue: #39bfff;
+      --cyan: #58dcff;
+      --teal: #4dffe0;
+      --violet: #b667ff;
+      --amber: #ffbf47;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 78% 4%, rgba(182,103,255,.08), transparent 28rem),
+        linear-gradient(180deg, #0b0d11 0, var(--bg) 24rem);
+    }
+    button, input { font: inherit; }
+    button { color: inherit; }
+
+    .topbar {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(8,10,13,.88);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      white-space: nowrap;
+      letter-spacing: -.03em;
+      font-weight: 900;
+    }
+    .brand-mark { color: var(--green); font-size: 20px; }
+    .brand-sub { color: var(--muted); font-size: 11px; letter-spacing: .16em; }
+    .session-tabs { display: flex; gap: 7px; overflow-x: auto; flex: 1; scrollbar-width: thin; }
+    .session-tab, .load-button, .ghost-button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 999px;
+      padding: 9px 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: border-color .18s, background .18s, color .18s;
+    }
+    .session-tab:hover, .load-button:hover, .ghost-button:hover { border-color: var(--line-strong); background: #1a1f27; }
+    .session-tab.active { border-color: rgba(72,255,97,.48); color: var(--green); background: rgba(72,255,97,.06); }
+    .load-button { background: var(--text); color: #080a0d; border-color: var(--text); font-weight: 800; }
+    .load-button:hover { background: var(--green); border-color: var(--green); }
+
+    .empty {
+      min-height: calc(100vh - 68px);
+      display: grid;
+      place-items: center;
+      padding: 28px;
+    }
+    .dropzone {
+      width: min(760px, 100%);
+      min-height: 390px;
+      border: 1px dashed rgba(255,255,255,.24);
+      border-radius: 24px;
+      padding: 42px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px),
+        rgba(16,19,24,.72);
+      background-size: 28px 28px;
+      transition: border-color .2s, background .2s, transform .2s;
+    }
+    .dropzone.dragging { border-color: var(--green); background-color: rgba(72,255,97,.045); transform: scale(1.01); }
+    .drop-icon {
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 26px;
+      border-radius: 50%;
+      border: 1px solid rgba(72,255,97,.38);
+      display: grid;
+      place-items: center;
+      color: var(--green);
+      font-size: 28px;
+      box-shadow: 0 0 45px rgba(72,255,97,.08);
+    }
+    .dropzone h1 { margin: 0; font-size: clamp(34px, 6vw, 72px); line-height: .94; letter-spacing: -.055em; text-transform: uppercase; }
+    .dropzone p { color: var(--muted); line-height: 1.65; max-width: 520px; margin: 20px auto 26px; }
+    .dropzone strong { color: var(--violet); }
+
+    .dashboard { display: none; padding: 18px; }
+    .dashboard.visible { display: block; }
+    .session-header {
+      display: grid;
+      grid-template-columns: minmax(260px, 1.2fr) repeat(6, minmax(112px, .46fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .identity, .stat {
+      background: rgba(16,19,24,.9);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 15px 17px;
+      min-width: 0;
+    }
+    .eyebrow { color: var(--muted); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 7px; }
+    .identity h1 { margin: 0; font-size: clamp(24px, 3vw, 39px); line-height: .95; letter-spacing: -.04em; text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .identity-meta { color: var(--muted); font-size: 12px; margin-top: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .stat strong { font-size: 24px; display: block; letter-spacing: -.035em; font-variant-numeric: tabular-nums; }
+    .stat.ideal strong { color: var(--violet); }
+    .stat.good strong { color: var(--green); }
+    .stat.fuel strong { color: var(--amber); }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 230px minmax(520px, 1fr) minmax(310px, 390px);
+      gap: 12px;
+      align-items: start;
+    }
+    .panel, .chart-card {
+      background: rgba(16,19,24,.94);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .panel-heading, .chart-heading {
+      min-height: 47px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .panel-heading h2, .chart-heading h2 { margin: 0; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+    .panel-heading span, .chart-heading span { color: var(--muted); font-size: 10px; }
+
+    .lap-list { max-height: calc(100vh - 170px); overflow-y: auto; padding: 7px; }
+    .lap-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 9px;
+      align-items: center;
+      border: 1px solid transparent;
+      background: transparent;
+      border-radius: 10px;
+      padding: 10px 9px;
+      cursor: pointer;
+      text-align: left;
+      margin-bottom: 4px;
+    }
+    .lap-row:hover { background: rgba(255,255,255,.035); }
+    .lap-row.active { background: rgba(88,220,255,.075); border-color: rgba(88,220,255,.36); }
+    .lap-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--panel-2);
+      color: var(--muted);
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .lap-row.active .lap-number { background: var(--cyan); color: #071015; }
+    .lap-time { font-weight: 800; font-variant-numeric: tabular-nums; font-size: 14px; }
+    .lap-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 5px 7px; margin-top: 4px; color: var(--muted); font-size: 10px; }
+    .valid-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+    .invalid .valid-dot { background: var(--red); }
+    .best-tag { color: var(--green); text-transform: uppercase; letter-spacing: .08em; }
+
+    .charts { display: grid; gap: 12px; }
+    .chart-card { min-width: 0; }
+    .chart-legend { display: flex; flex-wrap: wrap; gap: 11px; }
+    .legend-item { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; color: var(--muted); }
+    .legend-line { width: 18px; height: 2px; background: currentColor; }
+    .legend-line.dashed { background: repeating-linear-gradient(90deg, currentColor 0 5px, transparent 5px 8px); }
+    .canvas-wrap { height: 176px; position: relative; }
+    .canvas-wrap.compact { height: 148px; }
+    canvas { width: 100%; height: 100%; display: block; touch-action: none; }
+
+    .side { display: grid; gap: 12px; position: sticky; top: 86px; }
+    .map-wrap { height: 330px; position: relative; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.025), transparent 65%); }
+    .map-sector {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      z-index: 2;
+      background: rgba(8,10,13,.78);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .map-actions { display: flex; align-items: center; gap: 8px; }
+    .layer-button {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      padding: 5px 8px;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      cursor: pointer;
+    }
+    .layer-button.active { color: var(--amber); border-color: rgba(255,191,71,.42); background: rgba(255,191,71,.07); }
+    .layer-button:disabled { cursor: default; opacity: .42; }
+    .map-live {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      z-index: 2;
+      display: flex;
+      align-items: stretch;
+      gap: 6px;
+    }
+    .gear-badge, .map-data {
+      background: rgba(8,10,13,.84);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      backdrop-filter: blur(8px);
+    }
+    .gear-badge {
+      min-width: 52px;
+      display: grid;
+      place-items: center;
+      color: var(--text);
+      font-size: 29px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .map-data { padding: 7px 9px; min-width: 78px; }
+    .map-data span { display: block; color: var(--muted); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
+    .map-data strong { display: block; margin-top: 3px; font-size: 11px; font-variant-numeric: tabular-nums; }
+    .energy-legend {
+      position: absolute;
+      left: 12px;
+      bottom: 11px;
+      z-index: 2;
+      display: flex;
+      gap: 10px;
+      padding: 6px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(8,10,13,.82);
+      color: var(--muted);
+      font-size: 8px;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .energy-legend i { display: inline-block; width: 12px; height: 3px; margin-right: 4px; vertical-align: middle; border-radius: 4px; }
+    .energy-legend .deploy { background: var(--amber); }
+    .energy-legend .recover { background: var(--teal); }
+    .scrubber-box { padding: 15px; border-top: 1px solid var(--line); }
+    .scrubber-head { display: flex; justify-content: space-between; gap: 12px; font-size: 11px; margin-bottom: 10px; }
+    .scrubber-head strong { font-variant-numeric: tabular-nums; }
+    input[type="range"] {
+      width: 100%;
+      appearance: none;
+      height: 20px;
+      background: transparent;
+      cursor: ew-resize;
+    }
+    input[type="range"]::-webkit-slider-runnable-track { height: 3px; background: linear-gradient(90deg, var(--cyan), var(--violet)); border-radius: 4px; }
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 17px;
+      height: 17px;
+      margin-top: -7px;
+      border-radius: 50%;
+      background: var(--text);
+      border: 4px solid #171b22;
+      box-shadow: 0 0 0 1px var(--cyan);
+    }
+    input[type="range"]::-moz-range-track { height: 3px; background: linear-gradient(90deg, var(--cyan), var(--violet)); border: none; border-radius: 4px; }
+    input[type="range"]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--text); border: 3px solid #171b22; box-shadow: 0 0 0 1px var(--cyan); }
+
+    .readout { padding: 10px; }
+    .lap-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .lap-summary div { border: 1px solid var(--line); border-radius: 9px; padding: 8px; min-width: 0; }
+    .lap-summary span { display: block; color: var(--muted); font-size: 8px; text-transform: uppercase; letter-spacing: .08em; }
+    .lap-summary strong { display: block; margin-top: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; font-variant-numeric: tabular-nums; }
+    .readout-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr 1fr;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .readout-cell { padding: 9px 8px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-width: 0; }
+    .readout-cell:nth-child(3n) { border-right: 0; }
+    .readout-cell:nth-last-child(-n+3) { border-bottom: 0; }
+    .readout-cell.label { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
+    .readout-cell.value { font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+    .readout-cell.ideal { color: var(--violet); }
+    .delta-positive { color: var(--red) !important; }
+    .delta-negative { color: var(--green) !important; }
+    .note { color: var(--muted); font-size: 10px; line-height: 1.5; padding: 0 4px 3px; }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 50;
+      max-width: min(420px, calc(100vw - 36px));
+      padding: 12px 15px;
+      background: #1d1113;
+      border: 1px solid rgba(255,68,56,.35);
+      border-radius: 11px;
+      color: #ffaaa4;
+      transform: translateY(24px);
+      opacity: 0;
+      pointer-events: none;
+      transition: .2s;
+    }
+    .toast.visible { transform: translateY(0); opacity: 1; }
+    .hidden { display: none !important; }
+
+    @media (max-width: 1250px) {
+      .session-header { grid-template-columns: repeat(3, 1fr); }
+      .identity { grid-column: 1 / -1; }
+      .workspace { grid-template-columns: 210px minmax(480px, 1fr) 320px; }
+    }
+    @media (max-width: 980px) {
+      .workspace { grid-template-columns: 190px 1fr; }
+      .side { grid-column: 1 / -1; position: static; grid-template-columns: 1fr 1fr; }
+      .lap-list { max-height: 720px; }
+    }
+    @media (max-width: 720px) {
+      .topbar { align-items: flex-start; flex-wrap: wrap; }
+      .session-tabs { order: 3; width: 100%; }
+      .dashboard { padding: 10px; }
+      .session-header { grid-template-columns: 1fr 1fr; }
+      .identity { grid-column: 1 / -1; }
+      .workspace { grid-template-columns: 1fr; }
+      .laps { order: 2; }
+      .lap-list { max-height: 280px; }
+      .side { grid-template-columns: 1fr; }
+      .charts { order: 1; }
+      .side { order: 3; }
+      .dropzone { padding: 26px 18px; min-height: 350px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">JOTRACKS</span><span class="brand-sub">SESSION ANALYZER</span></div>
+    <div class="session-tabs" id="sessionTabs" aria-label="Tandas cargadas"></div>
+    <button class="load-button" id="loadButton" type="button">CARGAR TANDA</button>
+    <input class="hidden" id="fileInput" type="file" accept=".json,.jotracks.json,application/json" multiple>
+  </header>
+
+  <section class="empty" id="emptyState">
+    <div class="dropzone" id="dropzone">
+      <div>
+        <div class="drop-icon">↗</div>
+        <h1>Leé toda<br>la tanda.</h1>
+        <p>Arrastrá uno o varios archivos <strong>.jotracks.json</strong>. Todo se procesa en este navegador: vueltas, inputs, combustible, neumáticos, energía, recorrido e ideal.</p>
+        <button class="load-button" id="emptyLoadButton" type="button">SELECCIONAR ARCHIVOS</button>
+      </div>
+    </div>
+  </section>
+
+  <main class="dashboard" id="dashboard">
+    <section class="session-header">
+      <article class="identity">
+        <div class="eyebrow">Tanda cargada</div>
+        <h1 id="trackName">—</h1>
+        <div class="identity-meta" id="sessionMeta">—</div>
+      </article>
+      <article class="stat"><div class="eyebrow">Vueltas</div><strong id="lapCount">0</strong></article>
+      <article class="stat good"><div class="eyebrow">Mejor vuelta</div><strong id="bestLap">—</strong></article>
+      <article class="stat ideal"><div class="eyebrow">Ideal combinado</div><strong id="idealLap">—</strong></article>
+      <article class="stat"><div class="eyebrow">Margen encontrado</div><strong id="idealGain">—</strong></article>
+      <article class="stat fuel"><div class="eyebrow">Consumo medio</div><strong id="fuelAverage">—</strong></article>
+      <article class="stat"><div class="eyebrow">Autonomía final</div><strong id="fuelRange">—</strong></article>
+    </section>
+
+    <section class="workspace">
+      <aside class="panel laps">
+        <div class="panel-heading"><h2>Vueltas</h2><span>Elegí una</span></div>
+        <div class="lap-list" id="lapList"></div>
+      </aside>
+
+      <section class="charts">
+        <article class="chart-card">
+          <div class="chart-heading">
+            <h2>Pedales</h2>
+            <div class="chart-legend">
+              <span class="legend-item" style="color:var(--green)"><i class="legend-line"></i>Acelerador</span>
+              <span class="legend-item" style="color:var(--red)"><i class="legend-line"></i>Freno</span>
+              <span class="legend-item" style="color:var(--blue)"><i class="legend-line"></i>Embrague</span>
+              <span class="legend-item" style="color:var(--violet)"><i class="legend-line dashed"></i>Ideal</span>
+            </div>
+          </div>
+          <div class="canvas-wrap"><canvas id="pedalsCanvas"></canvas></div>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-heading">
+            <h2>Volante</h2>
+            <div class="chart-legend">
+              <span class="legend-item" style="color:var(--cyan)"><i class="legend-line"></i>Vuelta elegida</span>
+              <span class="legend-item" style="color:var(--violet)"><i class="legend-line dashed"></i>Ideal</span>
+            </div>
+          </div>
+          <div class="canvas-wrap compact"><canvas id="steerCanvas"></canvas></div>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-heading">
+            <h2>Velocidad</h2>
+            <div class="chart-legend">
+              <span class="legend-item" style="color:var(--text)"><i class="legend-line"></i>Vuelta elegida</span>
+              <span class="legend-item" style="color:var(--violet)"><i class="legend-line dashed"></i>Ideal</span>
+            </div>
+          </div>
+          <div class="canvas-wrap compact"><canvas id="speedCanvas"></canvas></div>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-heading">
+            <h2>Consumo de combustible</h2>
+            <div class="chart-legend">
+              <span class="legend-item" style="color:var(--amber)"><i class="legend-line"></i>Litros consumidos</span>
+            </div>
+          </div>
+          <div class="canvas-wrap compact"><canvas id="fuelCanvas"></canvas></div>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-heading"><h2>Delta contra el ideal</h2><span>Rojo: perdés · Verde: ganás</span></div>
+          <div class="canvas-wrap compact"><canvas id="deltaCanvas"></canvas></div>
+        </article>
+      </section>
+
+      <aside class="side">
+        <article class="panel">
+          <div class="panel-heading"><h2>Posición en pista</h2><div class="map-actions"><button class="layer-button active" id="energyToggle" type="button">ENERGÍA</button><span id="mapPercent">0%</span></div></div>
+          <div class="map-wrap">
+            <div class="map-sector" id="sectorLabel">Sector 1</div>
+            <div class="map-live">
+              <div class="gear-badge" id="gearValue">N</div>
+              <div class="map-data"><span>Combustible</span><strong id="mapFuelValue">—</strong></div>
+              <div class="map-data"><span>ERS</span><strong id="mapERSValue">—</strong></div>
+            </div>
+            <div class="energy-legend" id="energyLegend"><span><i class="deploy"></i>Despliegue</span><span><i class="recover"></i>Regeneración</span></div>
+            <canvas id="mapCanvas"></canvas>
+          </div>
+          <div class="scrubber-box">
+            <div class="scrubber-head"><span>Avanzar en la vuelta</span><strong id="distanceLabel">0 m</strong></div>
+            <input id="scrubber" type="range" min="0" max="999" value="0" step="1" aria-label="Posición dentro de la vuelta">
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading"><h2>Lectura puntual</h2><span id="lapCompound">Neumático —</span></div>
+          <div class="readout">
+            <div class="lap-summary">
+              <div><span>Compuesto</span><strong id="summaryTyre">—</strong></div>
+              <div><span>Consumo vuelta</span><strong id="summaryFuel">—</strong></div>
+              <div><span>Energía</span><strong id="summaryEnergy">—</strong></div>
+            </div>
+            <div class="readout-grid" id="readoutGrid"></div>
+          </div>
+        </article>
+        <p class="note">El ideal combina los 20 mejores minitramos reales y siempre permanece violeta. En el mapa, ámbar indica despliegue de energía y turquesa regeneración.</p>
+      </aside>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var COLORS = {
+        grid: 'rgba(255,255,255,.075)',
+        gridStrong: 'rgba(255,255,255,.14)',
+        text: '#f4f6f8',
+        muted: '#858d99',
+        green: '#48ff61',
+        red: '#ff4438',
+        blue: '#39bfff',
+        cyan: '#58dcff',
+        teal: '#4dffe0',
+        violet: '#b667ff',
+        amber: '#ffbf47'
+      };
+      var CHANNEL_KEYS = [
+        'lapTimeMs', 'throttle', 'brake', 'clutch', 'steer', 'steerDeg', 'speedKmh', 'gear',
+        'fuelLiters', 'fuelUsedLiters', 'ersLevel', 'ersDeploy', 'ersRecover', 'mgukDelivery', 'mgukRecovery',
+        'x', 'y', 'z'
+      ];
+      var DISCRETE_KEYS = { gear: true, mgukDelivery: true, mgukRecovery: true };
+      var state = { sessions: [], activeSession: 0, activeLap: 0, cursor: 0, frame: 0, showEnergy: true };
+      var els = {};
+
+      function byId(id) { return document.getElementById(id); }
+      function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
+      function number(value, fallback) { var n = Number(value); return Number.isFinite(n) ? n : (fallback || 0); }
+      function formatTime(ms, short) {
+        if (!Number.isFinite(ms) || ms <= 0) return '—';
+        var minutes = Math.floor(ms / 60000);
+        var seconds = (ms % 60000) / 1000;
+        return minutes + ':' + seconds.toFixed(short ? 3 : 3).padStart(6, '0');
+      }
+      function formatDelta(ms) {
+        if (!Number.isFinite(ms)) return '—';
+        var sign = ms > 0 ? '+' : ms < 0 ? '−' : '±';
+        return sign + (Math.abs(ms) / 1000).toFixed(3);
+      }
+      function formatLiters(value, decimals) {
+        return Number.isFinite(value) ? value.toFixed(decimals == null ? 2 : decimals) + ' L' : '—';
+      }
+      function formatGear(value) {
+        var gear = Math.round(number(value));
+        return gear < 0 ? 'R' : gear === 0 ? 'N' : String(gear);
+      }
+      function escapeHTML(value) {
+        return String(value == null ? '' : value)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      function firstDefinedIndex(array) {
+        for (var i = 0; i < array.length; i++) if (array[i] != null && Number.isFinite(array[i])) return i;
+        return -1;
+      }
+
+      function densify(source, indices, count, discrete) {
+        var result = new Array(count).fill(null);
+        if (Array.isArray(source)) {
+          for (var i = 0; i < Math.min(source.length, indices.length); i++) {
+            var index = clamp(Math.round(number(indices[i])), 0, count - 1);
+            result[index] = number(source[i]);
+          }
+        }
+        var first = firstDefinedIndex(result);
+        if (first < 0) return result.map(function () { return 0; });
+        for (var a = 0; a < first; a++) result[a] = result[first];
+        var previous = first;
+        for (var b = first + 1; b < count; b++) {
+          if (result[b] == null || !Number.isFinite(result[b])) continue;
+          var gap = b - previous;
+          for (var j = previous + 1; j < b; j++) {
+            var mix = (j - previous) / gap;
+            result[j] = discrete
+              ? result[previous]
+              : result[previous] + (result[b] - result[previous]) * mix;
+          }
+          previous = b;
+        }
+        for (var c = previous + 1; c < count; c++) result[c] = result[previous];
+        return result;
+      }
+
+      function normalizeLap(lap, count) {
+        if (!lap || !lap.channels || !Array.isArray(lap.channels.index)) throw new Error('Una vuelta no contiene canales compatibles.');
+        var dense = {};
+        CHANNEL_KEYS.forEach(function (key) {
+          dense[key] = densify(lap.channels[key], lap.channels.index, count, DISCRETE_KEYS[key]);
+        });
+        return {
+          number: number(lap.number),
+          timeMs: number(lap.timeMs),
+          valid: lap.valid !== false,
+          coverage: number(lap.coverage, 1),
+          tyreCompound: String(lap.tyreCompound || ''),
+          tyreCompoundLong: String(lap.tyreCompoundLong || lap.tyreCompound || ''),
+          fuelAvailable: lap.fuelAvailable == null ? Array.isArray(lap.channels.fuelLiters) : lap.fuelAvailable === true,
+          fuelStartLiters: number(lap.fuelStartLiters),
+          fuelEndLiters: number(lap.fuelEndLiters),
+          fuelUsedLiters: number(lap.fuelUsedLiters),
+          hybridAvailable: lap.hybridAvailable == null ? Array.isArray(lap.channels.ersLevel) : lap.hybridAvailable === true,
+          ersStartPercent: number(lap.ersStartPercent),
+          ersEndPercent: number(lap.ersEndPercent),
+          ersDeployedPercent: number(lap.ersDeployedPercent),
+          ersRecoveredPercent: number(lap.ersRecoveredPercent),
+          dense: dense
+        };
+      }
+
+      function buildIdeal(laps, count) {
+        var candidates = laps.filter(function (lap) { return lap.valid && lap.timeMs > 0; });
+        if (!candidates.length) candidates = laps.filter(function (lap) { return lap.timeMs > 0; });
+        if (!candidates.length) candidates = laps.slice();
+        var ideal = { number: 'IDEAL', timeMs: 0, valid: true, dense: {}, sources: [] };
+        CHANNEL_KEYS.forEach(function (key) { ideal.dense[key] = new Array(count).fill(0); });
+        if (!candidates.length) return ideal;
+
+        var segments = Math.min(20, Math.max(3, Math.floor(count / 40)));
+        var accumulated = 0;
+        for (var segment = 0; segment < segments; segment++) {
+          var start = Math.floor(segment * (count - 1) / segments);
+          var end = segment === segments - 1 ? count - 1 : Math.floor((segment + 1) * (count - 1) / segments);
+          var winner = candidates[0];
+          var bestDuration = Infinity;
+          candidates.forEach(function (lap) {
+            var duration = lap.dense.lapTimeMs[end] - lap.dense.lapTimeMs[start];
+            if (duration > 0 && duration < bestDuration) {
+              bestDuration = duration;
+              winner = lap;
+            }
+          });
+          if (!Number.isFinite(bestDuration)) bestDuration = Math.max(0, winner.dense.lapTimeMs[end] - winner.dense.lapTimeMs[start]);
+          ideal.sources.push({ start: start, end: end, lapNumber: winner.number, durationMs: bestDuration });
+          for (var i = start; i <= end; i++) {
+            CHANNEL_KEYS.forEach(function (key) {
+              if (key !== 'lapTimeMs') ideal.dense[key][i] = winner.dense[key][i];
+            });
+            ideal.dense.lapTimeMs[i] = accumulated + Math.max(0, winner.dense.lapTimeMs[i] - winner.dense.lapTimeMs[start]);
+          }
+          accumulated += bestDuration;
+        }
+        ideal.timeMs = accumulated;
+        return ideal;
+      }
+
+      function normalizeSession(raw, filename) {
+        if (!raw || raw.format !== 'jotracks.telemetry.session') throw new Error(filename + ': formato no reconocido.');
+        if (!Array.isArray(raw.laps) || !raw.laps.length) throw new Error(filename + ': la tanda todavía no contiene vueltas completas.');
+        var count = clamp(Math.round(number(raw.sampleCount, 1000)), 100, 5000);
+        var laps = raw.laps.map(function (lap) { return normalizeLap(lap, count); });
+        var validLaps = laps.filter(function (lap) { return lap.valid && lap.timeMs > 0; });
+        var best = (validLaps.length ? validLaps : laps).reduce(function (winner, lap) {
+          if (!winner || (lap.timeMs > 0 && lap.timeMs < winner.timeMs)) return lap;
+          return winner;
+        }, null);
+        var session = {
+          raw: raw,
+          filename: filename,
+          count: count,
+          laps: laps,
+          best: best,
+          ideal: null,
+          label: (raw.track && (raw.track.name || raw.track.id)) || filename
+        };
+        var fuelLaps = laps.filter(function (lap) { return lap.fuelAvailable && lap.fuelUsedLiters > 0.0001; });
+        session.averageFuel = fuelLaps.length
+          ? fuelLaps.reduce(function (sum, lap) { return sum + lap.fuelUsedLiters; }, 0) / fuelLaps.length
+          : 0;
+        var lastFuelLap = laps.slice().reverse().find(function (lap) { return lap.fuelAvailable; });
+        session.finalFuel = lastFuelLap ? lastFuelLap.fuelEndLiters : 0;
+        session.estimatedFuelLaps = session.averageFuel > 0 ? session.finalFuel / session.averageFuel : 0;
+        session.hasFuel = fuelLaps.length > 0 || !!(raw.capabilities && raw.capabilities.fuel);
+        session.hasHybrid = laps.some(function (lap) { return lap.hybridAvailable; }) || !!(raw.capabilities && raw.capabilities.hybrid);
+        session.ideal = buildIdeal(laps, count);
+        return session;
+      }
+
+      function currentSession() { return state.sessions[state.activeSession] || null; }
+      function currentLap() {
+        var session = currentSession();
+        return session ? session.laps[clamp(state.activeLap, 0, session.laps.length - 1)] : null;
+      }
+
+      function showToast(message) {
+        els.toast.textContent = message;
+        els.toast.classList.add('visible');
+        clearTimeout(showToast.timer);
+        showToast.timer = setTimeout(function () { els.toast.classList.remove('visible'); }, 4200);
+      }
+
+      async function loadFiles(fileList) {
+        var files = Array.from(fileList || []).filter(function (file) { return file.name.toLowerCase().endsWith('.json'); });
+        if (!files.length) { showToast('Elegí uno o más archivos .jotracks.json.'); return; }
+        var loaded = [];
+        var errors = [];
+        for (var i = 0; i < files.length; i++) {
+          try {
+            var raw = JSON.parse(await files[i].text());
+            loaded.push(normalizeSession(raw, files[i].name));
+          } catch (error) {
+            errors.push(error && error.message ? error.message : files[i].name + ': no se pudo leer.');
+          }
+        }
+        if (loaded.length) {
+          state.sessions = state.sessions.concat(loaded);
+          state.activeSession = state.sessions.length - loaded.length;
+          state.activeLap = 0;
+          state.cursor = 0;
+          renderStatic();
+          renderDynamic();
+        }
+        if (errors.length) showToast(errors.join(' '));
+        els.fileInput.value = '';
+      }
+
+      function renderSessionTabs() {
+        els.sessionTabs.innerHTML = '';
+        state.sessions.forEach(function (session, index) {
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'session-tab' + (index === state.activeSession ? ' active' : '');
+          button.textContent = session.label + ' · ' + session.laps.length + ' vtas';
+          button.addEventListener('click', function () {
+            state.activeSession = index; state.activeLap = 0; state.cursor = 0;
+            renderStatic(); renderDynamic();
+          });
+          els.sessionTabs.appendChild(button);
+        });
+      }
+
+      function renderLapList(session) {
+        els.lapList.innerHTML = '';
+        session.laps.forEach(function (lap, index) {
+          var row = document.createElement('button');
+          var isBest = session.best && lap.number === session.best.number;
+          row.type = 'button';
+          row.className = 'lap-row' + (index === state.activeLap ? ' active' : '') + (lap.valid ? '' : ' invalid');
+          row.innerHTML =
+            '<span class="lap-number">' + escapeHTML(lap.number) + '</span>' +
+            '<span><span class="lap-time">' + formatTime(lap.timeMs, true) + '</span>' +
+            '<span class="lap-meta"><i class="valid-dot"></i>' +
+            '<span>' + (lap.valid ? 'Válida' : 'Inválida') + '</span>' +
+            (isBest ? '<span class="best-tag">Mejor</span>' : '') +
+            (session.best ? '<span>' + formatDelta(lap.timeMs - session.best.timeMs) + '</span>' : '') +
+            (lap.tyreCompound ? '<span>' + escapeHTML(lap.tyreCompound) + '</span>' : '') +
+            (lap.fuelAvailable ? '<span>' + escapeHTML(formatLiters(lap.fuelUsedLiters, 2)) + '</span>' : '') +
+            '</span></span>';
+          row.addEventListener('click', function () {
+            state.activeLap = index;
+            renderLapList(session);
+            renderDynamic();
+          });
+          els.lapList.appendChild(row);
+        });
+      }
+
+      function renderStatic() {
+        var session = currentSession();
+        if (!session) return;
+        els.emptyState.classList.add('hidden');
+        els.dashboard.classList.add('visible');
+        renderSessionTabs();
+        renderLapList(session);
+        var raw = session.raw;
+        els.trackName.textContent = (raw.track && (raw.track.name || raw.track.id)) || 'Circuito';
+        var dateText = raw.createdAt ? new Date(raw.createdAt).toLocaleString('es-AR') : 'Fecha sin registrar';
+        els.sessionMeta.textContent = ((raw.car && (raw.car.name || raw.car.id)) || 'Auto') + ' · ' + (raw.driver || 'Piloto') + ' · ' + dateText;
+        els.lapCount.textContent = session.laps.length;
+        els.bestLap.textContent = session.best ? formatTime(session.best.timeMs) : '—';
+        els.idealLap.textContent = formatTime(session.ideal.timeMs);
+        els.idealGain.textContent = session.best ? formatDelta(session.best.timeMs - session.ideal.timeMs).replace('+', '') : '—';
+        els.fuelAverage.textContent = session.averageFuel > 0 ? formatLiters(session.averageFuel, 2) : '—';
+        els.fuelRange.textContent = session.estimatedFuelLaps > 0 ? session.estimatedFuelLaps.toFixed(1) + ' vtas' : '—';
+        els.energyToggle.disabled = !session.hasHybrid;
+        els.energyToggle.textContent = session.hasHybrid ? 'ENERGÍA' : 'SIN ERS';
+        els.energyToggle.classList.toggle('active', session.hasHybrid && state.showEnergy);
+        els.energyLegend.classList.toggle('hidden', !session.hasHybrid || !state.showEnergy);
+        els.scrubber.max = session.count - 1;
+        els.scrubber.value = state.cursor;
+      }
+
+      function setupCanvas(canvas) {
+        var rect = canvas.getBoundingClientRect();
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var width = Math.max(1, Math.round(rect.width));
+        var height = Math.max(1, Math.round(rect.height));
+        if (canvas.width !== Math.round(width * dpr) || canvas.height !== Math.round(height * dpr)) {
+          canvas.width = Math.round(width * dpr);
+          canvas.height = Math.round(height * dpr);
+        }
+        var ctx = canvas.getContext('2d');
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, width, height);
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        return { ctx: ctx, width: width, height: height };
+      }
+
+      function drawGrid(ctx, box, min, max, formatter) {
+        ctx.save();
+        ctx.strokeStyle = COLORS.grid;
+        ctx.lineWidth = 1;
+        ctx.fillStyle = COLORS.muted;
+        ctx.font = '10px Arial';
+        for (var xStep = 0; xStep <= 4; xStep++) {
+          var x = box.x + box.w * xStep / 4;
+          ctx.beginPath(); ctx.moveTo(x, box.y); ctx.lineTo(x, box.y + box.h); ctx.stroke();
+          ctx.textAlign = xStep === 0 ? 'left' : xStep === 4 ? 'right' : 'center';
+          ctx.fillText((xStep * 25) + '%', x, box.y + box.h + 17);
+        }
+        for (var yStep = 0; yStep <= 4; yStep++) {
+          var y = box.y + box.h * yStep / 4;
+          ctx.beginPath(); ctx.moveTo(box.x, y); ctx.lineTo(box.x + box.w, y); ctx.stroke();
+          ctx.textAlign = 'right';
+          var value = max - (max - min) * yStep / 4;
+          ctx.fillText(formatter ? formatter(value) : String(Math.round(value)), box.x - 7, y + 3);
+        }
+        ctx.restore();
+      }
+
+      function drawSeries(ctx, values, box, min, max, color, width, dash, alpha) {
+        if (!values || !values.length || max === min) return;
+        ctx.save();
+        ctx.strokeStyle = color;
+        ctx.globalAlpha = alpha == null ? 1 : alpha;
+        ctx.lineWidth = width || 1.5;
+        ctx.setLineDash(dash || []);
+        ctx.beginPath();
+        for (var i = 0; i < values.length; i++) {
+          var x = box.x + box.w * i / (values.length - 1);
+          var y = box.y + box.h * (1 - (number(values[i]) - min) / (max - min));
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawCursor(ctx, box, count) {
+        var x = box.x + box.w * state.cursor / Math.max(1, count - 1);
+        ctx.save();
+        ctx.strokeStyle = 'rgba(255,255,255,.42)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([2, 4]);
+        ctx.beginPath(); ctx.moveTo(x, box.y); ctx.lineTo(x, box.y + box.h); ctx.stroke();
+        ctx.restore();
+      }
+
+      function chartBox(surface) {
+        return { x: 43, y: 13, w: Math.max(20, surface.width - 56), h: Math.max(20, surface.height - 39) };
+      }
+
+      function renderPedals(lap, ideal, count) {
+        var s = setupCanvas(els.pedalsCanvas), ctx = s.ctx, box = chartBox(s);
+        drawGrid(ctx, box, 0, 1, function (v) { return Math.round(v * 100); });
+        drawSeries(ctx, ideal.dense.throttle, box, 0, 1, COLORS.violet, 1.3, [10, 5], .58);
+        drawSeries(ctx, ideal.dense.brake, box, 0, 1, COLORS.violet, 1.7, [3, 4], .92);
+        drawSeries(ctx, ideal.dense.clutch, box, 0, 1, COLORS.violet, 1.1, [1, 6], .4);
+        drawSeries(ctx, lap.dense.throttle, box, 0, 1, COLORS.green, 2);
+        drawSeries(ctx, lap.dense.brake, box, 0, 1, COLORS.red, 2);
+        drawSeries(ctx, lap.dense.clutch, box, 0, 1, COLORS.blue, 1.5, [], .85);
+        drawCursor(ctx, box, count);
+      }
+
+      function renderSteer(lap, ideal, count) {
+        var s = setupCanvas(els.steerCanvas), ctx = s.ctx, box = chartBox(s);
+        drawGrid(ctx, box, -1, 1, function (v) { return Math.round(v * 100); });
+        drawSeries(ctx, ideal.dense.steer, box, -1, 1, COLORS.violet, 1.7, [7, 5], .85);
+        drawSeries(ctx, lap.dense.steer, box, -1, 1, COLORS.cyan, 2);
+        drawCursor(ctx, box, count);
+      }
+
+      function renderSpeed(lap, ideal, count) {
+        var s = setupCanvas(els.speedCanvas), ctx = s.ctx, box = chartBox(s);
+        var maxValue = Math.max.apply(null, lap.dense.speedKmh.concat(ideal.dense.speedKmh));
+        maxValue = Math.max(40, Math.ceil(maxValue / 20) * 20);
+        drawGrid(ctx, box, 0, maxValue, function (v) { return Math.round(v); });
+        drawSeries(ctx, ideal.dense.speedKmh, box, 0, maxValue, COLORS.violet, 1.7, [7, 5], .9);
+        drawSeries(ctx, lap.dense.speedKmh, box, 0, maxValue, COLORS.text, 2);
+        drawCursor(ctx, box, count);
+      }
+
+      function renderFuel(session, lap, count) {
+        var s = setupCanvas(els.fuelCanvas), ctx = s.ctx;
+        if (!session.hasFuel || !lap.fuelAvailable) {
+          ctx.fillStyle = COLORS.muted;
+          ctx.font = '12px Arial';
+          ctx.textAlign = 'center';
+          ctx.fillText('Sin datos de combustible en esta vuelta', s.width / 2, s.height / 2);
+          return;
+        }
+        var box = chartBox(s);
+        var maxValue = Math.max(lap.fuelUsedLiters, Math.max.apply(null, lap.dense.fuelUsedLiters), 0.1);
+        maxValue = Math.ceil(maxValue * 10) / 10;
+        drawGrid(ctx, box, 0, maxValue, function (v) { return v.toFixed(maxValue < 1 ? 2 : 1); });
+        drawSeries(ctx, lap.dense.fuelUsedLiters, box, 0, maxValue, COLORS.amber, 2.2);
+        drawCursor(ctx, box, count);
+      }
+
+      function renderDelta(lap, ideal, count) {
+        var values = lap.dense.lapTimeMs.map(function (value, i) { return value - ideal.dense.lapTimeMs[i]; });
+        var maxAbs = Math.max(250, Math.max.apply(null, values.map(Math.abs)));
+        maxAbs = Math.ceil(maxAbs / 250) * 250;
+        var s = setupCanvas(els.deltaCanvas), ctx = s.ctx, box = chartBox(s);
+        drawGrid(ctx, box, -maxAbs, maxAbs, function (v) { return (v / 1000).toFixed(1); });
+        var zeroY = box.y + box.h / 2;
+        for (var i = 1; i < values.length; i++) {
+          var x1 = box.x + box.w * (i - 1) / (values.length - 1);
+          var x2 = box.x + box.w * i / (values.length - 1);
+          var y1 = box.y + box.h * (1 - (values[i - 1] + maxAbs) / (maxAbs * 2));
+          var y2 = box.y + box.h * (1 - (values[i] + maxAbs) / (maxAbs * 2));
+          ctx.beginPath(); ctx.moveTo(x1, zeroY); ctx.lineTo(x1, y1); ctx.lineTo(x2, y2); ctx.lineTo(x2, zeroY); ctx.closePath();
+          ctx.fillStyle = ((values[i] + values[i - 1]) / 2 >= 0) ? 'rgba(255,68,56,.24)' : 'rgba(72,255,97,.20)';
+          ctx.fill();
+        }
+        drawSeries(ctx, values, box, -maxAbs, maxAbs, COLORS.text, 1.5);
+        drawCursor(ctx, box, count);
+      }
+
+      function mapTransform(seriesList, width, height) {
+        var xs = [], zs = [];
+        seriesList.forEach(function (dense) {
+          if (!dense) return;
+          xs = xs.concat(dense.x || []);
+          zs = zs.concat(dense.z || []);
+        });
+        var minX = Math.min.apply(null, xs), maxX = Math.max.apply(null, xs);
+        var minZ = Math.min.apply(null, zs), maxZ = Math.max.apply(null, zs);
+        if (!Number.isFinite(minX) || maxX - minX < 1 || maxZ - minZ < 1) return null;
+        var padding = 25, spanX = maxX - minX, spanZ = maxZ - minZ;
+        var scale = Math.min((width - padding * 2) / spanX, (height - padding * 2) / spanZ);
+        var usedW = spanX * scale, usedH = spanZ * scale;
+        var offsetX = (width - usedW) / 2, offsetY = (height - usedH) / 2;
+        return function (x, z) {
+          return { x: offsetX + (x - minX) * scale, y: height - offsetY - (z - minZ) * scale };
+        };
+      }
+
+      function drawMapLine(ctx, dense, transform, color, width, dash, alpha) {
+        if (!dense || !transform || !dense.x.length) return;
+        ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = width; ctx.setLineDash(dash || []); ctx.globalAlpha = alpha == null ? 1 : alpha;
+        ctx.beginPath();
+        dense.x.forEach(function (x, i) {
+          var p = transform(x, dense.z[i]);
+          if (i === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+        });
+        ctx.stroke(); ctx.restore();
+      }
+
+      function drawEnergyMap(ctx, dense, transform) {
+        if (!dense || !transform || !dense.ersDeploy || !dense.ersRecover) return;
+        ctx.save();
+        ctx.lineCap = 'round';
+        for (var i = 1; i < dense.x.length; i++) {
+          var deploy = clamp((number(dense.ersDeploy[i - 1]) + number(dense.ersDeploy[i])) / 2, 0, 1);
+          var recover = clamp((number(dense.ersRecover[i - 1]) + number(dense.ersRecover[i])) / 2, 0, 1);
+          var intensity = Math.max(deploy, recover);
+          if (intensity < 0.025) continue;
+          var from = transform(dense.x[i - 1], dense.z[i - 1]);
+          var to = transform(dense.x[i], dense.z[i]);
+          ctx.beginPath(); ctx.moveTo(from.x, from.y); ctx.lineTo(to.x, to.y);
+          ctx.strokeStyle = deploy >= recover ? COLORS.amber : COLORS.teal;
+          ctx.globalAlpha = .42 + intensity * .58;
+          ctx.lineWidth = 2.5 + intensity * 4.5;
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      function renderMap(session, lap, ideal) {
+        var s = setupCanvas(els.mapCanvas), ctx = s.ctx;
+        var base = session.raw.trackMap && session.raw.trackMap.x ? {
+          x: session.raw.trackMap.x.map(number),
+          z: session.raw.trackMap.z.map(number)
+        } : null;
+        var transform = mapTransform([base, lap.dense, ideal.dense], s.width, s.height);
+        if (!transform) {
+          ctx.fillStyle = COLORS.muted; ctx.font = '12px Arial'; ctx.textAlign = 'center';
+          ctx.fillText('Mapa no disponible', s.width / 2, s.height / 2);
+          return;
+        }
+        drawMapLine(ctx, base, transform, 'rgba(255,255,255,.18)', 7, [], 1);
+        drawMapLine(ctx, base, transform, '#11151a', 4, [], 1);
+        drawMapLine(ctx, ideal.dense, transform, COLORS.violet, 2, [7, 5], .9);
+        drawMapLine(ctx, lap.dense, transform, COLORS.cyan, 2, [], .9);
+        if (session.hasHybrid && state.showEnergy) drawEnergyMap(ctx, lap.dense, transform);
+
+        var start = transform(lap.dense.x[0], lap.dense.z[0]);
+        ctx.fillStyle = COLORS.text; ctx.fillRect(start.x - 2, start.y - 7, 4, 14);
+
+        var p = clamp(state.cursor, 0, session.count - 1);
+        var selectedPoint = transform(lap.dense.x[p], lap.dense.z[p]);
+        var idealPoint = transform(ideal.dense.x[p], ideal.dense.z[p]);
+        ctx.beginPath(); ctx.arc(idealPoint.x, idealPoint.y, 7, 0, Math.PI * 2);
+        ctx.fillStyle = '#101318'; ctx.fill(); ctx.lineWidth = 3; ctx.strokeStyle = COLORS.violet; ctx.stroke();
+        ctx.beginPath(); ctx.arc(selectedPoint.x, selectedPoint.y, 6, 0, Math.PI * 2);
+        ctx.fillStyle = COLORS.cyan; ctx.fill(); ctx.lineWidth = 3; ctx.strokeStyle = '#101318'; ctx.stroke();
+        els.mapCanvas._mapTransform = transform;
+      }
+
+      function sectorAt(session, position) {
+        var sectors = Array.isArray(session.raw.sectors) ? session.raw.sectors : [];
+        var current = null;
+        sectors.forEach(function (sector) {
+          if (number(sector.position) <= position) current = sector;
+        });
+        if (current) return current.name || 'Sector';
+        if (position < 1 / 3) return 'Sector 1';
+        if (position < 2 / 3) return 'Sector 2';
+        return 'Sector 3';
+      }
+
+      function readoutRow(label, selected, ideal, selectedClass, idealClass) {
+        return '<div class="readout-cell label">' + escapeHTML(label) + '</div>' +
+          '<div class="readout-cell value ' + (selectedClass || '') + '">' + escapeHTML(selected) + '</div>' +
+          '<div class="readout-cell value ideal ' + (idealClass || '') + '">' + escapeHTML(ideal) + '</div>';
+      }
+
+      function renderReadout(session, lap, ideal) {
+        var i = clamp(state.cursor, 0, session.count - 1);
+        var delta = lap.dense.lapTimeMs[i] - ideal.dense.lapTimeMs[i];
+        var deltaClass = delta > 0 ? 'delta-positive' : delta < 0 ? 'delta-negative' : '';
+        var fuelRows = lap.fuelAvailable
+          ? readoutRow('Combustible', formatLiters(lap.dense.fuelLiters[i], 2), '—') +
+            readoutRow('Consumido', formatLiters(lap.dense.fuelUsedLiters[i], 3), '—')
+          : readoutRow('Combustible', 'Sin datos', '—');
+        var energyRows = lap.hybridAvailable
+          ? readoutRow('Carga ERS', Math.round(lap.dense.ersLevel[i] * 100) + '%', '—') +
+            readoutRow('Despliegue', Math.round(lap.dense.ersDeploy[i] * 100) + '%', Math.round(ideal.dense.ersDeploy[i] * 100) + '%') +
+            readoutRow('Regeneración', Math.round(lap.dense.ersRecover[i] * 100) + '%', Math.round(ideal.dense.ersRecover[i] * 100) + '%')
+          : readoutRow('Energía', 'Sin ERS/KERS', '—');
+        els.readoutGrid.innerHTML =
+          '<div class="readout-cell label"></div><div class="readout-cell label" style="text-align:right">VTA ' + escapeHTML(lap.number) + '</div><div class="readout-cell label ideal" style="text-align:right">IDEAL</div>' +
+          readoutRow('Tiempo', formatTime(lap.dense.lapTimeMs[i]), formatTime(ideal.dense.lapTimeMs[i])) +
+          readoutRow('Delta', formatDelta(delta), '0.000', deltaClass) +
+          readoutRow('Acelerador', Math.round(lap.dense.throttle[i] * 100) + '%', Math.round(ideal.dense.throttle[i] * 100) + '%') +
+          readoutRow('Freno', Math.round(lap.dense.brake[i] * 100) + '%', Math.round(ideal.dense.brake[i] * 100) + '%') +
+          readoutRow('Embrague', Math.round(lap.dense.clutch[i] * 100) + '%', Math.round(ideal.dense.clutch[i] * 100) + '%') +
+          readoutRow('Volante', Math.round(lap.dense.steerDeg[i]) + '°', Math.round(ideal.dense.steerDeg[i]) + '°') +
+          readoutRow('Velocidad', Math.round(lap.dense.speedKmh[i]) + ' km/h', Math.round(ideal.dense.speedKmh[i]) + ' km/h') +
+          readoutRow('Marcha', formatGear(lap.dense.gear[i]), formatGear(ideal.dense.gear[i])) +
+          fuelRows + energyRows;
+
+        els.lapCompound.textContent = 'Neumático ' + (lap.tyreCompound || '—');
+        els.summaryTyre.textContent = lap.tyreCompoundLong || lap.tyreCompound || '—';
+        els.summaryFuel.textContent = lap.fuelAvailable ? formatLiters(lap.fuelUsedLiters, 3) : 'Sin datos';
+        els.summaryEnergy.textContent = lap.hybridAvailable
+          ? 'D ' + lap.ersDeployedPercent.toFixed(1) + '% · R ' + lap.ersRecoveredPercent.toFixed(1) + '%'
+          : 'Sin ERS/KERS';
+      }
+
+      function renderDynamic() {
+        var session = currentSession(), lap = currentLap();
+        if (!session || !lap) return;
+        state.cursor = clamp(Math.round(state.cursor), 0, session.count - 1);
+        els.scrubber.value = state.cursor;
+        var position = state.cursor / Math.max(1, session.count - 1);
+        var distance = number(session.raw.track && session.raw.track.lengthM) * position;
+        els.mapPercent.textContent = Math.round(position * 100) + '%';
+        els.distanceLabel.textContent = Math.round(distance) + ' m';
+        els.sectorLabel.textContent = sectorAt(session, position);
+        els.gearValue.textContent = formatGear(lap.dense.gear[state.cursor]);
+        els.mapFuelValue.textContent = lap.fuelAvailable ? formatLiters(lap.dense.fuelLiters[state.cursor], 1) : '—';
+        if (lap.hybridAvailable) {
+          var deploy = lap.dense.ersDeploy[state.cursor], recover = lap.dense.ersRecover[state.cursor];
+          els.mapERSValue.textContent = deploy > .02 ? 'DES ' + Math.round(deploy * 100) + '%'
+            : recover > .02 ? 'REG ' + Math.round(recover * 100) + '%'
+            : Math.round(lap.dense.ersLevel[state.cursor] * 100) + '%';
+        } else {
+          els.mapERSValue.textContent = '—';
+        }
+        renderPedals(lap, session.ideal, session.count);
+        renderSteer(lap, session.ideal, session.count);
+        renderSpeed(lap, session.ideal, session.count);
+        renderFuel(session, lap, session.count);
+        renderDelta(lap, session.ideal, session.count);
+        renderMap(session, lap, session.ideal);
+        renderReadout(session, lap, session.ideal);
+      }
+
+      function scheduleDynamic() {
+        cancelAnimationFrame(state.frame);
+        state.frame = requestAnimationFrame(renderDynamic);
+      }
+
+      function bindCanvasScrub(canvas) {
+        canvas.addEventListener('pointermove', function (event) {
+          if (!currentSession()) return;
+          var rect = canvas.getBoundingClientRect();
+          var boxLeft = 43, boxRight = 13;
+          var ratio = clamp((event.clientX - rect.left - boxLeft) / Math.max(1, rect.width - boxLeft - boxRight), 0, 1);
+          state.cursor = Math.round(ratio * (currentSession().count - 1));
+          scheduleDynamic();
+        });
+      }
+
+      function nearestMapIndex(event) {
+        var session = currentSession(), lap = currentLap(), transform = els.mapCanvas._mapTransform;
+        if (!session || !lap || !transform) return;
+        var rect = els.mapCanvas.getBoundingClientRect();
+        var mx = event.clientX - rect.left, my = event.clientY - rect.top;
+        var bestIndex = 0, bestDistance = Infinity;
+        for (var i = 0; i < session.count; i += 2) {
+          var p = transform(lap.dense.x[i], lap.dense.z[i]);
+          var distance = (p.x - mx) * (p.x - mx) + (p.y - my) * (p.y - my);
+          if (distance < bestDistance) { bestDistance = distance; bestIndex = i; }
+        }
+        state.cursor = bestIndex;
+        scheduleDynamic();
+      }
+
+      function init() {
+        ['sessionTabs','loadButton','fileInput','emptyState','dropzone','emptyLoadButton','dashboard','trackName','sessionMeta','lapCount','bestLap','idealLap','idealGain','fuelAverage','fuelRange','lapList','pedalsCanvas','steerCanvas','speedCanvas','fuelCanvas','deltaCanvas','mapCanvas','mapPercent','sectorLabel','energyToggle','energyLegend','gearValue','mapFuelValue','mapERSValue','scrubber','distanceLabel','lapCompound','summaryTyre','summaryFuel','summaryEnergy','readoutGrid','toast'].forEach(function (id) { els[id] = byId(id); });
+        function openPicker() { els.fileInput.click(); }
+        els.loadButton.addEventListener('click', openPicker);
+        els.emptyLoadButton.addEventListener('click', openPicker);
+        els.fileInput.addEventListener('change', function () { loadFiles(els.fileInput.files); });
+        ['dragenter','dragover'].forEach(function (name) {
+          els.dropzone.addEventListener(name, function (event) { event.preventDefault(); els.dropzone.classList.add('dragging'); });
+        });
+        ['dragleave','drop'].forEach(function (name) {
+          els.dropzone.addEventListener(name, function (event) { event.preventDefault(); els.dropzone.classList.remove('dragging'); });
+        });
+        els.dropzone.addEventListener('drop', function (event) { loadFiles(event.dataTransfer.files); });
+        els.scrubber.addEventListener('input', function () { state.cursor = number(els.scrubber.value); scheduleDynamic(); });
+        els.energyToggle.addEventListener('click', function () {
+          var session = currentSession();
+          if (!session || !session.hasHybrid) return;
+          state.showEnergy = !state.showEnergy;
+          els.energyToggle.classList.toggle('active', state.showEnergy);
+          els.energyLegend.classList.toggle('hidden', !state.showEnergy);
+          scheduleDynamic();
+        });
+        [els.pedalsCanvas, els.steerCanvas, els.speedCanvas, els.fuelCanvas, els.deltaCanvas].forEach(bindCanvasScrub);
+        els.mapCanvas.addEventListener('pointerdown', nearestMapIndex);
+        window.addEventListener('resize', scheduleDynamic);
+      }
+
+      document.addEventListener('DOMContentLoaded', init);
+    })();
+  </script>
+</body>
+</html>
