@@ -93,7 +93,7 @@ tools/JOTRACKS_Telemetry_Analyzer.html
 El instalador descargable de la app queda en:
 
 ```text
-downloads/JOTRACKS_Telemetry_v0.3.0.zip
+downloads/JOTRACKS_Telemetry_v0.4.0.zip
 ```
 
 Si cambia la versión o el nombre del ZIP, actualizá también el enlace de descarga dentro de `telemetria.html`.
