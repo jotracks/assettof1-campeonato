@@ -116,13 +116,39 @@
   }
 
   function hydrateSiteText(site) {
+    const registration = site?.registration || {};
+    const promotion = registration.promotion || {};
+    const availableSlots = Number(registration.availableSlots ?? registration.totalSlots ?? 1);
+    const promotionActive = promotion.active === true && registration.open !== false && availableSlots > 0;
+
+    document.body.classList.toggle("registrationPromoActive", promotionActive);
     $$('[data-site-season]').forEach((node) => { node.textContent = site.seasonLabel || "TEMPORADA 2026"; });
     $$('[data-site-stage]').forEach((node) => { node.textContent = site.stageLabel || "ETAPA"; });
-    $$('[data-site-price]').forEach((node) => { node.textContent = site?.registration?.price || "Consultar"; });
+    $$('[data-site-price]').forEach((node) => {
+      node.textContent = promotionActive ? (promotion.priceLabel || "GRATIS") : (registration.price || "Consultar");
+    });
     $$('[data-site-races]').forEach((node) => {
-      const races = Number(site?.registration?.races);
+      const races = Number(registration.races);
       node.textContent = races ? `${races} fechas` : "Edición completa";
     });
+
+    $$('[data-registration-promo]').forEach((node) => { node.hidden = !promotionActive; });
+    $$('[data-registration-promo-title]').forEach((node) => { node.textContent = promotion.title || "INSCRIPCIÓN GRATIS"; });
+    $$('[data-registration-promo-subtitle]').forEach((node) => { node.textContent = promotion.subtitle || "POR TIEMPO LIMITADO"; });
+    $$('[data-registration-cta-label]').forEach((node) => {
+      node.textContent = promotionActive ? (promotion.ctaLabel || "INSCRIBITE GRATIS") : "¡INSCRIBITE AHORA!";
+    });
+
+    const stepTwo = document.querySelector("[data-registration-step-two]");
+    const stepTwoDetail = document.querySelector("[data-registration-step-two-detail]");
+    const stepThree = document.querySelector("[data-registration-step-three]");
+    const stepThreeDetail = document.querySelector("[data-registration-step-three-detail]");
+    const portalFlow = document.querySelector("[data-registration-portal-flow]");
+    if (stepTwo) stepTwo.textContent = promotionActive ? "Enviá tus datos" : "Pagá la inscripción";
+    if (stepTwoDetail) stepTwoDetail.textContent = promotionActive ? "Nombre y Steam ID" : "Mercado Pago";
+    if (stepThree) stepThree.textContent = promotionActive ? "Confirmá tu lugar" : "Enviá el comprobante";
+    if (stepThreeDetail) stepThreeDetail.textContent = "WhatsApp privado";
+    if (portalFlow) portalFlow.textContent = promotionActive ? "Reglamento → datos → WhatsApp" : "Reglamento → pago → WhatsApp";
   }
 
   function hydrateMedia(site) {

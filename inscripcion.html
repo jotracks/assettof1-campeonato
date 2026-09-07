@@ -57,10 +57,14 @@
 
     <main class="registrationPage">
       <section class="registrationHeroPage" aria-labelledby="registrationTitle">
+        <div class="registrationPromoBand registrationPromoBand--page" data-registration-promo hidden>
+          <strong data-registration-promo-title>INSCRIPCIÓN GRATIS</strong>
+          <span data-registration-promo-subtitle>POR TIEMPO LIMITADO</span>
+        </div>
         <div class="registrationHeroCopy">
           <span class="eyebrow eyebrow--filled" id="registrationStatus">INSCRIPCIONES ABIERTAS</span>
           <h2 id="registrationTitle">INSCRIBITE A<br/>ASSETTO F1</h2>
-          <p>La inscripción incluye las seis carreras. Necesitás nombre, apellido y Steam ID.</p>
+          <p id="registrationIntro">La inscripción incluye las seis carreras. Necesitás nombre, apellido y Steam ID.</p>
 
           <div class="registrationFacts" aria-label="Datos principales de la inscripción">
             <div><small>VALOR</small><strong data-registration-price>$15.000 ARS</strong></div>
@@ -76,7 +80,7 @@
             <div class="registrationCapacityTrack" aria-hidden="true"><span id="registrationCapacityBar"></span></div>
           </div>
 
-          <a class="primaryButton" href="#pago">PAGAR INSCRIPCIÓN <span aria-hidden="true">↓</span></a>
+          <a class="primaryButton" id="registrationHeroButton" href="#pago"><span data-registration-hero-cta>PAGAR INSCRIPCIÓN</span> <span aria-hidden="true">↓</span></a>
         </div>
 
         <div class="registrationHeroVisual" aria-hidden="true">
@@ -89,14 +93,19 @@
       <section class="registrationCheckout" id="pago" aria-labelledby="checkoutTitle">
         <div class="registrationCheckoutHeader">
           <div>
-            <span class="eyebrow">PAGO Y CONFIRMACIÓN</span>
+            <span class="eyebrow" id="checkoutEyebrow">PAGO Y CONFIRMACIÓN</span>
             <h2 id="checkoutTitle">PAGÁ Y ENVIÁ EL COMPROBANTE</h2>
           </div>
           <a class="secondaryButton" href="reglamento.html#s6">VER REGLAMENTO <span aria-hidden="true">→</span></a>
         </div>
 
         <div class="registrationCheckoutGrid">
-          <article class="registrationPayCard">
+          <article class="registrationPayCard" id="registrationPayCard">
+            <div class="registrationPromoCover" data-registration-promo hidden>
+              <span>OFERTA ACTIVA</span>
+              <strong data-registration-promo-title>INSCRIPCIÓN GRATIS</strong>
+              <small data-registration-promo-subtitle>POR TIEMPO LIMITADO</small>
+            </div>
             <div class="registrationPayCopy">
               <span class="registrationStepLabel">01 · PAGO</span>
               <div class="registrationPrice" data-registration-price>$15.000 ARS</div>
@@ -121,16 +130,16 @@
           </article>
 
           <article class="registrationConfirmCard" id="comprobante">
-            <span class="registrationStepLabel">02 · WHATSAPP</span>
-            <h3>ENVIÁ EL COMPROBANTE</h3>
-            <p>Mandá estos datos:</p>
+            <span class="registrationStepLabel" id="confirmStepLabel">02 · WHATSAPP</span>
+            <h3 id="confirmTitle">ENVIÁ EL COMPROBANTE</h3>
+            <p id="confirmIntro">Mandá estos datos:</p>
             <ul>
               <li>Nombre y apellido</li>
               <li>Steam ID</li>
-              <li>Comprobante de pago</li>
+              <li id="proofRequirement">Comprobante de pago</li>
             </ul>
             <a class="proofButton proofButton--large" id="proofButton" href="https://wa.me/5491169593888" target="_blank" rel="noopener noreferrer">
-              ABRIR WHATSAPP
+              <span id="proofButtonLabel">ABRIR WHATSAPP</span>
               <span aria-hidden="true">→</span>
             </a>
           </article>

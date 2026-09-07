@@ -23,11 +23,13 @@
     input.remove();
   }
 
-  function buildWhatsAppUrl(registration) {
+  function buildWhatsAppUrl(registration, promotionActive) {
     if (registration.whatsappProofUrl) return registration.whatsappProofUrl;
     const number = String(registration.whatsappNumber || "").replace(/\D/g, "");
     if (!number) return "";
-    const message = registration.whatsappMessage || "Hola Jota, me inscribí para Assetto F1.\n\nNombre y apellido:\nSteam ID:\n\nAdjunto el comprobante.";
+    const message = promotionActive
+      ? registration.promotion?.whatsappMessage || "Hola Jota, quiero inscribirme a Assetto F1.\n\nNombre y apellido:\nSteam ID:"
+      : registration.whatsappMessage || "Hola Jota, me inscribí para Assetto F1.\n\nNombre y apellido:\nSteam ID:\n\nAdjunto el comprobante.";
     return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
   }
 
@@ -91,7 +93,17 @@
     const paymentButton = document.getElementById("paymentButton");
     const copyButton = document.getElementById("copyAliasButton");
     const proofButton = document.getElementById("proofButton");
+    const proofButtonLabel = document.getElementById("proofButtonLabel");
+    const proofRequirement = document.getElementById("proofRequirement");
     const statusNode = document.getElementById("registrationStatus");
+    const introNode = document.getElementById("registrationIntro");
+    const heroButton = document.getElementById("registrationHeroButton");
+    const heroCtaNode = document.querySelector("[data-registration-hero-cta]");
+    const checkoutEyebrow = document.getElementById("checkoutEyebrow");
+    const checkoutTitle = document.getElementById("checkoutTitle");
+    const confirmStepLabel = document.getElementById("confirmStepLabel");
+    const confirmTitle = document.getElementById("confirmTitle");
+    const confirmIntro = document.getElementById("confirmIntro");
     const availabilityNode = document.getElementById("registrationAvailability");
     const capacityBar = document.getElementById("registrationCapacityBar");
     const qrHost = document.getElementById("paymentQr");
@@ -103,13 +115,25 @@
       const totalSlots = Math.max(1, Number(registration.totalSlots) || 20);
       const availableSlots = Math.min(totalSlots, Math.max(0, Number(registration.availableSlots ?? totalSlots)));
       const isOpen = registration.open !== false && availableSlots > 0;
+      const promotion = registration.promotion || {};
+      const promotionActive = promotion.active === true && isOpen;
       const paymentUrl = registration.paymentUrl || "";
-      const whatsAppUrl = buildWhatsAppUrl(registration);
+      const whatsAppUrl = buildWhatsAppUrl(registration, promotionActive);
       alias = registration.paymentAlias || alias;
 
       hydrateLinks(site);
+      document.body.classList.toggle("registrationPromoActive", promotionActive);
+      document.querySelectorAll("[data-registration-promo]").forEach((node) => { node.hidden = !promotionActive; });
+      document.querySelectorAll("[data-registration-promo-title]").forEach((node) => {
+        node.textContent = promotion.title || "INSCRIPCIÓN GRATIS";
+      });
+      document.querySelectorAll("[data-registration-promo-subtitle]").forEach((node) => {
+        node.textContent = promotion.subtitle || "POR TIEMPO LIMITADO";
+      });
       seasonNodes.forEach((node) => { node.textContent = site.seasonLabel || "TEMPORADA 2026"; });
-      priceNodes.forEach((node) => { node.textContent = registration.price || "$15.000 ARS"; });
+      priceNodes.forEach((node) => {
+        node.textContent = promotionActive ? (promotion.priceLabel || "GRATIS") : (registration.price || "$15.000 ARS");
+      });
       raceNodes.forEach((node) => { node.textContent = String(Number(registration.races) || 6); });
       capacityNodes.forEach((node) => { node.textContent = String(totalSlots); });
       availableNodes.forEach((node) => { node.textContent = String(availableSlots); });
@@ -117,11 +141,31 @@
 
       if (capacityBar) capacityBar.style.width = `${(availableSlots / totalSlots) * 100}%`;
       if (availabilityNode) availabilityNode.classList.toggle("isClosed", !isOpen);
-      if (statusNode) statusNode.textContent = isOpen ? "INSCRIPCIONES ABIERTAS" : "CUPOS COMPLETOS";
+      if (statusNode) statusNode.textContent = promotionActive ? "INSCRIPCIÓN GRATIS" : (isOpen ? "INSCRIPCIONES ABIERTAS" : "CUPOS COMPLETOS");
       document.body.classList.toggle("registrationClosed", !isOpen);
 
+      if (introNode) {
+        introNode.textContent = promotionActive
+          ? "Gratis por tiempo limitado. Necesitás nombre, apellido y Steam ID."
+          : "La inscripción incluye las seis carreras. Necesitás nombre, apellido y Steam ID.";
+      }
+      if (heroButton) heroButton.href = promotionActive ? "#comprobante" : "#pago";
+      if (heroCtaNode) heroCtaNode.textContent = promotionActive ? (promotion.ctaLabel || "INSCRIBITE GRATIS") : "PAGAR INSCRIPCIÓN";
+      if (checkoutEyebrow) checkoutEyebrow.textContent = promotionActive ? "INSCRIPCIÓN" : "PAGO Y CONFIRMACIÓN";
+      if (checkoutTitle) checkoutTitle.textContent = promotionActive ? "RESERVÁ TU LUGAR" : "PAGÁ Y ENVIÁ EL COMPROBANTE";
+      if (confirmStepLabel) confirmStepLabel.textContent = promotionActive ? "01 · WHATSAPP" : "02 · WHATSAPP";
+      if (confirmTitle) confirmTitle.textContent = promotionActive ? "CONFIRMÁ TU INSCRIPCIÓN" : "ENVIÁ EL COMPROBANTE";
+      if (confirmIntro) confirmIntro.textContent = "Mandá estos datos:";
+      if (proofRequirement) proofRequirement.hidden = promotionActive;
+      if (proofButtonLabel) proofButtonLabel.textContent = promotionActive ? "INSCRIBIRME POR WHATSAPP" : "ABRIR WHATSAPP";
+
       if (paymentButton) {
-        if (isOpen && paymentUrl) {
+        if (promotionActive) {
+          paymentButton.removeAttribute("href");
+          paymentButton.setAttribute("aria-disabled", "true");
+          paymentButton.classList.add("isDisabled");
+          paymentButton.textContent = "PROMOCIÓN ACTIVA";
+        } else if (isOpen && paymentUrl) {
           paymentButton.href = paymentUrl;
           paymentButton.removeAttribute("aria-disabled");
           paymentButton.classList.remove("isDisabled");
@@ -134,8 +178,14 @@
         }
       }
 
-      if (isOpen) renderQr(qrHost, paymentUrl, registration.paymentQrAsset);
+      if (promotionActive && qrHost) qrHost.replaceChildren();
+      else if (isOpen) renderQr(qrHost, paymentUrl, registration.paymentQrAsset);
       else if (qrHost) qrHost.innerHTML = '<span class="registrationQrClosed">SIN CUPOS</span>';
+
+      if (copyButton) {
+        copyButton.disabled = promotionActive;
+        copyButton.setAttribute("aria-hidden", promotionActive ? "true" : "false");
+      }
 
       if (proofButton && whatsAppUrl) {
         proofButton.href = whatsAppUrl;

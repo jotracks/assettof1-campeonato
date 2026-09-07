@@ -12,6 +12,14 @@
     "paymentQrAsset": "img/payment/mercado-pago-qr.png",
     "whatsappNumber": "5491169593888",
     "whatsappMessage": "Hola Jota, me inscribí para Assetto F1.\n\nNombre y apellido:\nSteam ID:\n\nAdjunto el comprobante.",
+    "promotion": {
+      "active": true,
+      "title": "INSCRIPCIÓN GRATIS",
+      "subtitle": "POR TIEMPO LIMITADO",
+      "priceLabel": "GRATIS",
+      "ctaLabel": "INSCRIBITE GRATIS",
+      "whatsappMessage": "Hola Jota, quiero inscribirme a Assetto F1.\n\nNombre y apellido:\nSteam ID:"
+    },
     "pageUrl": "inscripcion.html",
     "rulesUrl": "reglamento.html#s6"
   },
