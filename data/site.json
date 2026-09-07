@@ -50,11 +50,11 @@
     }
   },
   "nextRace": {
-    "name": "GP DE HUNGRÍA",
-    "country": "Hungría",
-    "circuit": "Hungaroring · Budapest",
-    "date": "2026-08-16T21:00:00-03:00",
-    "trackAsset": "img/tracks/hungaroring.svg"
+    "name": "GP DE MADRID",
+    "country": "Madrid",
+    "circuit": "Madring · Madrid",
+    "date": "2026-09-13T21:00:00-03:00",
+    "trackAsset": "img/tracks/madring.svg"
   },
   "trackAliases": {
     "montreal": {
@@ -86,6 +86,36 @@
       "name": "Spa-Francorchamps",
       "circuit": "Circuit de Spa-Francorchamps",
       "trackAsset": "img/tracks/spa-francorchamps.svg"
+    },
+    "hungaroring": {
+      "name": "Hungría",
+      "circuit": "Hungaroring",
+      "trackAsset": "img/tracks/hungaroring.svg"
+    },
+    "ks_zandvoort": {
+      "name": "Países Bajos",
+      "circuit": "Circuit Zandvoort",
+      "trackAsset": "img/tracks/zandvoort.svg"
+    },
+    "zandvoort2023": {
+      "name": "Países Bajos",
+      "circuit": "Circuit Zandvoort",
+      "trackAsset": "img/tracks/zandvoort.svg"
+    },
+    "monza": {
+      "name": "Italia",
+      "circuit": "Autodromo Nazionale Monza",
+      "trackAsset": "img/tracks/monza.svg"
+    },
+    "rj_monza": {
+      "name": "Italia",
+      "circuit": "Autodromo Nazionale Monza",
+      "trackAsset": "img/tracks/monza.svg"
+    },
+    "madring": {
+      "name": "Madrid",
+      "circuit": "Madring",
+      "trackAsset": "img/tracks/madring.svg"
     }
   },
   "teams": {
