@@ -1,6 +1,6 @@
 {
   "seasonLabel": "TEMPORADA 2026",
-  "stageLabel": "ETAPA 3",
+  "stageLabel": "ETAPA 4",
   "registration": {
     "open": true,
     "price": "$15.000 ARS",
@@ -58,11 +58,11 @@
     }
   },
   "nextRace": {
-    "name": "GP DE MADRID",
-    "country": "Madrid",
-    "circuit": "Madring · Madrid",
-    "date": "2026-09-13T21:00:00-03:00",
-    "trackAsset": "img/tracks/madring.svg"
+    "name": "GP DE SINGAPUR",
+    "country": "Singapur",
+    "circuit": "Marina Bay Street Circuit",
+    "date": "2026-10-11T21:00:00-03:00",
+    "trackAsset": "img/tracks/singapore.svg"
   },
   "trackAliases": {
     "montreal": {
@@ -124,6 +124,41 @@
       "name": "Madrid",
       "circuit": "Madring",
       "trackAsset": "img/tracks/madring.svg"
+    },
+    "madrid": {
+      "name": "Madrid",
+      "circuit": "Madring · Madrid",
+      "trackAsset": "img/tracks/madring.svg"
+    },
+    "madrid_street_circuit_2026": {
+      "name": "Madrid",
+      "circuit": "Madring · Madrid",
+      "trackAsset": "img/tracks/madring.svg"
+    },
+    "baku": {
+      "name": "Azerbaiyán",
+      "circuit": "Baku City Circuit",
+      "trackAsset": "img/tracks/baku.svg"
+    },
+    "baku_2022": {
+      "name": "Azerbaiyán",
+      "circuit": "Baku City Circuit",
+      "trackAsset": "img/tracks/baku.svg"
+    },
+    "sepang": {
+      "name": "Sepang",
+      "circuit": "Sepang International Circuit · Malasia",
+      "trackAsset": "img/tracks/sepang.svg"
+    },
+    "singapore": {
+      "name": "Singapur",
+      "circuit": "Marina Bay Street Circuit",
+      "trackAsset": "img/tracks/singapore.svg"
+    },
+    "marina_bay": {
+      "name": "Singapur",
+      "circuit": "Marina Bay Street Circuit",
+      "trackAsset": "img/tracks/singapore.svg"
     }
   },
   "teams": {
@@ -176,7 +211,13 @@
     "title": "REVISTA ASSETTO F1",
     "directory": "magazine",
     "prefix": "mag_pag_",
-    "extensions": ["webp", "png", "jpg", "jpeg", "svg"],
+    "extensions": [
+      "webp",
+      "png",
+      "jpg",
+      "jpeg",
+      "svg"
+    ],
     "maxPages": 60,
     "fallbackPages": [
       "magazine/mag_pag_1.png",

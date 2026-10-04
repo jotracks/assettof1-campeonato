@@ -63,6 +63,29 @@
       .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")))[0] || null;
   }
 
+  function normalizeTrackKey(value) {
+    return String(value || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "");
+  }
+
+  function resolveTrackData(site, trackName) {
+    const aliases = site?.trackAliases || {};
+    if (aliases[trackName]) return aliases[trackName];
+
+    const target = normalizeTrackKey(trackName);
+    if (!target) return {};
+
+    const match = Object.entries(aliases)
+      .map(([key, value]) => ({ key: normalizeTrackKey(key), value }))
+      .filter((entry) => entry.key.length >= 4 && (target.includes(entry.key) || entry.key.includes(target)))
+      .sort((a, b) => b.key.length - a.key.length)[0];
+
+    return match?.value || {};
+  }
+
   function computeLeaders(championship) {
     const pointsTable = championship?.meta?.points || [20, 17, 14, 12, 10, 8, 6, 4, 2, 1];
     const drivers = new Map();
@@ -171,7 +194,7 @@
   function hydrateRaceSummary(site, championship) {
     const race = latestRace(championship);
     const winner = winnerFromRace(race);
-    const trackData = site?.trackAliases?.[race?.trackName] || {};
+    const trackData = resolveTrackData(site, race?.trackName);
     const trackName = trackData.name || race?.trackName || "Última carrera";
     const circuit = trackData.circuit || trackName;
     const trackAsset = trackData.trackAsset || "img/tracks/spa-francorchamps.svg";
