@@ -388,7 +388,7 @@
     const zoomInButton = $("[data-mag-zoom-in]");
     const zoomResetButton = $("[data-mag-zoom-reset]");
     const mobileQuery = window.matchMedia("(max-width: 720px)");
-    let cursor = 0;
+    // La revista abre siempre en la hoja más reciente publicada.\n    let cursor = Math.max(0, pages.length - 1);
     let zoom = 1;
     const zoomMin = 1;
     const zoomMax = 3;
@@ -421,29 +421,28 @@
     }
 
     function render() {
-      const mobile = mobileQuery.matches;
       const leftIndex = cursor;
-      const rightIndex = mobile ? -1 : leftIndex + 1;
+      const rightIndex = -1;
       if (left) {
         left.src = pages[leftIndex] || "";
         left.hidden = !pages[leftIndex];
         left.alt = pages[leftIndex] ? `Página ${leftIndex + 1} de la revista` : "";
       }
       if (right) {
-        right.src = pages[rightIndex] || "";
-        right.hidden = !pages[rightIndex];
-        right.alt = pages[rightIndex] ? `Página ${rightIndex + 1} de la revista` : "";
+        right.src = "";
+        right.hidden = true;
+        right.removeAttribute("alt");
       }
-      const shown = rightIndex >= 0 && pages[rightIndex] ? `${leftIndex + 1}–${rightIndex + 1}` : `${leftIndex + 1}`;
-      setText("#magazineStatus", pages.length ? `PÁGINAS ${shown} DE ${pages.length}` : "SIN PÁGINAS PUBLICADAS");
+      const shown = pages[leftIndex] ? `${leftIndex + 1}` : "0";
+      setText("#magazineStatus", pages.length ? `PÁGINA ${shown} DE ${pages.length}` : "SIN PÁGINAS PUBLICADAS");
       $("[data-mag-prev]")?.toggleAttribute("disabled", cursor === 0);
-      const nextCursor = cursor + (mobile ? 1 : 2);
+      const nextCursor = cursor + 1;
       $("[data-mag-next]")?.toggleAttribute("disabled", nextCursor >= pages.length);
     }
 
     function move(direction) {
-      const step = mobileQuery.matches ? 1 : 2;
-      const maxCursor = mobileQuery.matches ? Math.max(0, pages.length - 1) : Math.max(0, Math.floor((pages.length - 1) / 2) * 2);
+      const step = 1;
+      const maxCursor = Math.max(0, pages.length - 1);
       cursor = Math.min(maxCursor, Math.max(0, cursor + direction * step));
       setZoom(1, false);
       render();
@@ -498,7 +497,6 @@
       if (Math.abs(delta) > 55) move(delta < 0 ? 1 : -1);
     });
     mobileQuery.addEventListener?.("change", () => {
-      if (!mobileQuery.matches) cursor = Math.floor(cursor / 2) * 2;
       setZoom(1, false);
       render();
     });
