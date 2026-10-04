@@ -388,7 +388,8 @@
     const zoomInButton = $("[data-mag-zoom-in]");
     const zoomResetButton = $("[data-mag-zoom-reset]");
     const mobileQuery = window.matchMedia("(max-width: 720px)");
-    // La revista abre siempre en la hoja más reciente publicada.\n    let cursor = Math.max(0, pages.length - 1);
+    // La revista abre siempre en la hoja más reciente publicada.
+    let cursor = Math.max(0, pages.length - 1);
     let zoom = 1;
     const zoomMin = 1;
     const zoomMax = 3;
