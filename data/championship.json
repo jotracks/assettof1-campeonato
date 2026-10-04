@@ -137,7 +137,7 @@
           "pos": 8,
           "driverName": "Tomás Morguen",
           "driverGuid": "76561198194725750",
-          "team": "Sauber",
+          "team": "Audi",
           "grid": 8,
           "laps": 24,
           "tyresUsed": [
@@ -288,7 +288,7 @@
           "pos": 9,
           "driverName": "alan aboukrat",
           "driverGuid": "76561199310540011",
-          "team": "function Object() { [native code] }",
+          "team": "",
           "grid": 11,
           "laps": 29,
           "tyresUsed": [
@@ -303,7 +303,7 @@
           "pos": 10,
           "driverName": "Tomás Morguen",
           "driverGuid": "76561198194725750",
-          "team": "Sauber",
+          "team": "Audi",
           "grid": 5,
           "laps": 28,
           "tyresUsed": [
@@ -334,7 +334,7 @@
           "pos": 12,
           "driverName": "Ignacio Negri",
           "driverGuid": "76561198187168879",
-          "team": "function Object() { [native code] }",
+          "team": "",
           "grid": 4,
           "laps": 11,
           "tyresUsed": [
@@ -424,7 +424,7 @@
           "pos": 5,
           "driverName": "Tomás Morguen",
           "driverGuid": "76561198194725750",
-          "team": "Sauber",
+          "team": "Audi",
           "grid": 2,
           "laps": 9,
           "tyresUsed": [
