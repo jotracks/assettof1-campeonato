@@ -1,7 +1,7 @@
 {
   "meta": {
     "season": "Temporada 2026",
-    "updatedAt": "2026-09-21 14:04",
+    "updatedAt": "2026-10-04 15:34",
     "points": [
       20,
       17,
@@ -76,7 +76,7 @@
           "pos": 4,
           "driverName": "Juan Scocozza",
           "driverGuid": "76561199778294845",
-          "team": "Alpíne",
+          "team": "Alpine",
           "grid": 3,
           "laps": 27,
           "tyresUsed": [
@@ -210,7 +210,7 @@
           "pos": 4,
           "driverName": "Juan Scocozza",
           "driverGuid": "76561199778294845",
-          "team": "Alpíne",
+          "team": "Alpine",
           "grid": 2,
           "laps": 35,
           "tyresUsed": [
@@ -273,7 +273,7 @@
           "pos": 8,
           "driverName": "Sebastian.Sanchez",
           "driverGuid": "76561199778180071",
-          "team": "function Object() { [native code] }",
+          "team": "Mclaren",
           "grid": 10,
           "laps": 32,
           "tyresUsed": [
@@ -393,7 +393,7 @@
           "pos": 3,
           "driverName": "Jota Mossotto",
           "driverGuid": "76561198099278383",
-          "team": "Red Bulls",
+          "team": "Red Bull",
           "grid": 4,
           "laps": 25,
           "tyresUsed": [
@@ -463,6 +463,184 @@
           ],
           "penaltyExtraMs": 0,
           "finalTimeMs": 1408990,
+          "status": "DSQ",
+          "points": 0
+        }
+      ]
+    },
+    {
+      "round": "",
+      "date": "2026-09-27T22:21:00-03:00",
+      "trackName": "baku_2022",
+      "fastestLap": {
+        "driverName": "Jonathan Monzon",
+        "time": "1:39.771",
+        "lapTimeMs": 99771,
+        "tyre": "C4"
+      },
+      "results": [
+        {
+          "pos": 1,
+          "driverName": "Jonathan Monzon",
+          "driverGuid": "76561199557580783",
+          "team": "Ferrari",
+          "grid": 1,
+          "laps": 26,
+          "tyresUsed": [
+            "C3",
+            "C4"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2703080,
+          "status": "OK"
+        },
+        {
+          "pos": 2,
+          "driverName": "Juanma Bellegarde",
+          "driverGuid": "76561197960267366",
+          "team": "Racing Bulls",
+          "grid": 3,
+          "laps": 26,
+          "tyresUsed": [
+            "C2",
+            "C3"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2747981,
+          "status": "OK"
+        },
+        {
+          "pos": 3,
+          "driverName": "Lucas Dionicio",
+          "driverGuid": "76561198141428723",
+          "team": "Mclaren",
+          "grid": 11,
+          "laps": 26,
+          "tyresUsed": [
+            "C3",
+            "C4"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 9002737120,
+          "status": "OK"
+        },
+        {
+          "pos": 4,
+          "driverName": "Sebastian.Sanchez",
+          "driverGuid": "76561199778180071",
+          "team": "Mclaren",
+          "grid": 6,
+          "laps": 26,
+          "tyresUsed": [
+            "C3",
+            "C4"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 15002859033,
+          "status": "OK"
+        },
+        {
+          "pos": 5,
+          "driverName": "Juan Scocozza",
+          "driverGuid": "76561199778294845",
+          "team": "Alpine",
+          "grid": 2,
+          "laps": 25,
+          "tyresUsed": [
+            "C3",
+            "C4"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2719076,
+          "status": "OK"
+        },
+        {
+          "pos": 6,
+          "driverName": "Federico Paternó",
+          "driverGuid": "76561198317504479",
+          "team": "Mercedes",
+          "grid": 4,
+          "laps": 25,
+          "tyresUsed": [
+            "C3",
+            "C4"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2728656,
+          "status": "OK"
+        },
+        {
+          "pos": 7,
+          "driverName": "Claudio Eberhart",
+          "driverGuid": "76561198085972282",
+          "team": "Aston Martin",
+          "grid": 8,
+          "laps": 25,
+          "tyresUsed": [
+            "C3",
+            "C4"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2765686,
+          "status": "OK"
+        },
+        {
+          "pos": 8,
+          "driverName": "Jota Mossotto",
+          "driverGuid": "76561198099278383",
+          "team": "Red Bull",
+          "grid": 5,
+          "laps": 24,
+          "tyresUsed": [
+            "C3",
+            "C4"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2722429,
+          "status": "OK"
+        },
+        {
+          "pos": 9,
+          "driverName": "Patricio Yorio",
+          "driverGuid": "76561199568719898",
+          "team": "Haas",
+          "grid": 9,
+          "laps": 23,
+          "tyresUsed": [
+            "C4"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2747628,
+          "status": "DSQ",
+          "points": 0
+        },
+        {
+          "pos": 10,
+          "driverName": "NOYA",
+          "driverGuid": "76561198262804779",
+          "team": "",
+          "grid": 7,
+          "laps": 8,
+          "tyresUsed": [
+            "C4"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 5001170485,
+          "status": "DSQ",
+          "points": 0
+        },
+        {
+          "pos": 11,
+          "driverName": "Matias Roldan",
+          "driverGuid": "76561199387734212",
+          "team": "Williams",
+          "grid": 10,
+          "laps": 5,
+          "tyresUsed": [
+            "C3"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 618517,
           "status": "DSQ",
           "points": 0
         }
