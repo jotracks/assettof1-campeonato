@@ -1524,9 +1524,9 @@ body .ourRaceTag{background:rgba(255,255,255,.06)!important;border-color:rgba(25
 .magazineViewport::-webkit-scrollbar{width:10px;height:10px}
 .magazineViewport::-webkit-scrollbar-track{background:#17181c}
 .magazineViewport::-webkit-scrollbar-thumb{border:2px solid #17181c;border-radius:999px;background:#ef1738}
-.magazineSpread{width:100%;display:grid;grid-template-columns:1fr 1fr;align-items:stretch;overflow:hidden;border:8px solid #050506;border-radius:8px;background:#050506;box-shadow:0 34px 55px rgba(0,0,0,.72);transform:perspective(1800px) rotateX(1deg);transform-origin:top left}
+.magazineSpread{width:100%;max-width:720px;margin:0 auto;display:grid;grid-template-columns:1fr;align-items:stretch;overflow:hidden;border:8px solid #050506;border-radius:8px;background:#050506;box-shadow:0 34px 55px rgba(0,0,0,.72);transform:perspective(1800px) rotateX(1deg);transform-origin:top left}
 .magazineSpread img{width:100%;min-width:0;aspect-ratio:5/7;object-fit:contain;object-position:center;background:#e8e5dc}
-.magazineSpread img+img{border-left:2px solid rgba(0,0,0,.62)}
+.magazineSpread img+img{display:none}
 .magazineArrow{width:54px;height:54px;background:#23242a}
 .magazineArrow--next{background:#ef1738}
 .magazineArrow:disabled{opacity:.25;cursor:not-allowed}
