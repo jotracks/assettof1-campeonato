@@ -221,7 +221,8 @@
     "maxPages": 60,
     "fallbackPages": [
       "magazine/mag_pag_1.png",
-      "magazine/mag_pag_2.jpg"
+      "magazine/mag_pag_2.jpg",
+      "magazine/mag_pag_3.webp"
     ]
   }
 }
