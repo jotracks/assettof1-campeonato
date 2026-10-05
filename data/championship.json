@@ -1,7 +1,7 @@
 {
   "meta": {
     "season": "Temporada 2026",
-    "updatedAt": "2026-10-05 13:05",
+    "updatedAt": "2026-10-05 13:54",
     "points": [
       20,
       17,
@@ -690,6 +690,21 @@
         },
         {
           "pos": 3,
+          "driverName": "Federico Paternó",
+          "driverGuid": "76561198317504479",
+          "team": "Mercedes",
+          "grid": 7,
+          "laps": 27,
+          "tyresUsed": [
+            "C2",
+            "C3"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2719273,
+          "status": "OK"
+        },
+        {
+          "pos": 4,
           "driverName": "Lucas Dionicio",
           "driverGuid": "76561198141428723",
           "team": "Mclaren",
@@ -704,7 +719,7 @@
           "status": "OK"
         },
         {
-          "pos": 4,
+          "pos": 5,
           "driverName": "Matias daSilva",
           "driverGuid": "76561198935125634",
           "team": "Mclaren",
@@ -719,7 +734,7 @@
           "status": "OK"
         },
         {
-          "pos": 5,
+          "pos": 6,
           "driverName": "Tomás Morguen",
           "driverGuid": "76561198194725750",
           "team": "Sauber",
@@ -734,7 +749,7 @@
           "status": "OK"
         },
         {
-          "pos": 6,
+          "pos": 7,
           "driverName": "Alejandro Oppenlander",
           "driverGuid": "76561198978892459",
           "team": "Audi",
@@ -749,7 +764,7 @@
           "status": "OK"
         },
         {
-          "pos": 7,
+          "pos": 8,
           "driverName": "Claudio Eberhart",
           "driverGuid": "76561198085972282",
           "team": "Aston Martin",
@@ -765,7 +780,7 @@
           "status": "OK"
         },
         {
-          "pos": 8,
+          "pos": 9,
           "driverName": "Juan Scocozza",
           "driverGuid": "76561199778294845",
           "team": "Alpine",
@@ -778,21 +793,6 @@
           ],
           "penaltyExtraMs": 0,
           "finalTimeMs": 2800282,
-          "status": "OK"
-        },
-        {
-          "pos": 9,
-          "driverName": "Federico Paternó",
-          "driverGuid": "76561198317504479",
-          "team": "Mercedes",
-          "grid": 7,
-          "laps": 27,
-          "tyresUsed": [
-            "C2",
-            "C3"
-          ],
-          "penaltyExtraMs": 0,
-          "finalTimeMs": 1002719273,
           "status": "OK"
         },
         {
