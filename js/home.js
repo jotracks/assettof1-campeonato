@@ -37,8 +37,9 @@
   }
 
   function formatRaceDate(value, includeTime = true) {
+    if (!value) return "FECHA A CONFIRMAR";
     const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return "—";
+    if (Number.isNaN(date.getTime())) return "FECHA A CONFIRMAR";
     const parts = new Intl.DateTimeFormat("es-AR", {
       timeZone: "America/Argentina/Buenos_Aires",
       day: "2-digit",

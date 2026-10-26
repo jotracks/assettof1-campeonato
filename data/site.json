@@ -58,11 +58,11 @@
     }
   },
   "nextRace": {
-    "name": "GP DE SINGAPUR",
-    "country": "Singapur",
-    "circuit": "Marina Bay Street Circuit",
-    "date": "2026-10-11T21:00:00-03:00",
-    "trackAsset": "img/tracks/singapore.svg"
+    "name": "GP DE MÉXICO",
+    "country": "México",
+    "circuit": "Autódromo Hermanos Rodríguez",
+    "date": null,
+    "trackAsset": "img/tracks/mexico-city.svg"
   },
   "trackAliases": {
     "montreal": {
@@ -159,6 +159,11 @@
       "name": "Singapur",
       "circuit": "Marina Bay Street Circuit",
       "trackAsset": "img/tracks/singapore.svg"
+    },
+    "cota_2022": {
+      "name": "Austin",
+      "circuit": "Circuit of the Americas",
+      "trackAsset": "img/tracks/cota.svg"
     }
   },
   "teams": {
@@ -209,7 +214,7 @@
   },
   "magazine": {
     "title": "REVISTA ASSETTO F1",
-    "directory": "magazine",
+    "directory": "magazine/etapa-4-austin",
     "prefix": "mag_pag_",
     "extensions": [
       "webp",
@@ -220,9 +225,11 @@
     ],
     "maxPages": 60,
     "fallbackPages": [
-      "magazine/mag_pag_1.png",
-      "magazine/mag_pag_2.jpg",
-      "magazine/mag_pag_3.webp"
+      "magazine/etapa-4-austin/mag_pag_1.webp",
+      "magazine/etapa-4-austin/mag_pag_2.webp",
+      "magazine/etapa-4-austin/mag_pag_3.webp",
+      "magazine/etapa-4-austin/mag_pag_4.webp",
+      "magazine/etapa-4-austin/mag_pag_5.webp"
     ]
   }
 }

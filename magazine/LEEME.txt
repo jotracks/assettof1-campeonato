@@ -1,19 +1,11 @@
 REVISTA ASSETTO F1
 
-Para sumar páginas nuevas, guardalas en esta carpeta con nombres correlativos:
+La edición activa se define en data/site.json, en magazine.directory.
+La edición actual está en magazine/etapa-4-austin/.
 
-mag_pag_1.png
-mag_pag_2.png
-mag_pag_3.png
+Páginas: mag_pag_1.webp, mag_pag_2.webp, mag_pag_3.webp…
+Mantené la numeración correlativa, sin saltear números. Se admiten WEBP, PNG, JPG, JPEG y SVG.
 
-También admite WEBP, JPG, JPEG y SVG. La página busca automáticamente la siguiente numeración y se detiene cuando encuentra el primer número faltante.
-
-IMPORTANTE:
-- Los archivos tienen que estar dentro de la carpeta magazine.
-- Los nombres deben ir en minúsculas y sin espacios.
-- No puede faltar un número intermedio.
-- Se pueden mezclar formatos: mag_pag_1.png, mag_pag_2.jpg, mag_pag_3.webp.
-
-El detector funciona tanto en GitHub Pages como al abrir index.html directamente desde la PC. No hace falta modificar el HTML, JavaScript ni JSON.
-
-El lector permite ampliar cada página hasta 300% con los controles − y +, doble clic o Ctrl + rueda del mouse.
+Para activar otra edición, cambiá magazine.directory y fallbackPages en data/site.json.
+El visor detecta las páginas en GitHub Pages y al abrir index.html desde la PC.
+El zoom llega a 300% con los controles, doble clic o Ctrl + rueda.
