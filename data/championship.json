@@ -17,7 +17,7 @@
   },
   "races": [
     {
-      "round": "",
+      "round": "1",
       "date": "2026-10-25T22:14:00-03:00",
       "trackName": "cota_2022",
       "fastestLap": {
@@ -83,8 +83,8 @@
             "C3",
             "C4"
           ],
-          "penaltyExtraMs": 0,
-          "finalTimeMs": 17002791885,
+          "penaltyExtraMs": 17000,
+          "finalTimeMs": 2808885,
           "status": "OK"
         },
         {
@@ -134,6 +134,21 @@
         },
         {
           "pos": 8,
+          "driverName": "Horacio Oviedo",
+          "driverGuid": "76561198334732590",
+          "team": "Mercedes",
+          "grid": 7,
+          "laps": 27,
+          "tyresUsed": [
+            "C2",
+            "C3"
+          ],
+          "penaltyExtraMs": 5000,
+          "finalTimeMs": 2801973,
+          "status": "OK"
+        },
+        {
+          "pos": 9,
           "driverName": "Jota Mossotto",
           "driverGuid": "76561198099278383",
           "team": "Red Bull",
@@ -148,7 +163,7 @@
           "status": "OK"
         },
         {
-          "pos": 9,
+          "pos": 10,
           "driverName": "Gonzalo Serrano",
           "driverGuid": "76561198217207716",
           "team": "Racing Bulls",
@@ -163,7 +178,7 @@
           "status": "OK"
         },
         {
-          "pos": 10,
+          "pos": 11,
           "driverName": "Federico Paternó",
           "driverGuid": "76561198317504479",
           "team": "Mercedes",
@@ -175,21 +190,6 @@
           ],
           "penaltyExtraMs": 0,
           "finalTimeMs": 2814049,
-          "status": "OK"
-        },
-        {
-          "pos": 11,
-          "driverName": "Horacio Oviedo",
-          "driverGuid": "76561198334732590",
-          "team": "Mercedes",
-          "grid": 7,
-          "laps": 27,
-          "tyresUsed": [
-            "C2",
-            "C3"
-          ],
-          "penaltyExtraMs": 0,
-          "finalTimeMs": 5002796973,
           "status": "OK"
         },
         {
@@ -219,9 +219,10 @@
             "C4",
             "C5"
           ],
-          "penaltyExtraMs": 0,
-          "finalTimeMs": 241002745304,
-          "status": "OK"
+          "penaltyExtraMs": 241000,
+          "finalTimeMs": 2986302,
+          "status": "OK",
+          "lapPenalty": 2
         },
         {
           "pos": 14,

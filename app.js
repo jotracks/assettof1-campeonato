@@ -512,6 +512,8 @@ function formatNotes(r) {
   if (st === "DSQ") notes.push(badge("dsq", "DSQ"));
   const penMs = Number(r.penaltyExtraMs || 0);
   if (penMs > 0) notes.push(badge("pen", `+${(penMs / 1000).toFixed(1)}s`));
+  const lapPenalty = Number(r.lapPenalty || 0);
+  if (lapPenalty > 0) notes.push(badge("pen", `-${lapPenalty} ${lapPenalty === 1 ? "VUELTA" : "VUELTAS"}`));
   return notes.join(" ");
 }
 
