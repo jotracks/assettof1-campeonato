@@ -207,6 +207,7 @@
     setText("#lastRaceHeroDate", formatRaceDate(race?.date, false));
     setText("#podiumRaceRound", race?.round ? "FECHA " + race.round : "ÚLTIMA FECHA");
     setText("#podiumTrackName", trackName);
+    setText("#magazineEditionLabel", trackName.toUpperCase());
     setText("#lastRaceTabLabel", `RESUMEN ${trackName}`.toUpperCase());
     setText("#lastRaceCardTrack", trackName);
     setText("#lastRaceCardWinner", winner?.driverName || "—");
@@ -241,52 +242,62 @@
     }
   }
 
-  function renderRacePodium(championship) {
-    const race = latestRace(championship);
-    const host = $("#racePodium");
+  function renderChampionshipTopThree(championship, site) {
+    const host = $("#championshipTopThree");
     if (!host) return;
 
-    const results = (race?.results || [])
-      .filter((result) => Number(result.pos) > 0 && String(result.status || "OK").toUpperCase() !== "DSQ")
-      .slice()
-      .sort((a, b) => Number(a.pos) - Number(b.pos))
-      .slice(0, 3);
+    const leaders = computeLeaders(championship).slice(0, 3);
+    const teamEntries = Object.entries(site?.teams || {});
 
-    if (!results.length) {
+    if (!leaders.length) {
       const empty = document.createElement("li");
-      empty.className = "podiumEmpty";
-      empty.textContent = "Todavía no hay resultados cargados.";
+      empty.className = "championshipEmpty";
+      empty.textContent = "Todavía no hay posiciones cargadas.";
       host.replaceChildren(empty);
       return;
     }
 
-    const entries = results.map((result) => {
-      const position = Number(result.pos);
-      const item = document.createElement("li");
-      item.className = "podiumEntry podiumEntry--" + position;
+    const rows = leaders.map((driver, index) => {
+      const row = document.createElement("li");
+      row.className = "championshipStandingRow championshipStandingRow--" + (index + 1);
 
       const rank = document.createElement("span");
-      rank.className = "podiumPosition";
-      rank.textContent = String(position).padStart(2, "0");
-      rank.setAttribute("aria-label", "Posición " + position);
+      rank.className = "championshipRank";
+      rank.textContent = (index + 1) + "º";
 
-      const driver = document.createElement("span");
-      driver.className = "podiumDriver";
+      const identity = document.createElement("span");
+      identity.className = "championshipDriver";
       const name = document.createElement("strong");
-      name.textContent = result.driverName || "—";
+      name.textContent = driver.name || "—";
       const team = document.createElement("small");
-      team.textContent = result.team || "—";
-      driver.append(name, team);
+      team.textContent = driver.team || "—";
+      identity.append(name, team);
 
-      const time = document.createElement("span");
-      time.className = "podiumResultTime";
-      time.textContent = formatClock(result.finalTimeMs);
+      const points = document.createElement("span");
+      points.className = "championshipPoints";
+      const score = document.createElement("strong");
+      score.textContent = String(driver.points);
+      const unit = document.createElement("small");
+      unit.textContent = "PTS";
+      points.append(score, unit);
 
-      item.append(rank, driver, time);
-      return item;
+      row.append(rank, identity, points);
+      const normalizedTeam = normalizeTrackKey(driver.team);
+      const match = teamEntries.find(([teamName]) => normalizeTrackKey(teamName) === normalizedTeam);
+      if (match?.[1]?.color) row.style.setProperty("--team-color", match[1].color);
+      if (match?.[1]?.asset) {
+        const logo = document.createElement("img");
+        logo.className = "championshipTeamLogo";
+        logo.src = match[1].asset;
+        logo.alt = "Logo de " + (driver.team || "equipo");
+        logo.loading = "lazy";
+        logo.addEventListener("error", () => logo.remove(), { once: true });
+        row.append(logo);
+      }
+      return row;
     });
 
-    host.replaceChildren(...entries);
+    host.replaceChildren(...rows);
   }
 
   function initCarousel() {
@@ -450,12 +461,14 @@
 
     function setZoom(nextZoom, preserveCenter = true) {
       if (!spread || !viewport) return;
+      const compactView = Boolean(viewer.closest(".homeMagazinePanel")) && document.fullscreenElement !== fullscreenTarget;
+      const baseWidth = compactView ? Math.min(180, Math.max(1, viewport.clientWidth)) : Math.max(1, viewport.clientWidth);
       const previousWidth = Math.max(1, viewport.scrollWidth);
       const previousHeight = Math.max(1, viewport.scrollHeight);
       const centerX = (viewport.scrollLeft + viewport.clientWidth / 2) / previousWidth;
       const centerY = (viewport.scrollTop + viewport.clientHeight / 2) / previousHeight;
       zoom = Math.min(zoomMax, Math.max(zoomMin, Math.round(nextZoom * 100) / 100));
-      spread.style.width = `${Math.round(zoom * 100)}%`;
+      spread.style.width = compactView ? `${Math.round(baseWidth * zoom)}px` : `${Math.round(zoom * 100)}%`;
       spread.style.marginInline = zoom === 1 ? "auto" : "0";
       setText("#magazineZoomValue", `${Math.round(zoom * 100)}%`);
       zoomOutButton?.toggleAttribute("disabled", zoom <= zoomMin);
@@ -514,8 +527,8 @@
       } catch (_) {}
     });
     document.addEventListener("fullscreenchange", () => {
-      if (!fullscreenButton) return;
-      fullscreenButton.textContent = document.fullscreenElement === fullscreenTarget ? "SALIR DE PANTALLA COMPLETA" : "PANTALLA COMPLETA";
+      if (fullscreenButton) fullscreenButton.textContent = document.fullscreenElement === fullscreenTarget ? "SALIR DE PANTALLA COMPLETA" : "PANTALLA COMPLETA";
+      setZoom(zoom, false);
     });
     viewer.addEventListener("keydown", (event) => {
       if (event.key === "ArrowLeft") move(-1);
@@ -574,7 +587,7 @@
     hydrateSiteText(site);
     hydrateMedia(site);
     hydrateRaceSummary(site, championship);
-    renderRacePodium(championship);
+    renderChampionshipTopThree(championship, site);
     initStandingsControls();
     initMagazine(site);
   }
