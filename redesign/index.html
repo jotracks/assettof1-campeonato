@@ -26,9 +26,8 @@
     <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-calendario" aria-controls="view-calendario" data-tab="calendario">CALENDARIO</button>
     <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-revista" aria-controls="view-revista" data-tab="revista">REVISTA</button>
     <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-reglamento" aria-controls="view-reglamento" data-tab="reglamento">REGLAMENTO</button>
-    <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-inscripcion" aria-controls="view-inscripcion" data-tab="inscripcion">INSCRIPCIÓN</button>
-    <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-sanciones" aria-controls="view-sanciones" data-tab="sanciones">SANCIONES</button>
     <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-herramientas" aria-controls="view-herramientas" data-tab="herramientas">HERRAMIENTAS</button>
+    <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-inscripcion" aria-controls="view-inscripcion" data-tab="inscripcion">INSCRIPCIÓN</button>
   </nav>
 
   <main class="appMain">
@@ -83,7 +82,7 @@
 
       <section class="homeRaceArchive" aria-labelledby="homeRaceArchiveTitle">
         <header class="homeArchiveHead">
-          <div><span>ARCHIVO DEPORTIVO / RESULTADOS OFICIALES</span><h2 id="homeRaceArchiveTitle">RESULTADOS DE<br/><em>TODAS LAS CARRERAS</em></h2></div>
+          <div><h2 id="homeRaceArchiveTitle">RESULTADOS</h2></div>
           <strong id="homeRaceCount">— CARRERAS</strong>
         </header>
         <div class="homeArchiveList" id="homeRaceArchiveList"><p class="homeArchiveEmpty">Cargando resultados…</p></div>
@@ -148,7 +147,7 @@
     </section>
 
     <section class="view" id="view-reglamento" role="tabpanel" data-view="reglamento" aria-labelledby="tab-reglamento" hidden>
-      <header class="pageIntro"><span>DOCUMENTO OFICIAL / TEMPORADA 2026</span><h1>REGLAMENTO<br/><em>DE CARRERA</em></h1><p>Normas vigentes para todos los pilotos inscriptos.</p></header>
+      <header class="pageIntro"><span>NORMAS OFICIALES / TEMPORADA 2026</span><h1>REGLAMENTO<br/><em>Y SANCIONES</em></h1><p>Normas vigentes para todos los pilotos inscriptos.</p></header>
       <div class="ruleStatusGrid">
         <div><small>REAL PENALTY</small><strong>EN PAUSA</strong></div>
         <div><small>DRS ASSIST</small><strong>EN PRUEBA</strong></div>
@@ -156,7 +155,7 @@
         <div><small>BOXES</small><strong>80 KM/H · DRIVE THROUGH</strong></div>
       </div>
       <nav class="ruleIndex" aria-label="Índice del reglamento">
-        <button type="button" data-rule-jump="rule-0">00 GENERAL</button><button type="button" data-rule-jump="rule-1">01 FORMATO</button><button type="button" data-rule-jump="rule-2">02 BANDERAS</button><button type="button" data-rule-jump="rule-3">03 SANCIONES</button><button type="button" data-rule-jump="rule-4">04 DENUNCIAS</button><button type="button" data-rule-jump="rule-5">05 TÉCNICA</button><button type="button" data-rule-jump="rule-6">06 INSCRIPCIÓN</button><button type="button" data-rule-jump="rule-7">07 PUNTOS</button><button type="button" data-rule-jump="rule-8">08 CALENDARIO</button>
+        <button type="button" data-rule-jump="rule-0">00 GENERAL</button><button type="button" data-rule-jump="rule-1">01 FORMATO</button><button type="button" data-rule-jump="rule-2">02 BANDERAS</button><button type="button" data-rule-jump="rule-3">03 SANCIONES</button><button type="button" data-rule-jump="rule-4">04 DENUNCIAS</button><button type="button" data-rule-jump="rule-5">05 TÉCNICA</button><button type="button" data-rule-jump="rule-6">06 INSCRIPCIÓN</button><button type="button" data-rule-jump="rule-7">07 PUNTOS</button><button type="button" data-rule-jump="rule-8">08 CALENDARIO</button><button type="button" data-rule-jump="rule-9">09 ESCALA DE SANCIONES</button>
       </nav>
       <div class="rulesAccordion">
         <details id="rule-0"><summary><span>00</span><b>DISPOSICIONES GENERALES</b><i>+</i></summary><div class="ruleBody"><p>El campeonato es competitivo y prioriza el respeto en pista en todas las sesiones. La organización se reserva el derecho de admisión y permanencia.</p><h3>Nombre en el servidor</h3><ul><li>Formato obligatorio: NOMBRE APELLIDO (ej.: Juan Pérez).</li><li>No se permiten apodos, prefijos, números, caracteres especiales ni tags.</li><li>El incumplimiento puede causar expulsión de la sesión o carrera; la reincidencia puede derivar en baneo permanente.</li></ul><h3>Aplicaciones de carrera</h3><ul><li>Real Penalty no se utiliza momentáneamente y no es obligatorio hasta nuevo aviso.</li><li>En carrera se utiliza DRS Assist para evitar aperturas accidentales del DRS.</li><li>La app está en período de prueba y puede fallar. Si hay un fallo general, afecta a todos por igual.</li><li><a href="https://www.overtake.gg/downloads/drs-assist.87289/" target="_blank" rel="noopener noreferrer">Descargar DRS Assist en OverTake ↗</a></li></ul><h3>Conducta y actualizaciones</h3><p>Las maniobras peligrosas o antideportivas se sancionan. El reglamento puede modificarse durante el campeonato; rige siempre la última versión publicada.</p></div></details>
@@ -168,6 +167,21 @@
         <details id="rule-6"><summary><span>06</span><b>INSCRIPCIÓN Y PREMIOS</b><i>+</i></summary><div class="ruleBody"><ul><li>Grilla máxima: 20 cupos.</li><li>La inscripción cubre las seis carreras de la etapa en curso.</li><li>Para ser campeón se requiere 85% de asistencia: cinco de seis carreras.</li><li>La inscripción es obligatoria para participar y sumar puntos.</li><li>El valor y la disponibilidad vigentes se muestran en la pestaña Inscripción. No se realizan devoluciones.</li></ul><h3>Premios</h3><p>El fondo corresponde a un porcentaje de las inscripciones y lo define la organización. Distribución: 1.º 45%, 2.º 35%, 3.º 20%. El monto total se comunica antes de cada mini campeonato.</p><button type="button" class="inlineAction" data-go="inscripcion">VER INSCRIPCIÓN →</button></div></details>
         <details id="rule-7"><summary><span>07</span><b>SISTEMA DE PUNTUACIÓN</b><i>+</i></summary><div class="ruleBody"><p>Solo suman puntos los pilotos inscriptos y clasificados en el resultado oficial. Las penalizaciones pueden modificar la clasificación.</p><div class="pointsScale"><span>1.º <b>20</b></span><span>2.º <b>17</b></span><span>3.º <b>14</b></span><span>4.º <b>12</b></span><span>5.º <b>10</b></span><span>6.º <b>8</b></span><span>7.º <b>6</b></span><span>8.º <b>4</b></span><span>9.º <b>2</b></span><span>10.º <b>1</b></span></div></div></details>
         <details id="rule-8"><summary><span>08</span><b>CALENDARIO OFICIAL</b><i>+</i></summary><div class="ruleBody"><p>24 fechas divididas en cuatro etapas de seis carreras. Cualquier cambio se refleja en el calendario oficial.</p><button type="button" class="inlineAction" data-go="calendario">VER CALENDARIO →</button></div></details>
+        <details id="rule-9"><summary><span>09</span><b>CRITERIO Y ESCALA DE SANCIONES</b><i>+</i></summary><div class="ruleBody">
+          <p>La sanción considera el contexto, el daño, la posición devuelta y la reincidencia.</p>
+          <div class="penaltyScale">
+            <article><span>+5s</span><b>ERROR LEVE</b><p>Perjuicio menor o riesgo controlado.</p></article>
+            <article><span>+10s</span><b>ERROR CLARO</b><p>Daño deportivo real o pérdida relevante.</p></article>
+            <article><span>+20s</span><b>ERROR GRAVE</b><p>Incidente fuerte, trompo claro o carrera comprometida.</p></article>
+            <article><span>+30s</span><b>MUY GRAVE</b><p>Conducción temeraria, deliberada o extremadamente peligrosa.</p></article>
+          </div>
+          <div class="sanctionInfoGrid">
+            <article><span>01</span><h2>REVISIÓN</h2><p>Los comisarios revisan repeticiones, cámaras y telemetría disponible.</p></article>
+            <article><span>02</span><h2>DENUNCIA</h2><p>Presentala dentro de las dos horas posteriores a la carrera. Adjuntá video, vuelta y pilotos involucrados.</p></article>
+            <article><span>03</span><h2>APELACIÓN</h2><p>Una sanción automática se apela con evidencia técnica objetiva, dentro del plazo informado por la organización.</p></article>
+          </div>
+          <div class="sanctionNote"><strong>REAL PENALTY NO ESTÁ ACTIVO.</strong><span>No se usa momentáneamente ni es obligatorio hasta nuevo aviso. Las penalizaciones vigentes se aplican según este reglamento.</span><button type="button" data-rule-jump="rule-3">VER PENALIZACIONES →</button></div>
+        </div></details>
       </div>
     </section>
 
@@ -197,21 +211,6 @@
       <p class="registrationFootnote">La grilla tiene un máximo de 20 lugares. La disponibilidad se actualiza desde la configuración de la página.</p>
     </section>
 
-    <section class="view" id="view-sanciones" role="tabpanel" data-view="sanciones" aria-labelledby="tab-sanciones" hidden>
-      <header class="pageIntro"><span>CRITERIO DEPORTIVO / COMISARIOS</span><h1>CRITERIO<br/><em>DE SANCIONES</em></h1><p>Referencia para evaluar incidentes. Cada caso considera contexto, daño, posición devuelta y reincidencia.</p></header>
-      <div class="penaltyScale">
-        <article><span>+5s</span><b>ERROR LEVE</b><p>Perjuicio menor o riesgo controlado.</p></article>
-        <article><span>+10s</span><b>ERROR CLARO</b><p>Daño deportivo real o pérdida relevante.</p></article>
-        <article><span>+20s</span><b>ERROR GRAVE</b><p>Incidente fuerte, trompo claro o carrera comprometida.</p></article>
-        <article><span>+30s</span><b>MUY GRAVE</b><p>Conducción temeraria, deliberada o extremadamente peligrosa.</p></article>
-      </div>
-      <div class="sanctionInfoGrid">
-        <article><span>01</span><h2>REVISIÓN</h2><p>Los comisarios revisan repeticiones, cámaras y telemetría disponible.</p></article>
-        <article><span>02</span><h2>DENUNCIA</h2><p>Presentala dentro de las dos horas posteriores a la carrera. Adjuntá video, vuelta y pilotos involucrados.</p></article>
-        <article><span>03</span><h2>APELACIÓN</h2><p>Una sanción automática se apela con evidencia técnica objetiva, dentro del plazo informado por la organización.</p></article>
-      </div>
-      <div class="sanctionNote"><strong>REAL PENALTY NO ESTÁ ACTIVO.</strong><span>No se usa momentáneamente y no es obligatorio hasta nuevo aviso. Las sanciones vigentes se aplican según el reglamento del campeonato.</span><button type="button" data-go="reglamento">LEER REGLAMENTO →</button></div>
-    </section>
 
     <section class="view" id="view-herramientas" role="tabpanel" data-view="herramientas" aria-labelledby="tab-herramientas" hidden>
       <header class="pageIntro"><span>JOTRACKS / UTILIDADES</span><h1>HERRAMIENTAS<br/><em>DE CARRERA</em></h1><p>Analizá tus vueltas o consultá el live timing del servidor.</p></header>
