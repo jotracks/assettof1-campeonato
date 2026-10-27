@@ -380,3 +380,9 @@ td strong{color:#fff;font-size:10px}
 .serverTop:hover{border-color:var(--yellow);background:#202226;color:#fff}
 @media(max-width:760px){.topActions{gap:7px}.serverTop{min-height:36px;padding:0 9px;font-size:8px}}
 @media(max-width:420px){.serverTop{min-height:31px;padding:0 7px;font-size:7px}}
+
+/* Ajustes solicitados: archivo de resultados a todo el ancho del cuerpo */
+.homeRaceArchive{width:100%}
+.homeArchiveHead h2{margin-top:0}
+.homeArchiveList{grid-template-columns:minmax(0,1fr)}
+@media(max-width:760px){.homeArchiveList{grid-template-columns:minmax(0,1fr)}}
