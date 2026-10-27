@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" href="img/favicon.png"/>
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/tw.css"/>
+  <link rel="stylesheet" href="css/redesign.css"/>
 </head>
 <body class="pageHome">
   <div class="wrap">
@@ -53,114 +54,56 @@
     </header>
 
     <main>
-      <section class="homeCarousel" id="homeCarousel" aria-label="Información destacada" aria-roledescription="carrusel">
-        <div class="carouselViewport">
-          <article class="carouselSlide carouselSlide--race" data-slide-index="0" aria-hidden="true">
-            <img class="carouselBackdrop" id="lastRaceBackdrop" src="img/media/pack-battle-wide.webp" alt="" aria-hidden="true" decoding="async"/>
-            <div class="carouselCopy">
-              <span class="eyebrow">ÚLTIMA CARRERA</span>
-              <h2 id="lastRaceHeroTitle">SEPANG</h2>
-              <p class="carouselLead" id="lastRaceHeroLead">Sepang International Circuit · Malasia</p>
-              <div class="heroStatLine">
-                <span>GANADOR</span>
-                <strong id="lastRaceHeroWinner">—</strong>
-              </div>
-              <a class="primaryButton" href="#resultsArchive">VER RESULTADOS <span aria-hidden="true">→</span></a>
+      <section class="homeFeatureHero" id="homeFeature" aria-label="Resumen del campeonato">
+        <article class="featureRaceCard">
+          <img class="featureRaceBackdrop" id="lastRaceBackdrop" src="img/media/pack-battle-wide.webp" alt="" aria-hidden="true" decoding="async"/>
+          <div class="featureRaceShade"></div>
+          <div class="featureRaceContent">
+            <div class="featureEyebrow"><span class="featureLiveDot"></span> ÚLTIMA CARRERA <span class="featureDivider">/</span> <span data-site-stage>ETAPA 4</span></div>
+            <h2 id="lastRaceHeroTitle">AUSTIN</h2>
+            <p class="featureRaceCircuit" id="lastRaceHeroLead">Circuit of the Americas</p>
+            <div class="featureRaceStats">
+              <div><small>GANADOR</small><strong id="lastRaceHeroWinner">—</strong></div>
+              <div><small>TIEMPO</small><strong id="lastRaceHeroTime">—</strong></div>
+              <div><small>FECHA</small><strong id="lastRaceHeroDate">—</strong></div>
             </div>
-            <div class="carouselVisual carouselVisual--track">
-              <img id="lastRaceHeroTrack" src="img/tracks/sepang.svg" alt="Trazado de Sepang"/>
+            <a class="featureResultsLink" href="#podium">RESULTADOS DE LA CARRERA <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="featureTrackBadge">
+            <img id="lastRaceHeroTrack" src="img/tracks/cota.svg" alt="Trazado de Austin"/>
+            <span>TRAZADO DE CARRERA</span>
+          </div>
+        </article>
+
+        <div class="featureRail">
+          <article class="nextRaceFeature">
+            <img class="nextRaceBackdrop" id="nextRaceBackdrop" src="img/media/mercedes-overhead-wide.webp" alt="" aria-hidden="true" decoding="async"/>
+            <div class="nextRaceShade"></div>
+            <div class="nextRaceContent">
+              <span class="featureEyebrow">PRÓXIMA FECHA</span>
+              <h2 id="nextRaceHeroTitle">GP DE MÉXICO</h2>
+              <p id="nextRaceHeroCircuit">Autódromo Hermanos Rodríguez</p>
+              <div class="nextRaceInfo">
+                <img id="nextRaceHeroTrack" src="img/tracks/mexico-city.svg" alt="Trazado de México"/>
+                <div><small>FECHA</small><strong id="nextRaceHeroDate">FECHA A CONFIRMAR</strong></div>
+              </div>
+              <a class="nextRaceLink" href="calendario.html">VER CALENDARIO <span aria-hidden="true">→</span></a>
             </div>
           </article>
 
-          <article class="carouselSlide carouselSlide--next" data-slide-index="1" aria-hidden="true">
-            <img class="carouselBackdrop" id="nextRaceBackdrop" src="img/media/mercedes-overhead-wide.webp" alt="" aria-hidden="true" decoding="async"/>
-            <div class="carouselCopy">
-              <span class="eyebrow">PRÓXIMA FECHA</span>
-              <h2 id="nextRaceHeroTitle">GP DE SINGAPUR</h2>
-              <p class="carouselLead" id="nextRaceHeroCircuit">Marina Bay Street Circuit</p>
-              <div class="heroStatLine">
-                <span>DOMINGO</span>
-                <strong id="nextRaceHeroDate">11 OCT · 21:00 ARG</strong>
-              </div>
-              <a class="primaryButton" href="calendario.html">VER CALENDARIO <span aria-hidden="true">→</span></a>
-            </div>
-            <div class="carouselVisual carouselVisual--track">
-              <img id="nextRaceHeroTrack" src="img/tracks/singapore.svg" alt="Trazado de Marina Bay"/>
-            </div>
-          </article>
-
-          <article class="carouselSlide carouselSlide--youtube" data-slide-index="2" aria-hidden="true">
-            <img class="carouselBackdrop" id="youtubeBackdrop" src="img/media/mercedes-sunset-wide.webp" alt="" aria-hidden="true" decoding="async"/>
-            <div class="carouselCopy">
-              <span class="eyebrow">TRANSMISIÓN OFICIAL</span>
-              <h2>VIVÍ LA CARRERA EN DIRECTO</h2>
-              <p class="carouselLead">CLASIFICACIÓN, CARRERA Y RELATO DE JOTA Y PELUCA.</p>
-              <div class="liveStatus"><span class="liveDot"></span> <span id="nextBroadcastStatus">PRÓXIMA TRANSMISIÓN · DOMINGO 21:00</span></div>
-              <a class="primaryButton primaryButton--youtube" data-link="youtube" href="https://www.youtube.com/@jotracks-ac/streams" target="_blank" rel="noopener noreferrer">VER EN YOUTUBE <span aria-hidden="true">▶</span></a>
-            </div>
-            <div class="carouselVisual carouselVisual--broadcast" aria-hidden="true">
-              <div class="broadcastFrame">
-                <img id="youtubeWindowImage" src="img/media/youtube-broadcast.webp" alt="" decoding="async"/>
-                <div class="broadcastShade"></div>
-                <div class="broadcastPlay">▶</div>
-                <span>ASSETTO F1 · TRANSMISIÓN OFICIAL</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="carouselSlide carouselSlide--registration" data-slide-index="3" aria-hidden="true">
-            <img class="carouselBackdrop" id="registrationBackdrop" src="img/media/pack-straight-wide.webp" alt="" aria-hidden="true" decoding="async"/>
-            <div class="registrationPromoBand registrationPromoBand--carousel" data-registration-promo hidden>
+          <article class="signupFeature">
+            <div class="signupPromoBadge" data-registration-promo hidden>
               <strong data-registration-promo-title>INSCRIPCIÓN GRATIS</strong>
               <span data-registration-promo-subtitle>POR TIEMPO LIMITADO</span>
             </div>
-            <div class="carouselCopy carouselCopy--registration">
-              <span class="eyebrow eyebrow--filled">INSCRIPCIONES ABIERTAS</span>
-              <h2>¡INSCRIBITE<br/>AHORA!</h2>
-              <p class="carouselLead"><span data-site-stage>Etapa 3</span> · <span data-site-races>6 fechas</span> · <span data-site-price>$15.000 ARS</span></p>
-              <ol class="registrationSteps" aria-label="Pasos de inscripción">
-                <li><b>1</b><span><strong>Leé el reglamento</strong><small>Condiciones claras</small></span></li>
-                <li><b>2</b><span><strong data-registration-step-two>Pagá la inscripción</strong><small data-registration-step-two-detail>Mercado Pago</small></span></li>
-                <li><b>3</b><span><strong data-registration-step-three>Enviá el comprobante</strong><small data-registration-step-three-detail>WhatsApp privado</small></span></li>
-              </ol>
-              <a class="primaryButton" data-link="registration" href="inscripcion.html"><span data-registration-cta-label>¡INSCRIBITE AHORA!</span> <span aria-hidden="true">→</span></a>
+            <div class="signupFeatureCopy">
+              <span class="signupFeatureLabel">ASSETTO F1 <span data-site-stage>ETAPA 4</span></span>
+              <h2>INSCRIBITE AL CAMPEONATO</h2>
+              <p><span data-site-races>6 fechas</span><span class="signupFeatureDot">·</span><span data-site-price>GRATIS</span></p>
             </div>
-            <div class="carouselVisual carouselVisual--registration" aria-hidden="true">
-              <div class="registrationNumber">03</div>
-              <span>ETAPA</span>
-              <strong>2026</strong>
-            </div>
-          </article>
-
-          <article class="carouselSlide carouselSlide--telemetry isActive" data-slide-index="4" aria-hidden="false">
-            <img class="carouselBackdrop" id="telemetryBackdrop" src="img/media/jotracks-telemetry-analyzer.png" alt="" aria-hidden="true" decoding="async"/>
-            <div class="carouselCopy">
-              <span class="eyebrow telemetryEyebrow">NUEVA HERRAMIENTA JOTRACKS</span>
-              <h2>MEJORÁ CADA<br/>VUELTA.</h2>
-              <p class="carouselLead">PEDALES, VOLANTE, COMBUSTIBLE, NEUMÁTICOS, ENERGÍA Y TU IDEAL COMBINADO.</p>
-              <div class="heroStatLine"><span>IDEAL</span><strong style="color:#c477ff">SIEMPRE VIOLETA</strong></div>
-              <a class="primaryButton primaryButton--telemetry" data-link="telemetry" href="telemetria.html">ABRIR ANALIZADOR <span aria-hidden="true">→</span></a>
-            </div>
-            <div class="carouselVisual carouselVisual--telemetry" aria-hidden="true">
-              <div class="telemetryCarouselFrame">
-                <img src="img/media/jotracks-telemetry-analyzer.png" alt="" decoding="async"/>
-                <div class="telemetryCarouselBrand"><img src="img/jotracks-logo.png" alt=""/><span>SESSION ANALYZER</span></div>
-              </div>
-            </div>
+            <a class="signupFeatureLink" data-link="registration" href="inscripcion.html"><span data-registration-cta-label>¡INSCRIBITE AHORA!</span><span aria-hidden="true">→</span></a>
           </article>
         </div>
-
-        <div class="carouselControls">
-          <div class="carouselTabs" role="tablist" aria-label="Secciones destacadas">
-            <button type="button" role="tab" aria-selected="false" data-carousel-go="0"><small>01</small><span id="lastRaceTabLabel">RESUMEN SEPANG</span></button>
-            <button type="button" role="tab" aria-selected="false" data-carousel-go="1"><small>02</small><span>PRÓXIMA FECHA</span></button>
-            <button type="button" role="tab" aria-selected="false" data-carousel-go="2"><small>03</small><span>YOUTUBE</span></button>
-            <button type="button" role="tab" aria-selected="false" data-carousel-go="3"><small>04</small><span>INSCRIPCIÓN</span></button>
-            <button class="isActive" type="button" role="tab" aria-selected="true" data-carousel-go="4"><small>05 · ACTIVO</small><span>TELEMETRÍA</span></button>
-          </div>
-          <button class="carouselArrow" type="button" data-carousel-next aria-label="Siguiente destacado">›</button>
-        </div>
-        <p class="srOnly" id="carouselStatus" aria-live="polite">Analizador de telemetría</p>
       </section>
 
       <div class="card" id="loadCard" style="display:none">
@@ -171,26 +114,26 @@
         </div>
       </div>
 
-      <section class="quickGrid" aria-label="Resumen del campeonato">
-        <article class="quickCard quickCard--last">
-          <span class="eyebrow">ÚLTIMA CARRERA</span>
-          <h2 id="lastRaceCardTrack">Sepang</h2>
-          <p>Ganador · <strong id="lastRaceCardWinner">—</strong></p>
-          <div class="quickResult"><span id="lastRaceCardTeam">—</span><b id="lastRaceCardTime">—</b></div>
-          <img id="lastRaceCardTrackImg" src="img/tracks/sepang.svg" alt="Trazado de Sepang"/>
+      <section class="homeHighlights" aria-label="Podio y transmisión">
+        <article class="racePodiumCard" id="podium">
+          <div class="podiumHeading">
+            <div><span class="eyebrow">ÚLTIMA FECHA <span class="podiumHeadingDivider">/</span> <span id="podiumRaceRound">ETAPA 4</span></span><h2>Podio de carrera</h2></div>
+            <p id="podiumTrackName">Austin</p>
+          </div>
+          <ol class="racePodium" id="racePodium" aria-label="Resultados del podio">
+            <li class="podiumEmpty">Cargando resultados…</li>
+          </ol>
         </article>
-        <article class="quickCard quickCard--next">
-          <span class="eyebrow">PRÓXIMA FECHA</span>
-          <h2 id="nextRaceCardName">Singapur</h2>
-          <p id="nextRaceCardCircuit">Marina Bay Street Circuit</p>
-          <div class="quickResult"><span id="nextRaceCardDate">11 OCT</span><b>21:00 ARG</b></div>
-          <img id="nextRaceCardTrackImg" src="img/tracks/singapore.svg" alt="Trazado de Marina Bay"/>
-        </article>
-        <article class="quickCard quickCard--leaders">
-          <span class="eyebrow">LÍDERES</span>
-          <h2>Campeonato</h2>
-          <ol class="leadersSummary" id="leadersSummary"><li><span>Calculando posiciones…</span></li></ol>
-        </article>
+
+        <a class="broadcastFeature" data-link="youtube" href="https://www.youtube.com/@jotracks-ac/streams" target="_blank" rel="noopener noreferrer" aria-label="Ver relato de Jota y Peluca en YouTube">
+          <img id="youtubeWindowImage" src="img/media/youtube-broadcast.webp" alt="" decoding="async"/>
+          <span class="broadcastFeatureShade"></span>
+          <span class="broadcastFeatureContent">
+            <span class="broadcastFeatureEyebrow"><span class="broadcastPlayIcon">▶</span> TRANSMISIÓN EN YOUTUBE</span>
+            <strong>RELATO DE<br/>JOTA Y PELUCA</strong>
+            <span class="broadcastFeatureLink">VER CANAL <span aria-hidden="true">↗</span></span>
+          </span>
+        </a>
       </section>
 
       <section class="card standingsCardV2" id="standingsCard">
@@ -271,6 +214,6 @@
 
   <script src="js/data-snapshot.js" defer></script>
   <script src="js/app.js" defer></script>
-  <script src="js/home.js?v=20261004-mag-single" defer></script>
+  <script src="js/home.js?v=20261027-redesign" defer></script>
 </body>
 </html>
