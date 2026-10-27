@@ -25,6 +25,7 @@
   };
   const latestRace = championship => (championship?.races || []).slice().sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")))[0] || null;
   const raceWinner = race => (race?.results || []).slice().sort((a,b)=>Number(a.pos||999)-Number(b.pos||999)).find(r=>String(r.status||"OK").toUpperCase()!=="DSQ") || null;
+  const raceLaps = race => Number(race?.laps) || Number((race?.results || []).find(result=>Number(result.laps)>0)?.laps) || "—";
   const getTrack = (name) => {
     const aliases=currentSite.trackAliases || {};
     if(aliases[name]) return aliases[name];
@@ -80,7 +81,7 @@
       if(id==="herramientas") loadToolFrame("telemetria");
       window.scrollTo({top:0,behavior:"smooth"});
     }
-    const tabs=$(".navTab");
+    const tabs=$$(".navTab");
     tabs.forEach((tab,index)=>tab.addEventListener("keydown",event=>{
       if(!["ArrowRight","ArrowLeft","Home","End"].includes(event.key))return;
       event.preventDefault();
@@ -120,10 +121,10 @@
     }));
   }
   function renderResults(race,races){
-    const alias=getTrack(race?.trackName), name=alias.name||race?.trackName||"Última carrera", winner=raceWinner(race);
+    const alias=getTrack(race?.trackName), name=alias.name||race?.trackName||"Última carrera", winner=raceWinner(race), laps=raceLaps(race);
     setText("#resultTitle",name.toUpperCase());
-    setText("#resultSummary",(alias.circuit||name)+" · "+(race?.laps||"—")+" vueltas");
-    setText("#resultWinner",winner?.driverName||"—");setText("#resultLaps",race?.laps||"—");
+    setText("#resultSummary",(alias.circuit||name)+" · "+(laps)+" vueltas");
+    setText("#resultWinner",winner?.driverName||"—");setText("#resultLaps",laps);
     setText("#resultDate",formatDate(race?.date));setText("#resultCount",(race?.results||[]).filter(r=>Number(r.pos)>0).length);
     setText("#resultTrackCircuit",alias.circuit||name);
     const body=$("#raceResults");
@@ -329,7 +330,7 @@
     setText("#heroWinner",winner?.driverName||"—");setText("#heroWinnerTime",formatTime(winner?.finalTimeMs));
     setText("#heroRound",currentRace?.round?"FECHA "+currentRace.round:"ÚLTIMA FECHA");
     setText("#heroRaceDate",formatDate(currentRace?.date));
-    setText("#raceLaps",currentRace?.laps||"—");
+    setText("#raceLaps",raceLaps(currentRace));
     setText("#fastestLapTime",currentRace?.fastestLap?.time||"—");
     setText("#fastestLapPilot",currentRace?.fastestLap?.driverName||"—");
     if(currentSite.media?.carousel?.lastRace?.src)$("#heroBackdrop").src=currentSite.media.carousel.lastRace.src;
@@ -337,7 +338,7 @@
     setText("#nextDate",next.date?formatDate(next.date,true):"FECHA A CONFIRMAR");
     if(next.trackAsset)$("#nextTrack").src=next.trackAsset;
     if(currentSite.media?.carousel?.nextRace?.src)$("#nextBackdrop").src=currentSite.media.carousel.nextRace.src;
-    setText("#resultSummary",(track.circuit||track.name||currentRace?.trackName||"")+" · "+(currentRace?.laps||"—")+" VUELTAS");
+    setText("#resultSummary",(track.circuit||track.name||currentRace?.trackName||"")+" · "+(raceLaps(currentRace))+" VUELTAS");
     renderTopRows(currentRace);renderResults(currentRace,races);renderStandings();renderCalendar(schedule);
     setupRegistration();setupMagazine(currentSite.magazine||{},currentRace);
     setupNavigation();setupTools();setupRuleNavigation();setupModalNavigation();
