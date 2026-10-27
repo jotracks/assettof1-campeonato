@@ -3,134 +3,236 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="description" content="Assetto F1 — campeonato, resultados, próxima fecha y transmisiones."/>
-  <title>Assetto F1 — Nueva versión en prueba</title>
+  <meta name="description" content="Assetto F1: resultados, campeonato, calendario, revista y reglamento en un solo sitio."/>
+  <title>Assetto F1 — Campeonato</title>
   <link rel="icon" type="image/png" href="img/favicon.png"/>
-  <link rel="stylesheet" href="css/preview.css?v=1"/>
+  <link rel="stylesheet" href="css/preview.css?v=3"/>
 </head>
 <body>
-  <header class="masthead">
-    <a class="brand" href="index.html" aria-label="Assetto F1">
-      <img src="img/banner.png" alt="Assetto F1 — Liga de Assetto Corsa"/>
-    </a>
-    <nav class="mainNav" aria-label="Secciones">
-      <a class="isActive" href="index.html">Inicio</a>
-      <a href="reglamento.html">Reglamento</a>
-      <a href="calendario.html">Calendario</a>
-      <a href="criterio-sanciones.html">Sanciones</a>
-      <a href="telemetria.html">Telemetría</a>
-    </nav>
-    <div class="navActions">
-      <a class="currentSite" href="../index.html">Sitio actual</a>
-      <a class="registerButton" data-link="registration" href="inscripcion.html">INSCRIPCIÓN GRATIS</a>
+  <header class="siteTop">
+    <a class="brand" href="#inicio" data-go="inicio" aria-label="Assetto F1, inicio"><img src="img/banner.png" alt="Assetto F1 — Liga de Assetto Corsa"/></a>
+    <div class="seasonStamp"><span id="seasonLabel">TEMPORADA 2026</span><strong id="stageLabel">ETAPA 4</strong></div>
+    <div class="topActions">
+      <a class="quietLink youtubeLink" data-link="youtube" href="https://www.youtube.com/@jotracks-ac/streams" target="_blank" rel="noopener noreferrer">RELATO DE JOTA Y PELUCA ↗</a>
+      <button class="signupTop" type="button" data-go="inscripcion">INSCRIBITE</button>
     </div>
   </header>
 
-  <main>
-    <section class="raceHero" aria-label="Resumen del campeonato">
-      <img class="heroPhoto" id="lastRacePhoto" src="img/media/pack-battle-wide.webp" alt="" aria-hidden="true"/>
-      <div class="heroVeil"></div>
-      <div class="heroCopy">
-        <span class="redRule"></span>
-        <p class="microLabel"><span data-stage>ETAPA 4</span> <i>·</i> CAMPEONATO 2026</p>
-        <h1>ETAPA <span data-stage-number>4</span></h1>
-        <p class="lastRaceLabel">ÚLTIMA CARRERA <b>·</b> <strong id="lastRaceName">AUSTIN</strong></p>
-        <p class="circuitName" id="lastRaceCircuit">Circuit of the Americas</p>
-        <div class="winner">
-          <span>GANADOR</span>
-          <strong id="winnerName">—</strong>
-          <p><b>1.º</b> <i>·</i> <span id="winnerTime">—</span></p>
+  <nav class="tabNav" role="tablist" aria-label="Navegación del campeonato">
+    <button class="navTab isActive" type="button" role="tab" aria-selected="true" id="tab-inicio" aria-controls="view-inicio" data-tab="inicio">INICIO</button>
+    <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-resultados" aria-controls="view-resultados" data-tab="resultados">RESULTADOS</button>
+    <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-pilotos" aria-controls="view-pilotos" data-tab="pilotos">PILOTOS</button>
+    <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-calendario" aria-controls="view-calendario" data-tab="calendario">CALENDARIO</button>
+    <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-revista" aria-controls="view-revista" data-tab="revista">REVISTA</button>
+    <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-reglamento" aria-controls="view-reglamento" data-tab="reglamento">REGLAMENTO</button>
+    <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-inscripcion" aria-controls="view-inscripcion" data-tab="inscripcion">INSCRIPCIÓN</button>
+    <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-sanciones" aria-controls="view-sanciones" data-tab="sanciones">SANCIONES</button>
+    <button class="navTab" type="button" role="tab" aria-selected="false" id="tab-herramientas" aria-controls="view-herramientas" data-tab="herramientas">HERRAMIENTAS</button>
+  </nav>
+
+  <main class="appMain">
+    <section class="view isActive" id="view-inicio" role="tabpanel" data-view="inicio" aria-labelledby="tab-inicio">
+      <div class="homeHero">
+        <img class="heroBackdrop" id="heroBackdrop" src="img/media/pack-battle-wide.webp" alt="" aria-hidden="true"/>
+        <div class="heroScrim"></div>
+        <div class="heroEditorial">
+          <span class="redDash"></span>
+          <p class="eyebrow"><span id="heroStage">ETAPA 4</span> <i>·</i> RESULTADO OFICIAL</p>
+          <h1 id="heroTrack">AUSTIN</h1>
+          <p class="raceName">ÚLTIMA CARRERA <b>·</b> <span id="heroCircuit">CIRCUIT OF THE AMERICAS</span></p>
+          <div class="heroWinner"><small>GANADOR</small><strong id="heroWinner">—</strong><span><b>1.º</b> <i>·</i> <em id="heroWinnerTime">—</em></span></div>
+          <button class="textAction" type="button" data-go="resultados">VER RESULTADOS COMPLETOS <b>↗</b></button>
         </div>
-        <a class="textLink" href="#resultados">RESULTADOS <span>↗</span></a>
+        <aside class="nextRace">
+          <img class="nextBackdrop" id="nextBackdrop" src="img/media/mercedes-overhead-wide.webp" alt="" aria-hidden="true"/>
+          <div class="nextScrim"></div>
+          <div class="nextCopy"><span>PRÓXIMA FECHA</span><h2 id="nextName">GP DE MÉXICO</h2><p id="nextCircuit">AUTÓDROMO HERMANOS RODRÍGUEZ</p><strong id="nextDate">FECHA A CONFIRMAR</strong><button type="button" data-go="calendario">VER CALENDARIO →</button></div>
+          <img class="nextTrack" id="nextTrack" src="img/tracks/mexico-city.svg" alt="Trazado de la próxima fecha"/>
+        </aside>
+        <div class="heroIndex"><span id="heroRound">FECHA 1</span><span id="heroRaceDate">25 OCT 2026</span></div>
       </div>
 
-      <article class="nextRaceCard">
-        <img class="nextPhoto" id="nextRacePhoto" src="img/media/mercedes-overhead-wide.webp" alt="" aria-hidden="true"/>
-        <div class="nextVeil"></div>
-        <div class="nextCopy">
-          <span class="cardKicker">PRÓXIMA FECHA</span>
-          <h2 id="nextRaceName">GP DE MÉXICO</h2>
-          <p id="nextRaceCircuit">Autódromo Hermanos Rodríguez</p>
-          <strong id="nextRaceDate">FECHA A CONFIRMAR</strong>
-          <a href="calendario.html">VER CALENDARIO <span>→</span></a>
-        </div>
-        <img class="trackMap" id="nextTrackMap" src="img/tracks/mexico-city.svg" alt="Trazado del próximo circuito"/>
-      </article>
+      <div class="quickFacts">
+        <div><small>VUELTAS</small><strong id="raceLaps">—</strong></div>
+        <div><small>MEJOR VUELTA</small><strong id="fastestLapTime">—</strong><span id="fastestLapPilot">—</span></div>
+        <div><small>INSCRIPCIÓN</small><strong id="homeRegistrationLabel">—</strong><span id="slotSummary">—</span></div>
+      </div>
 
-      <div class="previewFlag"><span></span> NUEVA VERSIÓN · EN PRUEBA</div>
+      <section class="homeGrid" aria-label="Lo más importante">
+        <article class="homeCard homeResults">
+          <div class="cardHeading"><span>01 / CARRERA</span><button type="button" data-go="resultados">VER TODO →</button></div>
+          <h2>RESULTADO<br/>DE LA FECHA</h2>
+          <ol id="homeTopThree" class="topThree"><li>Cargando resultados…</li></ol>
+        </article>
+        <article class="homeCard homePoints">
+          <div class="cardHeading"><span>02 / CAMPEONATO</span><button type="button" data-go="pilotos">CLASIFICACIÓN →</button></div>
+          <h2>PUNTOS<br/>DE PILOTOS</h2>
+          <ol id="homeTopPoints" class="topPoints"><li>Cargando posiciones…</li></ol>
+        </article>
+        <article class="homeCard homeMagazine">
+          <div class="cardHeading"><span>03 / REVISTA</span><button type="button" data-go="revista">ABRIR →</button></div>
+          <h2>LA REVISTA<br/>ASSETTO F1</h2>
+          <button class="magazineCoverButton" type="button" data-go="revista" aria-label="Abrir la revista">
+            <img id="homeMagazinePage" src="magazine/etapa-4-austin/mag_pag_5.webp" alt="Última página de la revista"/>
+            <span>LEER LA ÚLTIMA EDICIÓN ↗</span>
+          </button>
+        </article>
+      </section>
+
+      <div class="ruleTicker"><span>REGLAS CLAVE</span><b>CAMBIO DE NEUMÁTICOS OBLIGATORIO</b><i>•</i><b>DRS ASSIST EN PRUEBA</b><i>•</i><b>BOXES: 80 KM/H</b><i>•</i><b>DRIVE THROUGH EN 2 VUELTAS</b></div>
+      <div class="homeFooterLine"><span>ASSETTO F1 · CAMPEONATO 2026</span><span>INFORMACIÓN ACTUALIZADA DESDE LOS DATOS DEL CAMPEONATO</span></div>
     </section>
 
-    <section class="dashboard" aria-label="Campeonato, transmisión y revista">
-      <article class="panel classificationPanel">
-        <header class="panelHeading">
-          <div>
-            <span class="eyebrow">TOP 3 · CLASIFICACIÓN</span>
-            <h2>CAMPEONATO</h2>
-          </div>
-          <span class="panelRound" id="raceCount">—</span>
-        </header>
-        <ol id="topThree" class="topThree"><li class="loadingRow">Cargando posiciones…</li></ol>
-        <a class="panelLink" href="index.html#tabla">VER TABLA COMPLETA <span>→</span></a>
-      </article>
-
-      <a class="panel broadcastPanel" data-link="youtube" href="https://www.youtube.com/@jotracks-ac/streams" target="_blank" rel="noopener noreferrer">
-        <header class="panelHeading">
-          <div><span class="eyebrow">TRANSMISIÓN OFICIAL</span><h2>RELATO DE JOTA Y PELUCA</h2></div>
-          <span class="youtubeMark" aria-hidden="true">▶</span>
-        </header>
-        <span class="broadcastImage">
-          <img id="youtubeImage" src="img/media/youtube-broadcast.webp" alt="Captura de una transmisión de Assetto F1"/>
-          <span class="playButton">▶</span>
-        </span>
-        <span class="panelLink">VER CANAL <span>↗</span></span>
-      </a>
-
-      <article class="panel magazinePanel">
-        <header class="panelHeading">
-          <div>
-            <span class="eyebrow">ÚLTIMA PÁGINA PUBLICADA</span>
-            <h2>REVISTA ASSETTO F1</h2>
-          </div>
-        </header>
-        <div class="magazineView">
-          <button class="magButton" id="magPrev" type="button" aria-label="Página anterior">‹</button>
-          <div class="magazineCrop"><img id="magazinePage" alt="Última página de la revista"/></div>
-          <button class="magButton" id="magNext" type="button" aria-label="Página siguiente">›</button>
-        </div>
-        <div class="magazineControls">
-          <span id="magazineStatus">Cargando revista…</span>
-          <div class="zoomGroup" aria-label="Zoom de la revista">
-            <button id="zoomOut" type="button" aria-label="Alejar">−</button>
-            <output id="zoomValue">100%</output>
-            <button id="zoomIn" type="button" aria-label="Acercar">+</button>
-          </div>
-        </div>
-      </article>
+    <section class="view" id="view-resultados" role="tabpanel" data-view="resultados" aria-labelledby="tab-resultados" hidden>
+      <header class="pageIntro"><span>ARCHIVO DEPORTIVO / ÚLTIMA FECHA</span><h1>RESULTADOS<br/><em id="resultTitle">AUSTIN</em></h1><p id="resultSummary">Resultado oficial del campeonato.</p></header>
+      <div class="raceStatGrid">
+        <div><small>GANADOR</small><strong id="resultWinner">—</strong></div>
+        <div><small>VUELTAS</small><strong id="resultLaps">—</strong></div>
+        <div><small>FECHA</small><strong id="resultDate">—</strong></div>
+        <div><small>PILOTOS CLASIFICADOS</small><strong id="resultCount">—</strong></div>
+      </div>
+      <div class="tableSection">
+        <div class="tableTitle"><span>CLASIFICACIÓN OFICIAL</span><small id="resultTrackCircuit">—</small></div>
+        <div class="tableScroll"><table><thead><tr><th>POS.</th><th>PILOTO</th><th>ESCUDERÍA</th><th>GRILLA</th><th>NEUMÁTICOS</th><th>TIEMPO FINAL</th><th>ESTADO</th></tr></thead><tbody id="raceResults"></tbody></table></div>
+      </div>
+      <div class="historyBlock">
+        <h2>FECHAS ANTERIORES</h2>
+        <div id="raceHistory" class="historyList"></div>
+      </div>
     </section>
 
-    <section class="quickLinks" aria-label="Accesos del campeonato">
-      <a href="reglamento.html"><span>01</span><b>REGLAMENTO</b><i>LEER →</i></a>
-      <a href="calendario.html"><span>02</span><b>CALENDARIO</b><i>VER FECHAS →</i></a>
-      <a href="criterio-sanciones.html"><span>03</span><b>SANCIONES</b><i>CONSULTAR →</i></a>
-      <a href="inscripcion.html" data-link="registration"><span>04</span><b>INSCRIPCIÓN</b><i data-registration-label>INSCRIBITE →</i></a>
+    <section class="view" id="view-pilotos" role="tabpanel" data-view="pilotos" aria-labelledby="tab-pilotos" hidden>
+      <header class="pageIntro"><span>CAMPEONATO / PUNTOS OFICIALES</span><h1>LOS PILOTOS<br/><em>EN PUNTA</em></h1><p>La tabla se calcula desde los resultados cargados para cada carrera.</p></header>
+      <div class="segmented" role="tablist" aria-label="Clasificación">
+        <button class="isActive" type="button" data-standing="drivers">PILOTOS</button>
+        <button type="button" data-standing="teams">ESCUDERÍAS</button>
+      </div>
+      <div class="tableSection standingsTable" id="driverStandingView">
+        <div class="tableTitle"><span>CAMPEONATO DE PILOTOS</span><small id="driverCount">—</small></div>
+        <div class="tableScroll"><table><thead><tr><th>POS.</th><th>PILOTO</th><th>ESCUDERÍA</th><th>VICTORIAS</th><th>PUNTOS</th></tr></thead><tbody id="driverStandings"></tbody></table></div>
+      </div>
+      <div class="tableSection standingsTable" id="teamStandingView" hidden>
+        <div class="tableTitle"><span>CAMPEONATO DE ESCUDERÍAS</span><small id="teamCount">—</small></div>
+        <div class="tableScroll"><table><thead><tr><th>POS.</th><th>ESCUDERÍA</th><th>PILOTOS</th><th>PUNTOS</th></tr></thead><tbody id="teamStandings"></tbody></table></div>
+      </div>
     </section>
 
-    <details class="fullStandings" id="tabla">
-      <summary><span><small>CLASIFICACIÓN DEL CAMPEONATO</small><b>TODOS LOS PILOTOS</b></span><span id="driverCount">— pilotos</span></summary>
-      <div class="tableScroller"><table><thead><tr><th>POS.</th><th>PILOTO</th><th>ESCUDERÍA</th><th>PTS</th></tr></thead><tbody id="fullStandings"></tbody></table></div>
-    </details>
+    <section class="view" id="view-calendario" role="tabpanel" data-view="calendario" aria-labelledby="tab-calendario" hidden>
+      <header class="pageIntro"><span>CAMPEONATO 2026 / 24 FECHAS</span><h1>UN AÑO.<br/><em>24 CIRCUITOS.</em></h1><p>Cuatro etapas · seis fechas por etapa · domingos 21:00 ARG.</p></header>
+      <div class="calendarLegend"><span><i class="legendCurrent"></i> PRÓXIMA FECHA</span><span>24 RONDAS · 4 ETAPAS</span></div>
+      <div id="calendarStages" class="calendarStages"></div>
+    </section>
 
-    <details class="results" id="resultados">
-      <summary><span><small>ARCHIVO DEPORTIVO</small><b>RESULTADOS DE TODAS LAS CARRERAS</b></span><span id="resultsCount">0 carreras</span></summary>
-      <div class="resultsList" id="resultsList"></div>
-    </details>
+    <section class="view" id="view-revista" role="tabpanel" data-view="revista" aria-labelledby="tab-revista" hidden>
+      <header class="pageIntro magazineIntro"><span>PUBLICACIÓN DE LA LIGA</span><h1>LA REVISTA<br/><em>ASSETTO F1</em></h1><p>Crónicas, datos y momentos de cada carrera.</p></header>
+      <div class="magazineReader">
+        <div class="magazineToolbar"><span id="magazinePageLabel">PÁGINA 5 DE 5</span><div class="zoomControls"><button id="magZoomOut" type="button" aria-label="Alejar">−</button><output id="magZoomValue">100%</output><button id="magZoomIn" type="button" aria-label="Acercar">+</button><button id="magZoomReset" type="button">AJUSTAR</button></div></div>
+        <div class="magazineStage">
+          <button id="magPrev" class="pageArrow" type="button" aria-label="Página anterior">‹</button>
+          <div class="magazineViewport"><img id="magazinePage" src="magazine/etapa-4-austin/mag_pag_5.webp" alt="Última página de la revista"/></div>
+          <button id="magNext" class="pageArrow" type="button" aria-label="Página siguiente">›</button>
+        </div>
+        <div class="magazineBottom"><span id="magazineEdition">ETAPA 4 · AUSTIN</span><button type="button" id="reopenMagazine">VER AVISO DE LA ÚLTIMA EDICIÓN ↗</button></div>
+      </div>
+      <p class="magazineNote">La página más reciente aparece primero. Usá los controles para hojear y ampliar.</p>
+    </section>
+
+    <section class="view" id="view-reglamento" role="tabpanel" data-view="reglamento" aria-labelledby="tab-reglamento" hidden>
+      <header class="pageIntro"><span>DOCUMENTO OFICIAL / TEMPORADA 2026</span><h1>REGLAMENTO<br/><em>DE CARRERA</em></h1><p>Normas vigentes para todos los pilotos inscriptos.</p></header>
+      <div class="ruleStatusGrid">
+        <div><small>REAL PENALTY</small><strong>EN PAUSA</strong></div>
+        <div><small>DRS ASSIST</small><strong>EN PRUEBA</strong></div>
+        <div><small>NEUMÁTICOS</small><strong>CAMBIO OBLIGATORIO</strong></div>
+        <div><small>BOXES</small><strong>80 KM/H · DRIVE THROUGH</strong></div>
+      </div>
+      <nav class="ruleIndex" aria-label="Índice del reglamento">
+        <button type="button" data-rule-jump="rule-0">00 GENERAL</button><button type="button" data-rule-jump="rule-1">01 FORMATO</button><button type="button" data-rule-jump="rule-2">02 BANDERAS</button><button type="button" data-rule-jump="rule-3">03 SANCIONES</button><button type="button" data-rule-jump="rule-4">04 DENUNCIAS</button><button type="button" data-rule-jump="rule-5">05 TÉCNICA</button><button type="button" data-rule-jump="rule-6">06 INSCRIPCIÓN</button><button type="button" data-rule-jump="rule-7">07 PUNTOS</button><button type="button" data-rule-jump="rule-8">08 CALENDARIO</button>
+      </nav>
+      <div class="rulesAccordion">
+        <details id="rule-0"><summary><span>00</span><b>DISPOSICIONES GENERALES</b><i>+</i></summary><div class="ruleBody"><p>El campeonato es competitivo y prioriza el respeto en pista en todas las sesiones. La organización se reserva el derecho de admisión y permanencia.</p><h3>Nombre en el servidor</h3><ul><li>Formato obligatorio: NOMBRE APELLIDO (ej.: Juan Pérez).</li><li>No se permiten apodos, prefijos, números, caracteres especiales ni tags.</li><li>El incumplimiento puede causar expulsión de la sesión o carrera; la reincidencia puede derivar en baneo permanente.</li></ul><h3>Aplicaciones de carrera</h3><ul><li>Real Penalty no se utiliza momentáneamente y no es obligatorio hasta nuevo aviso.</li><li>En carrera se utiliza DRS Assist para evitar aperturas accidentales del DRS.</li><li>La app está en período de prueba y puede fallar. Si hay un fallo general, afecta a todos por igual.</li><li><a href="https://www.overtake.gg/downloads/drs-assist.87289/" target="_blank" rel="noopener noreferrer">Descargar DRS Assist en OverTake ↗</a></li></ul><h3>Conducta y actualizaciones</h3><p>Las maniobras peligrosas o antideportivas se sancionan. El reglamento puede modificarse durante el campeonato; rige siempre la última versión publicada.</p></div></details>
+        <details id="rule-1"><summary><span>01</span><b>FORMATO DEL CAMPEONATO</b><i>+</i></summary><div class="ruleBody"><h3>Fechas y sesiones</h3><ul><li>Se sigue el calendario oficial, con carreras los domingos a las 21:00 (ARG).</li><li>El servidor permanece abierto para prácticas.</li><li>Clasificación pública: 10 minutos.</li><li>Carrera estándar: 50% de la duración real de F1. Una carrera especial por campeonato puede ser al 100% y anunciarse con puntaje extra.</li><li>Los pilotos inscriptos usan setup libre dentro de las opciones habilitadas por el mod y el servidor.</li></ul><h3>Condiciones de carrera</h3><ul><li>Combustible: 100% · Desgaste de neumáticos: 150% · Daños: 50%.</li><li><strong>Cambio de compuestos obligatorio:</strong> mínimo una parada y dos compuestos distintos.</li><li>Repostaje libre, dentro de la limitación de Assetto Corsa.</li><li>Se permite un reinicio solo si el accidente involucra al menos al 85% de la grilla.</li><li>Si el servidor cae después del 50% de carrera, el resultado es válido con la última vuelta completa. Antes del 50%, se reprograma.</li></ul><h3>DRS, Overtake y teletransporte</h3><ul><li>DRS en práctica y clasificación: libre dentro de las zonas habilitadas.</li><li>En carrera, DRS Assist habilita el DRS con una diferencia de 1,000 s o menos en el punto de detección; con una diferencia mayor queda bloqueado. Solo se abre en zonas habilitadas.</li><li>Overtake: uso libre, bajo administración del piloto.</li><li>Teleport to Pits está prohibido durante la carrera; puede causar sanciones, incluida la exclusión.</li></ul></div></details>
+        <details id="rule-2"><summary><span>02</span><b>BANDERAS Y SAFETY CAR</b><i>+</i></summary><div class="ruleBody"><h3>Banderas</h3><ul><li><strong>Azul:</strong> el piloto con vuelta perdida debe dejar pasar a los líderes.</li><li><strong>Amarilla:</strong> hay peligro; no se adelanta y se reduce la velocidad.</li><li><strong>Roja:</strong> sesión detenida.</li><li><strong>Negra:</strong> descalificación.</li><li><strong>Blanca y negra:</strong> apercibimiento o penalización automática.</li></ul><h3>Safety Car</h3><ul><li>Señal amarilla: Safety Car desplegado.</li><li>Señal blanca: apaga las luces y entra a boxes.</li></ul></div></details>
+        <details id="rule-3"><summary><span>03</span><b>APLICACIONES Y PENALIZACIONES</b><i>+</i></summary><div class="ruleBody"><ul><li>Real Penalty está en pausa: no se usa y no es obligatorio hasta nuevo aviso.</li><li>DRS Assist administra el DRS durante la carrera. Está en período de prueba; si falla de forma general, afecta a todos por igual.</li><li>Stop & Go: cumplir en pitlane, no en el pit box, antes de dos vueltas.</li><li>Drive Through: pasar por pitlane sin detenerse y cumplir antes de dos vueltas.</li><li>Velocidad máxima en boxes: 80 km/h. Superarla implica un Drive Through a cumplir dentro de las dos vueltas siguientes.</li><li>Los límites de pista dependen del circuito. Cortar pista puede generar lastre acumulativo. Las penalizaciones automáticas del servidor son válidas.</li></ul><a class="inlineAction" href="https://www.overtake.gg/downloads/drs-assist.87289/" target="_blank" rel="noopener noreferrer">DESCARGAR DRS ASSIST ↗</a></div></details>
+        <details id="rule-4"><summary><span>04</span><b>DENUNCIAS Y APELACIONES</b><i>+</i></summary><div class="ruleBody"><ul><li>Las denuncias se presentan hasta dos horas después de terminada la competencia.</li><li>Incluir video claro, explicación, vuelta y vehículos involucrados.</li><li>Se analizan repeticiones, cámaras y telemetría disponibles. La organización define si publica las resoluciones.</li><li>Las penalizaciones automáticas solo se apelan con evidencia técnica objetiva y dentro de los plazos indicados por la organización.</li></ul></div></details>
+        <details id="rule-5"><summary><span>05</span><b>DISPOSICIONES TÉCNICAS</b><i>+</i></summary><div class="ruleBody"><ul><li>La organización puede definir y actualizar las versiones requeridas de mods y autos.</li><li>Cada piloto debe usar versiones oficiales. Un checksum incorrecto bloquea el ingreso al servidor.</li><li>Antes de cada fecha, verificá pista, auto y configuración de DRS Assist.</li><li>La comunicación se realiza por WhatsApp o Discord, según indique la organización. El día de carrera solo escriben los administradores.</li><li>Revisá las novedades antes de cada fecha.</li></ul></div></details>
+        <details id="rule-6"><summary><span>06</span><b>INSCRIPCIÓN Y PREMIOS</b><i>+</i></summary><div class="ruleBody"><ul><li>Grilla máxima: 20 cupos.</li><li>La inscripción cubre las seis carreras de la etapa en curso.</li><li>Para ser campeón se requiere 85% de asistencia: cinco de seis carreras.</li><li>La inscripción es obligatoria para participar y sumar puntos.</li><li>El valor y la disponibilidad vigentes se muestran en la pestaña Inscripción. No se realizan devoluciones.</li></ul><h3>Premios</h3><p>El fondo corresponde a un porcentaje de las inscripciones y lo define la organización. Distribución: 1.º 45%, 2.º 35%, 3.º 20%. El monto total se comunica antes de cada mini campeonato.</p><button type="button" class="inlineAction" data-go="inscripcion">VER INSCRIPCIÓN →</button></div></details>
+        <details id="rule-7"><summary><span>07</span><b>SISTEMA DE PUNTUACIÓN</b><i>+</i></summary><div class="ruleBody"><p>Solo suman puntos los pilotos inscriptos y clasificados en el resultado oficial. Las penalizaciones pueden modificar la clasificación.</p><div class="pointsScale"><span>1.º <b>20</b></span><span>2.º <b>17</b></span><span>3.º <b>14</b></span><span>4.º <b>12</b></span><span>5.º <b>10</b></span><span>6.º <b>8</b></span><span>7.º <b>6</b></span><span>8.º <b>4</b></span><span>9.º <b>2</b></span><span>10.º <b>1</b></span></div></div></details>
+        <details id="rule-8"><summary><span>08</span><b>CALENDARIO OFICIAL</b><i>+</i></summary><div class="ruleBody"><p>24 fechas divididas en cuatro etapas de seis carreras. Cualquier cambio se refleja en el calendario oficial.</p><button type="button" class="inlineAction" data-go="calendario">VER CALENDARIO →</button></div></details>
+      </div>
+    </section>
+
+    <section class="view" id="view-inscripcion" role="tabpanel" data-view="inscripcion" aria-labelledby="tab-inscripcion" hidden>
+      <div class="registrationHead"><div><span>CUPO LIMITADO / ETAPA 4</span><h1>INSCRIBITE<br/><em>A ASSETTO F1</em></h1><p>6 carreras · Nombre y apellido · Steam ID</p></div><div class="slotBadge"><small>CUPOS DISPONIBLES</small><strong id="availableSlots">—</strong><span id="totalSlots">DE 20</span></div></div>
+      <div id="freeOffer" class="offerBanner" hidden><span>OFERTA POR TIEMPO LIMITADO</span><strong id="offerTitle">INSCRIPCIÓN GRATIS</strong><p id="offerSubtitle">La inscripción incluye las seis carreras de la etapa en curso.</p></div>
+      <div id="closedOffer" class="closedBanner" hidden><span id="closedMessage">INSCRIPCIONES CERRADAS</span></div>
+      <div class="registrationGrid">
+        <article class="registrationCard" id="paymentCard" hidden>
+          <span class="sectionNo">01 / PAGO</span><h2>PAGÁ TU<br/>INSCRIPCIÓN</h2><p>La inscripción cubre seis carreras de la etapa vigente.</p>
+          <strong class="price" id="registrationPrice">$15.000 ARS</strong>
+          <a class="goldButton" id="payButton" href="https://mpago.la/1AcqJZA" target="_blank" rel="noopener noreferrer">PAGAR EN MERCADO PAGO ↗</a>
+          <div class="aliasRow">ALIAS <strong id="paymentAlias">JOTRACKS</strong><button id="copyAlias" type="button">COPIAR</button></div>
+          <img class="paymentQr" id="paymentQr" src="img/payment/mercado-pago-qr.png" alt="QR de pago de Mercado Pago"/>
+        </article>
+        <article class="registrationCard confirmCard">
+          <span class="sectionNo" id="confirmationNumber">01 / CONFIRMACIÓN</span><h2 id="confirmationTitle">ENVIÁ<br/>TUS DATOS</h2><p id="confirmationCopy">Completá el mensaje de WhatsApp con tu nombre y apellido y Steam ID.</p>
+          <ul><li>Nombre y apellido</li><li>Steam ID</li><li id="receiptRequirement" hidden>Comprobante de pago</li></ul>
+          <a class="goldButton" id="whatsappButton" href="#" target="_blank" rel="noopener noreferrer">CONTINUAR POR WHATSAPP ↗</a>
+          <p class="privacyNote">El acceso al servidor y al grupo privado se envía después de validar tus datos.</p>
+        </article>
+        <article class="registrationCard steamCard">
+          <span class="sectionNo">STEAM ID / GUÍA</span><h2>¿DÓNDE<br/>ENCONTRARLO?</h2><p>Content Manager → Opciones → General → Perfil de Steam. Copiá el número largo.</p>
+          <img src="img/guides/steam-id-content-manager.png" alt="Ejemplo para encontrar el Steam ID en Content Manager" loading="lazy"/>
+        </article>
+      </div>
+      <p class="registrationFootnote">La grilla tiene un máximo de 20 lugares. La disponibilidad se actualiza desde la configuración de la página.</p>
+    </section>
+
+    <section class="view" id="view-sanciones" role="tabpanel" data-view="sanciones" aria-labelledby="tab-sanciones" hidden>
+      <header class="pageIntro"><span>CRITERIO DEPORTIVO / COMISARIOS</span><h1>CRITERIO<br/><em>DE SANCIONES</em></h1><p>Referencia para evaluar incidentes. Cada caso considera contexto, daño, posición devuelta y reincidencia.</p></header>
+      <div class="penaltyScale">
+        <article><span>+5s</span><b>ERROR LEVE</b><p>Perjuicio menor o riesgo controlado.</p></article>
+        <article><span>+10s</span><b>ERROR CLARO</b><p>Daño deportivo real o pérdida relevante.</p></article>
+        <article><span>+20s</span><b>ERROR GRAVE</b><p>Incidente fuerte, trompo claro o carrera comprometida.</p></article>
+        <article><span>+30s</span><b>MUY GRAVE</b><p>Conducción temeraria, deliberada o extremadamente peligrosa.</p></article>
+      </div>
+      <div class="sanctionInfoGrid">
+        <article><span>01</span><h2>REVISIÓN</h2><p>Los comisarios revisan repeticiones, cámaras y telemetría disponible.</p></article>
+        <article><span>02</span><h2>DENUNCIA</h2><p>Presentala dentro de las dos horas posteriores a la carrera. Adjuntá video, vuelta y pilotos involucrados.</p></article>
+        <article><span>03</span><h2>APELACIÓN</h2><p>Una sanción automática se apela con evidencia técnica objetiva, dentro del plazo informado por la organización.</p></article>
+      </div>
+      <div class="sanctionNote"><strong>REAL PENALTY NO ESTÁ ACTIVO.</strong><span>No se usa momentáneamente y no es obligatorio hasta nuevo aviso. Las sanciones vigentes se aplican según el reglamento del campeonato.</span><button type="button" data-go="reglamento">LEER REGLAMENTO →</button></div>
+    </section>
+
+    <section class="view" id="view-herramientas" role="tabpanel" data-view="herramientas" aria-labelledby="tab-herramientas" hidden>
+      <header class="pageIntro"><span>JOTRACKS / UTILIDADES</span><h1>HERRAMIENTAS<br/><em>DE CARRERA</em></h1><p>Analizá tus vueltas o consultá el live timing del servidor.</p></header>
+      <div class="segmented toolTabs" role="tablist" aria-label="Herramientas">
+        <button class="isActive" type="button" data-tool="telemetria">TELEMETRÍA</button>
+        <button type="button" data-tool="live">LIVE TIMING</button>
+      </div>
+      <section class="toolPanel isActive" id="tool-telemetria">
+        <div class="toolIntro"><div><span>RACING DATA LAB</span><h2>CONVERTÍ CADA VUELTA<br/>EN INFORMACIÓN.</h2><p>Compará vueltas, frenadas, marchas, combustible, neumáticos y tu ideal combinado. El análisis se procesa localmente.</p><a class="goldButton" href="downloads/JOTRACKS_Telemetry_v0.4.0.zip" download>DESCARGAR ANALIZADOR v0.4 ↧</a><button class="outlineButton" id="loadTelemetry" type="button">ABRIR ANALIZADOR AQUÍ ↘</button></div><img src="img/media/jotracks-telemetry-analyzer.png" alt="Captura del analizador de telemetría JOTRACKS" loading="lazy"/></div>
+        <iframe id="telemetryFrame" title="Analizador de telemetría JOTRACKS" data-src="tools/JOTRACKS_Telemetry_Analyzer.html" loading="lazy" hidden></iframe>
+      </section>
+      <section class="toolPanel" id="tool-live" hidden>
+        <div class="liveIntro"><span>SEGUIMIENTO DE SESIÓN</span><h2>LIVE TIMING</h2><p>Consultá el estado del servidor y el orden en pista. El panel se carga al entrar a esta pestaña.</p><a class="outlineButton" data-link="server" href="https://server.jotracks.com/live-timing?server=0" target="_blank" rel="noopener noreferrer">ABRIR LIVE TIMING EN OTRA PESTAÑA ↗</a></div>
+        <iframe id="liveFrame" title="Live Timing Assetto F1" data-src="live.html" loading="lazy" hidden></iframe>
+      </section>
+    </section>
   </main>
 
   <footer class="siteFooter">
     <span>ASSETTO F1 · TEMPORADA 2026</span>
-    <a href="../index.html">VOLVER AL SITIO ACTUAL</a>
+    <span>RESULTADOS · PILOTOS · REGLAMENTO · REVISTA</span>
+    <a href="../index.html">VOLVER AL SITIO ACTUAL ↗</a>
   </footer>
+
+  <dialog class="magazineModal" id="magazineModal" aria-labelledby="modalTitle">
+    <button class="modalClose" type="button" data-close-magazine aria-label="Cerrar aviso">×</button>
+    <div class="modalCopy"><span class="modalEyebrow">NUEVA EDICIÓN / <b id="modalRaceName">ÚLTIMA CARRERA</b></span><h2 id="modalTitle">LA REVISTA<br/><em>YA ESTÁ LISTA.</em></h2><p>El resumen de la última fecha ya está publicado.</p><div class="modalActions"><button class="outlineButton" type="button" data-close-magazine>CERRAR</button><button class="goldButton" type="button" data-go="revista">LEER LA REVISTA →</button></div></div>
+    <div class="modalImageFrame"><img id="modalMagazinePage" src="" alt="Última página de la revista"/></div>
+  </dialog>
+  <div class="srOnly" id="statusLive" role="status" aria-live="polite"></div>
   <script src="js/data-snapshot.js" defer></script>
-  <script src="js/preview-home.js?v=1" defer></script>
+  <script src="js/preview-home.js?v=3" defer></script>
 </body>
 </html>

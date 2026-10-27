@@ -1,0 +1,218 @@
+[
+  {
+    "round": 1,
+    "stage": 1,
+    "flag": "🇦🇺",
+    "name": "Australia",
+    "circuit": "Albert Park · Melbourne",
+    "date": "08 MAR",
+    "trackAsset": "img/tracks/albert-park.svg"
+  },
+  {
+    "round": 2,
+    "stage": 1,
+    "flag": "🇨🇳",
+    "name": "China",
+    "circuit": "Shanghai International Circuit",
+    "date": "15 MAR",
+    "trackAsset": "img/tracks/shanghai.svg"
+  },
+  {
+    "round": 3,
+    "stage": 1,
+    "flag": "🇯🇵",
+    "name": "Japón",
+    "circuit": "Suzuka Circuit",
+    "date": "29 MAR",
+    "trackAsset": "img/tracks/suzuka.svg"
+  },
+  {
+    "round": 4,
+    "stage": 1,
+    "flag": "🇧🇭",
+    "name": "Bahrain",
+    "circuit": "Bahrain International Circuit",
+    "date": "12 ABR",
+    "trackAsset": "img/tracks/bahrain.svg"
+  },
+  {
+    "round": 5,
+    "stage": 1,
+    "flag": "🇸🇦",
+    "name": "Arabia Saudita",
+    "circuit": "Jeddah Corniche Circuit",
+    "date": "19 ABR",
+    "trackAsset": "img/tracks/jeddah.svg"
+  },
+  {
+    "round": 6,
+    "stage": 1,
+    "flag": "🇺🇸",
+    "name": "Miami",
+    "circuit": "Miami International Autodrome",
+    "date": "03 MAY",
+    "trackAsset": "img/tracks/miami.svg"
+  },
+  {
+    "round": 7,
+    "stage": 2,
+    "flag": "🇨🇦",
+    "name": "Canadá",
+    "circuit": "Circuit Gilles Villeneuve",
+    "date": "24 MAY",
+    "trackAsset": "img/tracks/montreal.svg"
+  },
+  {
+    "round": 8,
+    "stage": 2,
+    "flag": "🇲🇨",
+    "name": "Mónaco",
+    "circuit": "Circuit de Monaco",
+    "date": "07 JUN",
+    "trackAsset": "img/tracks/monaco.svg"
+  },
+  {
+    "round": 9,
+    "stage": 2,
+    "flag": "🇪🇸",
+    "name": "España",
+    "circuit": "Circuit de Barcelona-Catalunya",
+    "date": "14 JUN",
+    "trackAsset": "img/tracks/barcelona.svg"
+  },
+  {
+    "round": 10,
+    "stage": 2,
+    "flag": "🇦🇹",
+    "name": "Austria",
+    "circuit": "Red Bull Ring · Spielberg",
+    "date": "28 JUN",
+    "trackAsset": "img/tracks/red-bull-ring.svg"
+  },
+  {
+    "round": 11,
+    "stage": 2,
+    "flag": "🇬🇧",
+    "name": "Gran Bretaña",
+    "circuit": "Silverstone Circuit",
+    "date": "05 JUL",
+    "trackAsset": "img/tracks/silverstone.svg"
+  },
+  {
+    "round": 12,
+    "stage": 2,
+    "flag": "🇧🇪",
+    "name": "Bélgica",
+    "circuit": "Circuit de Spa-Francorchamps",
+    "date": "19 JUL",
+    "trackAsset": "img/tracks/spa-francorchamps.svg"
+  },
+  {
+    "round": 13,
+    "stage": 3,
+    "flag": "🇭🇺",
+    "name": "Hungría",
+    "circuit": "Hungaroring · Budapest",
+    "date": "16 AGO",
+    "trackAsset": "img/tracks/hungaroring.svg"
+  },
+  {
+    "round": 14,
+    "stage": 3,
+    "flag": "🇳🇱",
+    "name": "Países Bajos",
+    "circuit": "Circuit Zandvoort",
+    "date": "23 AGO",
+    "trackAsset": "img/tracks/zandvoort.svg"
+  },
+  {
+    "round": 15,
+    "stage": 3,
+    "flag": "🇮🇹",
+    "name": "Italia",
+    "circuit": "Autodromo Nazionale Monza",
+    "date": "06 SEP",
+    "trackAsset": "img/tracks/monza.svg"
+  },
+  {
+    "round": 16,
+    "stage": 3,
+    "flag": "🇪🇸",
+    "name": "Madrid",
+    "circuit": "Madring · Madrid",
+    "date": "13 SEP",
+    "trackAsset": "img/tracks/madring.svg"
+  },
+  {
+    "round": 17,
+    "stage": 3,
+    "flag": "🇦🇿",
+    "name": "Azerbaiyán",
+    "circuit": "Baku City Circuit",
+    "date": "26 SEP",
+    "trackAsset": "img/tracks/baku.svg"
+  },
+  {
+    "round": 18,
+    "stage": 3,
+    "flag": "🇲🇾",
+    "name": "Malasia",
+    "circuit": "Sepang International Circuit",
+    "date": "04 OCT",
+    "trackAsset": "img/tracks/sepang.svg"
+  },
+  {
+    "round": 19,
+    "stage": 4,
+    "flag": "🇸🇬",
+    "name": "Singapur",
+    "circuit": "Marina Bay Street Circuit",
+    "date": "11 OCT",
+    "trackAsset": "img/tracks/singapore.svg"
+  },
+  {
+    "round": 20,
+    "stage": 4,
+    "flag": "🇲🇽",
+    "name": "México",
+    "circuit": "Autódromo Hermanos Rodríguez",
+    "date": "25 OCT",
+    "trackAsset": "img/tracks/mexico-city.svg"
+  },
+  {
+    "round": 21,
+    "stage": 4,
+    "flag": "🇧🇷",
+    "name": "Brasil",
+    "circuit": "Autódromo José Carlos Pace",
+    "date": "08 NOV",
+    "trackAsset": "img/tracks/interlagos.svg"
+  },
+  {
+    "round": 22,
+    "stage": 4,
+    "flag": "🇺🇸",
+    "name": "Las Vegas",
+    "circuit": "Las Vegas Street Circuit",
+    "date": "21 NOV",
+    "trackAsset": "img/tracks/las-vegas.svg"
+  },
+  {
+    "round": 23,
+    "stage": 4,
+    "flag": "🇶🇦",
+    "name": "Qatar",
+    "circuit": "Lusail International Circuit",
+    "date": "29 NOV",
+    "trackAsset": "img/tracks/lusail.svg"
+  },
+  {
+    "round": 24,
+    "stage": 4,
+    "flag": "🇦🇪",
+    "name": "Abu Dhabi",
+    "circuit": "Yas Marina Circuit",
+    "date": "06 DIC",
+    "trackAsset": "img/tracks/yas-marina.svg"
+  }
+]
