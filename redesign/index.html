@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content="Assetto F1 — campeonato, resultados, próxima fecha y transmisiones."/>
+  <title>Assetto F1 — Nueva versión en prueba</title>
+  <link rel="icon" type="image/png" href="img/favicon.png"/>
+  <link rel="stylesheet" href="css/preview.css?v=1"/>
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="index.html" aria-label="Assetto F1">
+      <img src="img/banner.png" alt="Assetto F1 — Liga de Assetto Corsa"/>
+    </a>
+    <nav class="mainNav" aria-label="Secciones">
+      <a class="isActive" href="index.html">Inicio</a>
+      <a href="reglamento.html">Reglamento</a>
+      <a href="calendario.html">Calendario</a>
+      <a href="criterio-sanciones.html">Sanciones</a>
+      <a href="telemetria.html">Telemetría</a>
+    </nav>
+    <div class="navActions">
+      <a class="currentSite" href="../index.html">Sitio actual</a>
+      <a class="registerButton" data-link="registration" href="inscripcion.html">INSCRIPCIÓN GRATIS</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="raceHero" aria-label="Resumen del campeonato">
+      <img class="heroPhoto" id="lastRacePhoto" src="img/media/pack-battle-wide.webp" alt="" aria-hidden="true"/>
+      <div class="heroVeil"></div>
+      <div class="heroCopy">
+        <span class="redRule"></span>
+        <p class="microLabel"><span data-stage>ETAPA 4</span> <i>·</i> CAMPEONATO 2026</p>
+        <h1>ETAPA <span data-stage-number>4</span></h1>
+        <p class="lastRaceLabel">ÚLTIMA CARRERA <b>·</b> <strong id="lastRaceName">AUSTIN</strong></p>
+        <p class="circuitName" id="lastRaceCircuit">Circuit of the Americas</p>
+        <div class="winner">
+          <span>GANADOR</span>
+          <strong id="winnerName">—</strong>
+          <p><b>1.º</b> <i>·</i> <span id="winnerTime">—</span></p>
+        </div>
+        <a class="textLink" href="#resultados">RESULTADOS <span>↗</span></a>
+      </div>
+
+      <article class="nextRaceCard">
+        <img class="nextPhoto" id="nextRacePhoto" src="img/media/mercedes-overhead-wide.webp" alt="" aria-hidden="true"/>
+        <div class="nextVeil"></div>
+        <div class="nextCopy">
+          <span class="cardKicker">PRÓXIMA FECHA</span>
+          <h2 id="nextRaceName">GP DE MÉXICO</h2>
+          <p id="nextRaceCircuit">Autódromo Hermanos Rodríguez</p>
+          <strong id="nextRaceDate">FECHA A CONFIRMAR</strong>
+          <a href="calendario.html">VER CALENDARIO <span>→</span></a>
+        </div>
+        <img class="trackMap" id="nextTrackMap" src="img/tracks/mexico-city.svg" alt="Trazado del próximo circuito"/>
+      </article>
+
+      <div class="previewFlag"><span></span> NUEVA VERSIÓN · EN PRUEBA</div>
+    </section>
+
+    <section class="dashboard" aria-label="Campeonato, transmisión y revista">
+      <article class="panel classificationPanel">
+        <header class="panelHeading">
+          <div>
+            <span class="eyebrow">TOP 3 · CLASIFICACIÓN</span>
+            <h2>CAMPEONATO</h2>
+          </div>
+          <span class="panelRound" id="raceCount">—</span>
+        </header>
+        <ol id="topThree" class="topThree"><li class="loadingRow">Cargando posiciones…</li></ol>
+        <a class="panelLink" href="index.html#tabla">VER TABLA COMPLETA <span>→</span></a>
+      </article>
+
+      <a class="panel broadcastPanel" data-link="youtube" href="https://www.youtube.com/@jotracks-ac/streams" target="_blank" rel="noopener noreferrer">
+        <header class="panelHeading">
+          <div><span class="eyebrow">TRANSMISIÓN OFICIAL</span><h2>RELATO DE JOTA Y PELUCA</h2></div>
+          <span class="youtubeMark" aria-hidden="true">▶</span>
+        </header>
+        <span class="broadcastImage">
+          <img id="youtubeImage" src="img/media/youtube-broadcast.webp" alt="Captura de una transmisión de Assetto F1"/>
+          <span class="playButton">▶</span>
+        </span>
+        <span class="panelLink">VER CANAL <span>↗</span></span>
+      </a>
+
+      <article class="panel magazinePanel">
+        <header class="panelHeading">
+          <div>
+            <span class="eyebrow">ÚLTIMA PÁGINA PUBLICADA</span>
+            <h2>REVISTA ASSETTO F1</h2>
+          </div>
+        </header>
+        <div class="magazineView">
+          <button class="magButton" id="magPrev" type="button" aria-label="Página anterior">‹</button>
+          <div class="magazineCrop"><img id="magazinePage" alt="Última página de la revista"/></div>
+          <button class="magButton" id="magNext" type="button" aria-label="Página siguiente">›</button>
+        </div>
+        <div class="magazineControls">
+          <span id="magazineStatus">Cargando revista…</span>
+          <div class="zoomGroup" aria-label="Zoom de la revista">
+            <button id="zoomOut" type="button" aria-label="Alejar">−</button>
+            <output id="zoomValue">100%</output>
+            <button id="zoomIn" type="button" aria-label="Acercar">+</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="quickLinks" aria-label="Accesos del campeonato">
+      <a href="reglamento.html"><span>01</span><b>REGLAMENTO</b><i>LEER →</i></a>
+      <a href="calendario.html"><span>02</span><b>CALENDARIO</b><i>VER FECHAS →</i></a>
+      <a href="criterio-sanciones.html"><span>03</span><b>SANCIONES</b><i>CONSULTAR →</i></a>
+      <a href="inscripcion.html" data-link="registration"><span>04</span><b>INSCRIPCIÓN</b><i data-registration-label>INSCRIBITE →</i></a>
+    </section>
+
+    <details class="fullStandings" id="tabla">
+      <summary><span><small>CLASIFICACIÓN DEL CAMPEONATO</small><b>TODOS LOS PILOTOS</b></span><span id="driverCount">— pilotos</span></summary>
+      <div class="tableScroller"><table><thead><tr><th>POS.</th><th>PILOTO</th><th>ESCUDERÍA</th><th>PTS</th></tr></thead><tbody id="fullStandings"></tbody></table></div>
+    </details>
+
+    <details class="results" id="resultados">
+      <summary><span><small>ARCHIVO DEPORTIVO</small><b>RESULTADOS DE TODAS LAS CARRERAS</b></span><span id="resultsCount">0 carreras</span></summary>
+      <div class="resultsList" id="resultsList"></div>
+    </details>
+  </main>
+
+  <footer class="siteFooter">
+    <span>ASSETTO F1 · TEMPORADA 2026</span>
+    <a href="../index.html">VOLVER AL SITIO ACTUAL</a>
+  </footer>
+  <script src="js/data-snapshot.js" defer></script>
+  <script src="js/preview-home.js?v=1" defer></script>
+</body>
+</html>

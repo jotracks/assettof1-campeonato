@@ -1,0 +1,11 @@
+REVISTA ASSETTO F1
+
+La edición activa se define en data/site.json, en magazine.directory.
+La edición actual está en magazine/etapa-4-austin/.
+
+Páginas: mag_pag_1.webp, mag_pag_2.webp, mag_pag_3.webp…
+Mantené la numeración correlativa, sin saltear números. Se admiten WEBP, PNG, JPG, JPEG y SVG.
+
+Para activar otra edición, cambiá magazine.directory y fallbackPages en data/site.json.
+El visor detecta las páginas en GitHub Pages y al abrir index.html desde la PC.
+El zoom llega a 300% con los controles, doble clic o Ctrl + rueda.

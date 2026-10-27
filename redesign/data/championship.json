@@ -1,0 +1,260 @@
+{
+  "meta": {
+    "season": "Temporada 2026",
+    "updatedAt": "2026-10-26 17:00",
+    "points": [
+      20,
+      17,
+      14,
+      12,
+      10,
+      8,
+      6,
+      4,
+      2,
+      1
+    ]
+  },
+  "races": [
+    {
+      "round": "1",
+      "date": "2026-10-25T22:14:00-03:00",
+      "trackName": "cota_2022",
+      "fastestLap": {
+        "driverName": "Jonathan Monzon",
+        "time": "1:35.330",
+        "lapTimeMs": 95330,
+        "tyre": "C3"
+      },
+      "results": [
+        {
+          "pos": 1,
+          "driverName": "Jonathan Monzon",
+          "driverGuid": "76561199557580783",
+          "team": "Ferrari",
+          "grid": 1,
+          "laps": 28,
+          "tyresUsed": [
+            "C2",
+            "C3"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2745048,
+          "status": "OK"
+        },
+        {
+          "pos": 2,
+          "driverName": "Matias daSilva",
+          "driverGuid": "76561198935125634",
+          "team": "Mclaren",
+          "grid": 6,
+          "laps": 28,
+          "tyresUsed": [
+            "C2",
+            "C3"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2800533,
+          "status": "OK"
+        },
+        {
+          "pos": 3,
+          "driverName": "Juan Scocozza",
+          "driverGuid": "76561199778294845",
+          "team": "Alpine",
+          "grid": 3,
+          "laps": 28,
+          "tyresUsed": [
+            "C3",
+            "C4"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2806811,
+          "status": "OK"
+        },
+        {
+          "pos": 4,
+          "driverName": "Rodrigo Garcia",
+          "driverGuid": "76561198253730197",
+          "team": "Haas",
+          "grid": 4,
+          "laps": 28,
+          "tyresUsed": [
+            "C3",
+            "C4"
+          ],
+          "penaltyExtraMs": 17000,
+          "finalTimeMs": 2808885,
+          "status": "OK"
+        },
+        {
+          "pos": 5,
+          "driverName": "Juanma Bellegarde",
+          "driverGuid": "76561197960267366",
+          "team": "Racing Bulls",
+          "grid": 2,
+          "laps": 27,
+          "tyresUsed": [
+            "C2",
+            "C3"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2700962,
+          "status": "OK"
+        },
+        {
+          "pos": 6,
+          "driverName": "Sebastian Sanchez",
+          "driverGuid": "76561199778180071",
+          "team": "Mclaren",
+          "grid": 9,
+          "laps": 27,
+          "tyresUsed": [
+            "C1",
+            "C3"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2784612,
+          "status": "OK"
+        },
+        {
+          "pos": 7,
+          "driverName": "Tomás Morguen",
+          "driverGuid": "76561198194725750",
+          "team": "Audi",
+          "grid": 15,
+          "laps": 27,
+          "tyresUsed": [
+            "C3",
+            "C4"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2800903,
+          "status": "OK"
+        },
+        {
+          "pos": 8,
+          "driverName": "Horacio Oviedo",
+          "driverGuid": "76561198334732590",
+          "team": "Mercedes",
+          "grid": 7,
+          "laps": 27,
+          "tyresUsed": [
+            "C2",
+            "C3"
+          ],
+          "penaltyExtraMs": 5000,
+          "finalTimeMs": 2801973,
+          "status": "OK"
+        },
+        {
+          "pos": 9,
+          "driverName": "Jota Mossotto",
+          "driverGuid": "76561198099278383",
+          "team": "Red Bull",
+          "grid": 14,
+          "laps": 27,
+          "tyresUsed": [
+            "C3",
+            "C4"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2811093,
+          "status": "OK"
+        },
+        {
+          "pos": 10,
+          "driverName": "Gonzalo Serrano",
+          "driverGuid": "76561198217207716",
+          "team": "Racing Bulls",
+          "grid": 8,
+          "laps": 27,
+          "tyresUsed": [
+            "C1",
+            "C2"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2812222,
+          "status": "OK"
+        },
+        {
+          "pos": 11,
+          "driverName": "Federico Paternó",
+          "driverGuid": "76561198317504479",
+          "team": "Mercedes",
+          "grid": 10,
+          "laps": 27,
+          "tyresUsed": [
+            "C3",
+            "C4"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2814049,
+          "status": "OK"
+        },
+        {
+          "pos": 12,
+          "driverName": "Claudio Eberhart",
+          "driverGuid": "76561198085972282",
+          "team": "Aston Martin",
+          "grid": 11,
+          "laps": 26,
+          "tyresUsed": [
+            "C2",
+            "C3"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2775547,
+          "status": "OK"
+        },
+        {
+          "pos": 13,
+          "driverName": "Maleta Cristal",
+          "driverGuid": "76561198372882432",
+          "team": "Aston Martin",
+          "grid": 13,
+          "laps": 26,
+          "tyresUsed": [
+            "C3",
+            "C4",
+            "C5"
+          ],
+          "penaltyExtraMs": 241000,
+          "finalTimeMs": 2986302,
+          "status": "OK",
+          "lapPenalty": 2
+        },
+        {
+          "pos": 14,
+          "driverName": "Agustin Noya",
+          "driverGuid": "76561198262804779",
+          "team": "Ferrari",
+          "grid": 5,
+          "laps": 20,
+          "tyresUsed": [
+            "C3",
+            "C4"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 2171230,
+          "status": "OK"
+        },
+        {
+          "pos": 15,
+          "driverName": "Tomi Fraccarolli",
+          "driverGuid": "76561198726937616",
+          "team": "Williams",
+          "grid": 12,
+          "laps": 11,
+          "tyresUsed": [
+            "C2",
+            "C3"
+          ],
+          "penaltyExtraMs": 0,
+          "finalTimeMs": 1169765,
+          "status": "OK"
+        }
+      ]
+    }
+  ]
+}
