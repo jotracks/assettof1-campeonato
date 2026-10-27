@@ -100,16 +100,23 @@
     activate(initial && ids.has(initial)?initial:"inicio",false);
   }
   function renderTopRows(race){
-    const rows=(race?.results||[]).slice().sort((a,b)=>Number(a.pos||999)-Number(b.pos||999));
+    const rows=(race?.results||[]).filter(result=>Number(result.pos)>0 && String(result.status||"OK").toUpperCase()!=="DSQ").slice().sort((a,b)=>Number(a.pos)-Number(b.pos));
     const host=$("#homeTopThree");
     if(host) host.replaceChildren(...rows.slice(0,3).map((result,index)=>{
-      const li=document.createElement("li");li.className="homeResultRow";
-      const pos=document.createElement("span");pos.textContent=String(result.pos||index+1).padStart(2,"0");
-      const identity=document.createElement("div");const name=document.createElement("strong");name.textContent=result.driverName||"—";
-      const team=document.createElement("small");team.textContent=result.team||"—";identity.append(name,team);
-      const clock=document.createElement("b");clock.textContent=formatTime(result.finalTimeMs);
-      li.append(pos,identity,clock);return li;
+      const li=document.createElement("li");li.className="homePodiumItem homePodiumItem--"+(index+1);
+      const pos=document.createElement("span");pos.className="homePodiumPosition";pos.textContent=String(index+1).padStart(2,"0");
+      const identity=document.createElement("div");identity.className="homePodiumIdentity";
+      const name=document.createElement("strong");name.textContent=result.driverName||"—";
+      const team=document.createElement("div");team.className="homePodiumTeam";
+      const logo=makeLogo(result.team,"podiumTeamLogo");if(logo)team.append(logo);
+      const teamName=document.createElement("small");teamName.textContent=result.team||"—";team.append(teamName);
+      identity.append(name,team);
+      const time=document.createElement("b");time.className="homePodiumTime";time.textContent=formatTime(result.finalTimeMs);
+      li.append(pos,identity,time);return li;
     }));
+    if(!rows.length && host){const empty=document.createElement("li");empty.className="homePodiumEmpty";empty.textContent="RESULTADOS AÚN NO DISPONIBLES";host.replaceChildren(empty);}
+    const track=getTrack(race?.trackName),raceName=track.name||race?.trackName||"ÚLTIMA CARRERA";
+    setText("#homeRaceMeta",race ? raceName.toUpperCase()+" · FECHA "+(race.round||"—")+" · "+raceLaps(race)+" VUELTAS" : "AÚN NO HAY CARRERAS CARGADAS");
     const standings=computeDrivers(), pointsHost=$("#homeTopPoints");
     if(pointsHost) pointsHost.replaceChildren(...standings.slice(0,5).map((driver,index)=>{
       const li=document.createElement("li");li.className="homePointRow";
@@ -120,15 +127,8 @@
       li.append(pos,identity,points);return li;
     }));
   }
-  function renderResults(race,races){
-    const alias=getTrack(race?.trackName), name=alias.name||race?.trackName||"Última carrera", winner=raceWinner(race), laps=raceLaps(race);
-    setText("#resultTitle",name.toUpperCase());
-    setText("#resultSummary",(alias.circuit||name)+" · "+(laps)+" vueltas");
-    setText("#resultWinner",winner?.driverName||"—");setText("#resultLaps",laps);
-    setText("#resultDate",formatDate(race?.date));setText("#resultCount",(race?.results||[]).filter(r=>Number(r.pos)>0).length);
-    setText("#resultTrackCircuit",alias.circuit||name);
-    const body=$("#raceResults");
-    if(body) body.replaceChildren(...(race?.results||[]).slice().sort((a,b)=>Number(a.pos||999)-Number(b.pos||999)).map(result=>{
+  function buildResultRows(race){
+    return (race?.results||[]).slice().sort((a,b)=>Number(a.pos||999)-Number(b.pos||999)).map(result=>{
       const tr=document.createElement("tr");
       const pos=document.createElement("td");pos.textContent=String(result.pos||"—").padStart(2,"0");
       const driver=document.createElement("td");const strong=document.createElement("strong");strong.textContent=result.driverName||"—";driver.append(strong);
@@ -138,7 +138,67 @@
       const clock=document.createElement("td");clock.textContent=formatTime(result.finalTimeMs);
       const status=document.createElement("td");status.textContent=result.status||"OK";
       tr.append(pos,driver,team,grid,tyres,clock,status);return tr;
+    });
+  }
+  function buildRaceTable(race,className){
+    const table=document.createElement("table");table.className=className||"";
+    const thead=document.createElement("thead"),headRow=document.createElement("tr");
+    ["POS.","PILOTO","ESCUDERÍA","GRILLA","NEUMÁTICOS","TIEMPO FINAL","ESTADO"].forEach(label=>{const th=document.createElement("th");th.textContent=label;headRow.append(th);});
+    thead.append(headRow);
+    const tbody=document.createElement("tbody");tbody.replaceChildren(...buildResultRows(race));table.append(thead,tbody);return table;
+  }
+  function renderHomeRaceArchive(races){
+    const host=$("#homeRaceArchiveList"),ordered=Array.isArray(races)?races:[];
+    setText("#homeRaceCount",ordered.length+" "+(ordered.length===1?"CARRERA":"CARRERAS"));
+    if(!host)return;
+    host.replaceChildren(...ordered.map((race,index)=>{
+      const alias=getTrack(race.trackName),raceName=alias.name||race.trackName||"Carrera",winner=raceWinner(race);
+      const article=document.createElement("article");article.className="homeArchiveRace";
+      const head=document.createElement("header");head.className="homeArchiveRaceHead";
+      const round=document.createElement("span");round.className="homeArchiveRound";round.textContent="FECHA "+String(race.round||index+1).padStart(2,"0");
+      const identity=document.createElement("div");identity.className="homeArchiveRaceIdentity";
+      const title=document.createElement("h3");title.textContent=String(raceName).toUpperCase();
+      const subtitle=document.createElement("small");subtitle.textContent=formatDate(race.date)+" · "+(alias.circuit||raceName)+" · "+raceLaps(race)+" VUELTAS";identity.append(title,subtitle);
+      const winnerLabel=document.createElement("div");winnerLabel.className="homeArchiveWinner";
+      const winnerEyebrow=document.createElement("small");winnerEyebrow.textContent="GANADOR";
+      const winnerName=document.createElement("strong");winnerName.textContent=winner?.driverName||"—";winnerLabel.append(winnerEyebrow,winnerName);
+      head.append(round,identity,winnerLabel);
+      const podium=document.createElement("ol");podium.className="homeArchivePodium";
+      const podiumResults=(race.results||[]).filter(result=>Number(result.pos)>0 && String(result.status||"OK").toUpperCase()!=="DSQ").slice().sort((a,b)=>Number(a.pos)-Number(b.pos)).slice(0,3);
+      podium.replaceChildren(...podiumResults.map((result,index)=>{
+        const item=document.createElement("li");
+        const position=document.createElement("span");position.textContent=String(index+1).padStart(2,"0");
+        const name=document.createElement("strong");name.textContent=result.driverName||"—";
+        const team=document.createElement("small");team.textContent=result.team||"—";item.append(position,name,team);return item;
+      }));
+      const details=document.createElement("details");details.className="homeFullResults";details.id="homeRaceFull-"+index;
+      const summary=document.createElement("summary");
+      const summaryLabel=document.createElement("span");summaryLabel.textContent="VER CLASIFICACIÓN COMPLETA";
+      const pilotCount=document.createElement("b");pilotCount.textContent=(race.results||[]).length+" PILOTOS";
+      summary.append(summaryLabel,pilotCount);
+      const wrap=document.createElement("div");wrap.className="homeResultsTableWrap";wrap.append(buildRaceTable(race,"homeResultsTable"));
+      details.append(summary,wrap);article.append(head,podium,details);return article;
     }));
+    if(!ordered.length){
+      const empty=document.createElement("p");empty.className="homeArchiveEmpty";empty.textContent="TODAVÍA NO HAY RESULTADOS CARGADOS.";
+      host.replaceChildren(empty);
+    }
+    const buttons=$$("[data-open-latest-result]");
+    buttons.forEach(button=>{button.disabled=!ordered.length;button.setAttribute("aria-expanded","false");button.addEventListener("click",()=>{
+      const details=$("#homeRaceFull-0");if(!details)return;
+      details.open=true;buttons.forEach(item=>item.setAttribute("aria-expanded","true"));
+      details.scrollIntoView({behavior:"smooth",block:"center"});
+    });});
+  }
+    function renderResults(race,races){
+    const alias=getTrack(race?.trackName), name=alias.name||race?.trackName||"Última carrera", winner=raceWinner(race), laps=raceLaps(race);
+    setText("#resultTitle",name.toUpperCase());
+    setText("#resultSummary",(alias.circuit||name)+" · "+(laps)+" vueltas");
+    setText("#resultWinner",winner?.driverName||"—");setText("#resultLaps",laps);
+    setText("#resultDate",formatDate(race?.date));setText("#resultCount",(race?.results||[]).filter(r=>Number(r.pos)>0).length);
+    setText("#resultTrackCircuit",alias.circuit||name);
+    const body=$("#raceResults");
+    if(body) body.replaceChildren(...buildResultRows(race));
     const history=$("#raceHistory");
     if(history) history.replaceChildren(...races.slice(1).map(old=>{
       const row=document.createElement("div");row.className="historyRace";
@@ -318,6 +378,7 @@
       safeJson("data/calendar.json",fallbackCalendar)
     ]);
     currentSite=loaded[0]||{};currentChampionship=loaded[1]||{};
+    $$("[data-link]").forEach(anchor=>{const url=currentSite.links?.[anchor.dataset.link];if(url)anchor.href=url;});
     const schedule=Array.isArray(loaded[2])?loaded[2]:(loaded[2].events||[]);
     const races=(currentChampionship.races||[]).slice().sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
     currentRace=races[0]||null;
@@ -339,7 +400,7 @@
     if(next.trackAsset)$("#nextTrack").src=next.trackAsset;
     if(currentSite.media?.carousel?.nextRace?.src)$("#nextBackdrop").src=currentSite.media.carousel.nextRace.src;
     setText("#resultSummary",(track.circuit||track.name||currentRace?.trackName||"")+" · "+(raceLaps(currentRace))+" VUELTAS");
-    renderTopRows(currentRace);renderResults(currentRace,races);renderStandings();renderCalendar(schedule);
+    renderTopRows(currentRace);renderHomeRaceArchive(races);renderResults(currentRace,races);renderStandings();renderCalendar(schedule);
     setupRegistration();setupMagazine(currentSite.magazine||{},currentRace);
     setupNavigation();setupTools();setupRuleNavigation();setupModalNavigation();
   }

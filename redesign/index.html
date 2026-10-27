@@ -6,7 +6,7 @@
   <meta name="description" content="Assetto F1: resultados, campeonato, calendario, revista y reglamento en un solo sitio."/>
   <title>Assetto F1 — Campeonato</title>
   <link rel="icon" type="image/png" href="img/favicon.png"/>
-  <link rel="stylesheet" href="css/preview.css?v=3"/>
+  <link rel="stylesheet" href="css/preview.css?v=4"/>
 </head>
 <body>
   <header class="siteTop">
@@ -14,6 +14,7 @@
     <div class="seasonStamp"><span id="seasonLabel">TEMPORADA 2026</span><strong id="stageLabel">ETAPA 4</strong></div>
     <div class="topActions">
       <a class="quietLink youtubeLink" data-link="youtube" href="https://www.youtube.com/@jotracks-ac/streams" target="_blank" rel="noopener noreferrer">RELATO DE JOTA Y PELUCA ↗</a>
+      <a class="serverTop" data-link="server" href="https://server.jotracks.com/live-timing?server=0" target="_blank" rel="noopener noreferrer" aria-label="Abrir el servidor de Assetto F1">SERVER ↗</a>
       <button class="signupTop" type="button" data-go="inscripcion">INSCRIBITE</button>
     </div>
   </header>
@@ -41,7 +42,7 @@
           <h1 id="heroTrack">AUSTIN</h1>
           <p class="raceName">ÚLTIMA CARRERA <b>·</b> <span id="heroCircuit">CIRCUIT OF THE AMERICAS</span></p>
           <div class="heroWinner"><small>GANADOR</small><strong id="heroWinner">—</strong><span><b>1.º</b> <i>·</i> <em id="heroWinnerTime">—</em></span></div>
-          <button class="textAction" type="button" data-go="resultados">VER RESULTADOS COMPLETOS <b>↗</b></button>
+          <button class="textAction" type="button" data-open-latest-result aria-controls="homeRaceFull-0" aria-expanded="false">VER RESULTADO COMPLETO <b>↓</b></button>
         </div>
         <aside class="nextRace">
           <img class="nextBackdrop" id="nextBackdrop" src="img/media/mercedes-overhead-wide.webp" alt="" aria-hidden="true"/>
@@ -60,13 +61,14 @@
 
       <section class="homeGrid" aria-label="Lo más importante">
         <article class="homeCard homeResults">
-          <div class="cardHeading"><span>01 / CARRERA</span><button type="button" data-go="resultados">VER TODO →</button></div>
+          <div class="cardHeading"><span>01 / CARRERA</span><button type="button" data-open-latest-result aria-controls="homeRaceFull-0" aria-expanded="false">RESULTADO COMPLETO ↓</button></div>
           <h2>RESULTADO<br/>DE LA FECHA</h2>
-          <ol id="homeTopThree" class="topThree"><li>Cargando resultados…</li></ol>
+          <p class="homeRaceMeta" id="homeRaceMeta">CARGANDO FECHA…</p>
+          <ol id="homeTopThree" class="topThree topThree--podium"><li>Cargando podio…</li></ol>
         </article>
         <article class="homeCard homePoints">
           <div class="cardHeading"><span>02 / CAMPEONATO</span><button type="button" data-go="pilotos">CLASIFICACIÓN →</button></div>
-          <h2>PUNTOS<br/>DE PILOTOS</h2>
+          <h2>CAMPEONATO<br/>DE PILOTOS</h2>
           <ol id="homeTopPoints" class="topPoints"><li>Cargando posiciones…</li></ol>
         </article>
         <article class="homeCard homeMagazine">
@@ -77,6 +79,14 @@
             <span>LEER LA ÚLTIMA EDICIÓN ↗</span>
           </button>
         </article>
+      </section>
+
+      <section class="homeRaceArchive" aria-labelledby="homeRaceArchiveTitle">
+        <header class="homeArchiveHead">
+          <div><span>ARCHIVO DEPORTIVO / RESULTADOS OFICIALES</span><h2 id="homeRaceArchiveTitle">RESULTADOS DE<br/><em>TODAS LAS CARRERAS</em></h2></div>
+          <strong id="homeRaceCount">— CARRERAS</strong>
+        </header>
+        <div class="homeArchiveList" id="homeRaceArchiveList"><p class="homeArchiveEmpty">Cargando resultados…</p></div>
       </section>
 
       <div class="ruleTicker"><span>REGLAS CLAVE</span><b>CAMBIO DE NEUMÁTICOS OBLIGATORIO</b><i>•</i><b>DRS ASSIST EN PRUEBA</b><i>•</i><b>BOXES: 80 KM/H</b><i>•</i><b>DRIVE THROUGH EN 2 VUELTAS</b></div>
@@ -102,7 +112,7 @@
     </section>
 
     <section class="view" id="view-pilotos" role="tabpanel" data-view="pilotos" aria-labelledby="tab-pilotos" hidden>
-      <header class="pageIntro"><span>CAMPEONATO / PUNTOS OFICIALES</span><h1>LOS PILOTOS<br/><em>EN PUNTA</em></h1><p>La tabla se calcula desde los resultados cargados para cada carrera.</p></header>
+      <header class="pageIntro"><span>CAMPEONATO / PUNTOS OFICIALES</span><h1>CAMPEONATO<br/><em>DE PILOTOS</em></h1><p>La tabla se calcula desde los resultados cargados para cada carrera.</p></header>
       <div class="segmented" role="tablist" aria-label="Clasificación">
         <button class="isActive" type="button" data-standing="drivers">PILOTOS</button>
         <button type="button" data-standing="teams">ESCUDERÍAS</button>
@@ -233,6 +243,6 @@
   </dialog>
   <div class="srOnly" id="statusLive" role="status" aria-live="polite"></div>
   <script src="js/data-snapshot.js" defer></script>
-  <script src="js/preview-home.js?v=4" defer></script>
+  <script src="js/preview-home.js?v=5" defer></script>
 </body>
 </html>
