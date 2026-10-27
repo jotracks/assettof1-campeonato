@@ -115,7 +115,7 @@ main h2 { color:var(--af-text); }
 .featureResultsLink span, .nextRaceLink span { color:var(--af-red-bright); font-size:17px; transition:transform .2s ease; }
 .featureResultsLink:hover span, .nextRaceLink:hover span { transform:translateX(4px); }
 .featureTrackBadge { position:absolute; z-index:1; right:24px; bottom:24px; width:clamp(128px,19vw,228px); padding:12px 14px 10px; border:1px solid rgba(255,255,255,.12); border-radius:16px; background:rgba(12,14,16,.72); backdrop-filter:blur(12px); }
-.featureTrackBadge img { display:block; width:100%; height:90px; object-fit:contain; filter:drop-shadow(0 0 9px rgba(255,255,255,.15)); }
+.featureTrackBadge img { display:block; width:100%; height:90px; object-fit:contain; filter:brightness(0) invert(1) drop-shadow(0 0 9px rgba(255,255,255,.2)); }
 .featureTrackBadge span { display:block; margin-top:5px; color:#aeb1b2; text-align:center; font-size:8px; font-weight:900; letter-spacing:.14em; }
 .featureRail { display:grid; grid-template-rows:minmax(0,1.5fr) minmax(165px,.82fr); gap:16px; }
 .nextRaceFeature { min-height:285px; }
@@ -125,7 +125,7 @@ main h2 { color:var(--af-text); }
 .nextRaceContent h2 { margin:11px 0 3px; color:#fff; font-size:clamp(24px,3vw,35px); letter-spacing:.025em; }
 .nextRaceContent>p { margin:0; color:#c1c4c4; font-size:12px; }
 .nextRaceInfo { display:flex; align-items:center; gap:13px; margin-top:auto; padding:10px 12px; border:1px solid rgba(255,255,255,.11); border-radius:13px; background:rgba(9,11,13,.54); }
-.nextRaceInfo img { width:74px; height:52px; object-fit:contain; }
+.nextRaceInfo img { width:74px; height:52px; object-fit:contain; filter:brightness(0) invert(1) drop-shadow(0 0 7px rgba(255,255,255,.18)); }
 .nextRaceInfo div { display:flex; flex-direction:column; gap:4px; }
 .nextRaceInfo strong { max-width:160px; color:#fff; font-size:11px; line-height:1.25; }
 .nextRaceLink { margin-top:14px; }
