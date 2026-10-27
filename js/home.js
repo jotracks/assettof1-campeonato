@@ -203,10 +203,6 @@
     setText("#lastRaceHeroTitle", trackName.toUpperCase());
     setText("#lastRaceHeroLead", circuit);
     setText("#lastRaceHeroWinner", winner?.driverName || "—");
-    setText("#lastRaceHeroTime", formatClock(winner?.finalTimeMs));
-    setText("#lastRaceHeroDate", formatRaceDate(race?.date, false));
-    setText("#podiumRaceRound", race?.round ? "FECHA " + race.round : "ÚLTIMA FECHA");
-    setText("#podiumTrackName", trackName);
     setText("#lastRaceTabLabel", `RESUMEN ${trackName}`.toUpperCase());
     setText("#lastRaceCardTrack", trackName);
     setText("#lastRaceCardWinner", winner?.driverName || "—");
@@ -239,54 +235,6 @@
         return item;
       }));
     }
-  }
-
-  function renderRacePodium(championship) {
-    const race = latestRace(championship);
-    const host = $("#racePodium");
-    if (!host) return;
-
-    const results = (race?.results || [])
-      .filter((result) => Number(result.pos) > 0 && String(result.status || "OK").toUpperCase() !== "DSQ")
-      .slice()
-      .sort((a, b) => Number(a.pos) - Number(b.pos))
-      .slice(0, 3);
-
-    if (!results.length) {
-      const empty = document.createElement("li");
-      empty.className = "podiumEmpty";
-      empty.textContent = "Todavía no hay resultados cargados.";
-      host.replaceChildren(empty);
-      return;
-    }
-
-    const entries = results.map((result) => {
-      const position = Number(result.pos);
-      const item = document.createElement("li");
-      item.className = "podiumEntry podiumEntry--" + position;
-
-      const rank = document.createElement("span");
-      rank.className = "podiumPosition";
-      rank.textContent = String(position).padStart(2, "0");
-      rank.setAttribute("aria-label", "Posición " + position);
-
-      const driver = document.createElement("span");
-      driver.className = "podiumDriver";
-      const name = document.createElement("strong");
-      name.textContent = result.driverName || "—";
-      const team = document.createElement("small");
-      team.textContent = result.team || "—";
-      driver.append(name, team);
-
-      const time = document.createElement("span");
-      time.className = "podiumResultTime";
-      time.textContent = formatClock(result.finalTimeMs);
-
-      item.append(rank, driver, time);
-      return item;
-    });
-
-    host.replaceChildren(...entries);
   }
 
   function initCarousel() {
@@ -574,7 +522,7 @@
     hydrateSiteText(site);
     hydrateMedia(site);
     hydrateRaceSummary(site, championship);
-    renderRacePodium(championship);
+    initCarousel();
     initStandingsControls();
     initMagazine(site);
   }
