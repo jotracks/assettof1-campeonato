@@ -9,11 +9,10 @@
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/tw.css"/>
   <link rel="stylesheet" href="css/redesign.css?v=20261027-contrast"/>
-  <link rel="stylesheet" href="css/home-editorial.css?v=20261027-layout-v4"/>
 </head>
 <body class="pageHome">
   <div class="wrap">
-    <header class="hero homeMasthead">
+    <header class="hero">
       <div class="heroBannerWrap">
         <img class="heroBanner" src="./img/banner.png" alt="Assetto F1 — Liga de Assetto Corsa" width="718" height="85"/>
       </div>
@@ -40,7 +39,7 @@
           </a>
           <a class="navExtLink navExtLink--join" data-link="registration" href="./inscripcion.html" title="Inscripción al campeonato">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-            <span class="navExtLabel" data-registration-cta-label>INSCRIPCIÓN GRATIS</span>
+            <span class="navExtLabel">Inscribite</span>
           </a>
           <a class="navExtLink navExtLink--youtube" data-link="youtube" href="https://www.youtube.com/@jotracks-ac/streams" target="_blank" rel="noopener noreferrer" title="Transmisiones en YouTube">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 00.5 6.2 31 31 0 000 12a31 31 0 00.5 5.8 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 12a31 31 0 00-.5-5.8zM9.6 15.6V8.4L15.8 12z"/></svg>
@@ -55,37 +54,56 @@
     </header>
 
     <main>
-      <section class="homeEditorialHero" id="homeFeature" aria-label="Resumen de la etapa">
-        <img class="homeEditorialBackdrop" id="lastRaceBackdrop" src="img/media/pack-battle-wide.webp" alt="" aria-hidden="true" decoding="async"/>
-        <div class="homeEditorialShade"></div>
-
-        <div class="homeEditorialCopy">
-          <span class="homeEditorialMark" aria-hidden="true"></span>
-          <h1 class="homeStageTitle" data-site-stage>ETAPA 4</h1>
-          <p class="homeLastRaceLine">ÚLTIMA CARRERA <span>·</span> <strong id="lastRaceHeroTitle">AUSTIN</strong></p>
-          <p class="homeHeroCircuit" id="lastRaceHeroLead">Circuit of the Americas</p>
-          <div class="homeWinnerBlock">
-            <span>GANADOR</span>
-            <strong id="lastRaceHeroWinner">—</strong>
-            <p>1.º <i>·</i> <b id="lastRaceHeroTime">—</b></p>
-          </div>
-          <a class="homeResultsLink" href="#resultsArchive">RESULTADOS DE LA CARRERA <span aria-hidden="true">→</span></a>
-        </div>
-
-        <article class="homeNextRace">
-          <img class="homeNextRaceBackdrop" id="nextRaceBackdrop" src="img/media/mercedes-overhead-wide.webp" alt="" aria-hidden="true" decoding="async"/>
-          <div class="homeNextRaceShade"></div>
-          <div class="homeNextRaceCopy">
-            <span class="homeNextRaceKicker">PRÓXIMA FECHA</span>
-            <h2 id="nextRaceHeroTitle">GP DE MÉXICO</h2>
-            <p id="nextRaceHeroCircuit">Autódromo Hermanos Rodríguez</p>
-            <div class="homeNextRaceDate">
-              <strong id="nextRaceHeroDate">FECHA A CONFIRMAR</strong>
-              <a href="calendario.html">CALENDARIO <span aria-hidden="true">→</span></a>
+      <section class="homeFeatureHero" id="homeFeature" aria-label="Resumen del campeonato">
+        <article class="featureRaceCard">
+          <img class="featureRaceBackdrop" id="lastRaceBackdrop" src="img/media/pack-battle-wide.webp" alt="" aria-hidden="true" decoding="async"/>
+          <div class="featureRaceShade"></div>
+          <div class="featureRaceContent">
+            <div class="featureEyebrow"><span class="featureLiveDot"></span> ÚLTIMA CARRERA <span class="featureDivider">/</span> <span data-site-stage>ETAPA 4</span></div>
+            <h2 id="lastRaceHeroTitle">AUSTIN</h2>
+            <p class="featureRaceCircuit" id="lastRaceHeroLead">Circuit of the Americas</p>
+            <div class="featureRaceStats">
+              <div><small>GANADOR</small><strong id="lastRaceHeroWinner">—</strong></div>
+              <div><small>TIEMPO</small><strong id="lastRaceHeroTime">—</strong></div>
+              <div><small>FECHA</small><strong id="lastRaceHeroDate">—</strong></div>
             </div>
+            <a class="featureResultsLink" href="#podium">RESULTADOS DE LA CARRERA <span aria-hidden="true">→</span></a>
           </div>
-          <img class="homeNextRaceTrack" id="nextRaceHeroTrack" src="img/tracks/mexico-city.svg" alt="Trazado de México"/>
+          <div class="featureTrackBadge">
+            <img id="lastRaceHeroTrack" src="img/tracks/cota.svg" alt="Trazado de Austin"/>
+            <span>TRAZADO DE CARRERA</span>
+          </div>
         </article>
+
+        <div class="featureRail">
+          <article class="nextRaceFeature">
+            <img class="nextRaceBackdrop" id="nextRaceBackdrop" src="img/media/mercedes-overhead-wide.webp" alt="" aria-hidden="true" decoding="async"/>
+            <div class="nextRaceShade"></div>
+            <div class="nextRaceContent">
+              <span class="featureEyebrow">PRÓXIMA FECHA</span>
+              <h2 id="nextRaceHeroTitle">GP DE MÉXICO</h2>
+              <p id="nextRaceHeroCircuit">Autódromo Hermanos Rodríguez</p>
+              <div class="nextRaceInfo">
+                <img id="nextRaceHeroTrack" src="img/tracks/mexico-city.svg" alt="Trazado de México"/>
+                <div><small>FECHA</small><strong id="nextRaceHeroDate">FECHA A CONFIRMAR</strong></div>
+              </div>
+              <a class="nextRaceLink" href="calendario.html">VER CALENDARIO <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="signupFeature">
+            <div class="signupPromoBadge" data-registration-promo hidden>
+              <strong data-registration-promo-title>INSCRIPCIÓN GRATIS</strong>
+              <span data-registration-promo-subtitle>POR TIEMPO LIMITADO</span>
+            </div>
+            <div class="signupFeatureCopy">
+              <span class="signupFeatureLabel">ASSETTO F1 <span data-site-stage>ETAPA 4</span></span>
+              <h2>INSCRIBITE AL CAMPEONATO</h2>
+              <p><span data-site-races>6 fechas</span><span class="signupFeatureDot">·</span><span data-site-price>GRATIS</span></p>
+            </div>
+            <a class="signupFeatureLink" data-link="registration" href="inscripcion.html"><span data-registration-cta-label>¡INSCRIBITE AHORA!</span><span aria-hidden="true">→</span></a>
+          </article>
+        </div>
       </section>
 
       <div class="card" id="loadCard" style="display:none">
@@ -96,57 +114,29 @@
         </div>
       </div>
 
-      <section class="homeDashboard" aria-label="Clasificación, transmisión y revista">
-        <article class="dashboardPanel leaderboardPanel">
-          <header class="dashboardPanelHeading">
-            <span class="dashboardEyebrow">TOP 3 · CLASIFICACIÓN</span>
-            <h2>CAMPEONATO</h2>
-          </header>
-          <ol class="championshipTopThree" id="championshipTopThree" aria-label="Primeros puestos del campeonato">
-            <li class="championshipEmpty">Cargando clasificación…</li>
+      <section class="homeHighlights" aria-label="Podio y transmisión">
+        <article class="racePodiumCard" id="podium">
+          <div class="podiumHeading">
+            <div><span class="eyebrow">ÚLTIMA FECHA <span class="podiumHeadingDivider">/</span> <span id="podiumRaceRound">ETAPA 4</span></span><h2>Podio de carrera</h2></div>
+            <p id="podiumTrackName">Austin</p>
+          </div>
+          <ol class="racePodium" id="racePodium" aria-label="Resultados del podio">
+            <li class="podiumEmpty">Cargando resultados…</li>
           </ol>
-          <a class="dashboardPanelLink" href="#completeStandings">VER TABLA COMPLETA <span aria-hidden="true">→</span></a>
         </article>
 
-        <a class="dashboardPanel homeYoutubePanel" data-link="youtube" href="https://www.youtube.com/@jotracks-ac/streams" target="_blank" rel="noopener noreferrer" aria-label="Ver el relato de Jota y Peluca en YouTube">
-          <span class="dashboardEyebrow"><span class="youtubePlayDot">▶</span> RELATO DE JOTA Y PELUCA</span>
-          <span class="homeYoutubeFrame">
-            <img id="youtubeWindowImage" src="img/media/youtube-broadcast.webp" alt="" decoding="async"/>
-            <span class="homeYoutubeShade"></span>
-            <span class="homeYoutubePlay" aria-hidden="true">▶</span>
+        <a class="broadcastFeature" data-link="youtube" href="https://www.youtube.com/@jotracks-ac/streams" target="_blank" rel="noopener noreferrer" aria-label="Ver relato de Jota y Peluca en YouTube">
+          <img id="youtubeWindowImage" src="img/media/youtube-broadcast.webp" alt="" decoding="async"/>
+          <span class="broadcastFeatureShade"></span>
+          <span class="broadcastFeatureContent">
+            <span class="broadcastFeatureEyebrow"><span class="broadcastPlayIcon">▶</span> TRANSMISIÓN EN YOUTUBE</span>
+            <strong>RELATO DE<br/>JOTA Y PELUCA</strong>
+            <span class="broadcastFeatureLink">VER CANAL <span aria-hidden="true">↗</span></span>
           </span>
-          <span class="dashboardPanelLink">VER CANAL <span aria-hidden="true">↗</span></span>
         </a>
-
-<section class="magazineSection homeMagazinePanel" id="revista">
-        <div class="sectionTitleRow magazineTitleRow">
-          <div><span class="eyebrow">ÚLTIMA PÁGINA PUBLICADA</span><h2>REVISTA ASSETTO F1 · <span id="magazineEditionLabel">AUSTIN</span></h2></div><span class="magazineHint">HOJEAR · ZOOM</span>
-        </div>
-        <div class="magazineShell" id="magazineViewer" tabindex="0" aria-label="Revista de la liga">
-          <button class="magazineArrow magazineArrow--prev" type="button" data-mag-prev aria-label="Páginas anteriores">‹</button>
-          <div class="magazineViewport" data-mag-viewport>
-            <div class="magazineSpread" data-mag-spread>
-              <img id="magazinePageLeft" alt="Página izquierda de la revista"/>
-              <img id="magazinePageRight" alt="Página derecha de la revista"/>
-            </div>
-          </div>
-          <button class="magazineArrow magazineArrow--next" type="button" data-mag-next aria-label="Páginas siguientes">›</button>
-        </div>
-        <div class="magazineFooter">
-          <span id="magazineStatus">Cargando archivo…</span>
-          <div class="magazineZoom" role="group" aria-label="Zoom de la revista">
-            <button type="button" data-mag-zoom-out aria-label="Alejar revista">−</button>
-            <button class="magazineZoomValue" type="button" data-mag-zoom-reset aria-label="Restablecer zoom"><span id="magazineZoomValue">100%</span></button>
-            <button type="button" data-mag-zoom-in aria-label="Acercar revista">+</button>
-          </div>
-          <button class="magazineFullscreen" type="button" data-mag-fullscreen>PANTALLA COMPLETA</button>
-        </div>
-      </section>
       </section>
 
-      <details class="fullStandings" id="completeStandings">
-        <summary><span>CLASIFICACIÓN COMPLETA</span><span>VER PILOTOS Y EQUIPOS <b aria-hidden="true">＋</b></span></summary>
-        <section class="card standingsCardV2" id="standingsCard">
+      <section class="card standingsCardV2" id="standingsCard">
         <div class="sectionTitleRow">
           <div>
             <span class="eyebrow">CLASIFICACIÓN GENERAL</span>
@@ -174,9 +164,42 @@
           </section>
         </div>
       </section>
-      </details>
 
-      
+      <section class="magazineSection" id="revista">
+        <div class="sectionTitleRow magazineTitleRow">
+          <div><span class="eyebrow">HISTORIAL DE LA LIGA</span><h2>REVISTA ASSETTO F1</h2></div>
+          <span class="magazineHint">HOJEAR · ZOOM · PANTALLA COMPLETA</span>
+        </div>
+        <div class="magazineShell" id="magazineViewer" tabindex="0" aria-label="Revista de la liga">
+          <button class="magazineArrow magazineArrow--prev" type="button" data-mag-prev aria-label="Páginas anteriores">‹</button>
+          <div class="magazineViewport" data-mag-viewport>
+            <div class="magazineSpread" data-mag-spread>
+              <img id="magazinePageLeft" alt="Página izquierda de la revista"/>
+              <img id="magazinePageRight" alt="Página derecha de la revista"/>
+            </div>
+          </div>
+          <button class="magazineArrow magazineArrow--next" type="button" data-mag-next aria-label="Páginas siguientes">›</button>
+        </div>
+        <div class="magazineFooter">
+          <span id="magazineStatus">Cargando archivo…</span>
+          <div class="magazineZoom" role="group" aria-label="Zoom de la revista">
+            <button type="button" data-mag-zoom-out aria-label="Alejar revista">−</button>
+            <button class="magazineZoomValue" type="button" data-mag-zoom-reset aria-label="Restablecer zoom"><span id="magazineZoomValue">100%</span></button>
+            <button type="button" data-mag-zoom-in aria-label="Acercar revista">+</button>
+          </div>
+          <button class="magazineFullscreen" type="button" data-mag-fullscreen>PANTALLA COMPLETA</button>
+        </div>
+      </section>
+
+      <section class="portalSection" aria-label="Secciones de la web">
+        <span class="eyebrow">MISMA IDENTIDAD EN TODA LA WEB</span>
+        <div class="portalGrid">
+          <a class="portalCard portalCard--rules" href="reglamento.html"><b>REGLAMENTO</b><span>Lectura clara y ordenada</span><em>ABRIR →</em></a>
+          <a class="portalCard portalCard--purple" href="calendario.html"><b>CALENDARIO</b><span>Fechas y etapas</span><em>ABRIR →</em></a>
+          <a class="portalCard portalCard--silver" href="criterio-sanciones.html"><b>SANCIONES</b><span>Criterios y penalidades</span><em>ABRIR →</em></a>
+          <a class="portalCard portalCard--register" data-link="registration" href="inscripcion.html"><b>INSCRIPCIÓN</b><span data-registration-portal-flow>Reglamento → pago → WhatsApp</span><em data-registration-cta-label>¡INSCRIBITE AHORA!</em></a>
+        </div>
+      </section>
 
       <details class="resultsArchive" id="resultsArchive">
         <summary><span><small>ARCHIVO DEPORTIVO</small><b>RESULTADOS DE TODAS LAS CARRERAS</b></span><span class="pill" id="historyCount">0 carreras</span></summary>
@@ -191,6 +214,6 @@
 
   <script src="js/data-snapshot.js" defer></script>
   <script src="js/app.js" defer></script>
-  <script src="js/home.js?v=20261027-layout-v4" defer></script>
+  <script src="js/home.js?v=20261027-redesign" defer></script>
 </body>
 </html>
