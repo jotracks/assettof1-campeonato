@@ -164,11 +164,11 @@
   {
     "round": 19,
     "stage": 4,
-    "flag": "🇸🇬",
-    "name": "Singapur",
-    "circuit": "Marina Bay Street Circuit",
-    "date": "11 OCT",
-    "trackAsset": "img/tracks/singapore.svg"
+    "flag": "🇺🇸",
+    "name": "Austin",
+    "circuit": "Circuit of the Americas",
+    "date": "25 OCT",
+    "trackAsset": "img/tracks/cota.svg"
   },
   {
     "round": 20,
@@ -176,7 +176,7 @@
     "flag": "🇲🇽",
     "name": "México",
     "circuit": "Autódromo Hermanos Rodríguez",
-    "date": "25 OCT",
+    "date": "01 NOV",
     "trackAsset": "img/tracks/mexico-city.svg"
   },
   {
