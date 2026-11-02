@@ -58,11 +58,11 @@
     }
   },
   "nextRace": {
-    "name": "GP DE BRASIL",
-    "country": "Brasil",
-    "circuit": "Autódromo José Carlos Pace",
-    "date": "2026-11-08",
-    "trackAsset": "img/tracks/interlagos.svg"
+    "name": "GP DE MÉXICO",
+    "country": "México",
+    "circuit": "Autódromo Hermanos Rodríguez",
+    "date": null,
+    "trackAsset": "img/tracks/mexico-city.svg"
   },
   "trackAliases": {
     "montreal": {
@@ -164,11 +164,6 @@
       "name": "Austin",
       "circuit": "Circuit of the Americas",
       "trackAsset": "img/tracks/cota.svg"
-    },
-    "acu_mexico_2021": {
-      "name": "México",
-      "circuit": "Autódromo Hermanos Rodríguez",
-      "trackAsset": "img/tracks/mexico-city.svg"
     }
   },
   "teams": {
@@ -238,3 +233,4 @@
     ]
   }
 }
+
