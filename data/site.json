@@ -58,11 +58,11 @@
     }
   },
   "nextRace": {
-    "name": "GP DE BRASIL",
-    "country": "Brasil",
-    "circuit": "Autódromo José Carlos Pace",
-    "date": "2026-11-08T21:00:00-03:00",
-    "trackAsset": "img/tracks/interlagos.svg"
+    "name": "GP DE LAS VEGAS",
+    "country": "Las Vegas",
+    "circuit": "Las Vegas Strip Circuit",
+    "date": "2026-11-21T21:00:00-03:00",
+    "trackAsset": "img/tracks/las-vegas.svg"
   },
   "trackAliases": {
     "montreal": {
@@ -169,6 +169,21 @@
       "name": "México",
       "circuit": "Autódromo Hermanos Rodríguez",
       "trackAsset": "img/tracks/mexico-city.svg"
+    },
+    "vhe_interlagos": {
+      "name": "Brasil",
+      "circuit": "Autódromo José Carlos Pace",
+      "trackAsset": "img/tracks/interlagos.svg"
+    },
+    "interlagos": {
+      "name": "Brasil",
+      "circuit": "Autódromo José Carlos Pace",
+      "trackAsset": "img/tracks/interlagos.svg"
+    },
+    "las_vegas": {
+      "name": "Las Vegas",
+      "circuit": "Las Vegas Strip Circuit",
+      "trackAsset": "img/tracks/las-vegas.svg"
     }
   },
   "teams": {
