@@ -78,7 +78,6 @@
       });
       if(write && location.hash!=="#"+id) history.pushState({view:id},"","#"+id);
       setText("#statusLive","Sección "+id+" abierta");
-      if(id==="herramientas") loadToolFrame("telemetria");
       window.scrollTo({top:0,behavior:"smooth"});
     }
     const tabs=$$(".navTab");
@@ -190,24 +189,6 @@
       details.scrollIntoView({behavior:"smooth",block:"center"});
     });});
   }
-    function renderResults(race,races){
-    const alias=getTrack(race?.trackName), name=alias.name||race?.trackName||"Última carrera", winner=raceWinner(race), laps=raceLaps(race);
-    setText("#resultTitle",name.toUpperCase());
-    setText("#resultSummary",(alias.circuit||name)+" · "+(laps)+" vueltas");
-    setText("#resultWinner",winner?.driverName||"—");setText("#resultLaps",laps);
-    setText("#resultDate",formatDate(race?.date));setText("#resultCount",(race?.results||[]).filter(r=>Number(r.pos)>0).length);
-    setText("#resultTrackCircuit",alias.circuit||name);
-    const body=$("#raceResults");
-    if(body) body.replaceChildren(...buildResultRows(race));
-    const history=$("#raceHistory");
-    if(history) history.replaceChildren(...races.slice(1).map(old=>{
-      const row=document.createElement("div");row.className="historyRace";
-      const date=document.createElement("span");date.textContent=formatDate(old.date);
-      const details=document.createElement("strong");const track=getTrack(old.trackName);details.textContent=(track.name||old.trackName||"Carrera")+" · "+(raceWinner(old)?.driverName||"Sin ganador");
-      const time=document.createElement("b");time.textContent=formatTime(raceWinner(old)?.finalTimeMs);
-      row.append(date,details,time);return row;
-    }));
-  }
   function renderStandings(){
     const drivers=computeDrivers(), driverHost=$("#driverStandings");
     setText("#driverCount",drivers.length+" PILOTOS");
@@ -219,20 +200,6 @@
       const wins=document.createElement("td");wins.textContent=String(driver.wins);
       const points=document.createElement("td");points.innerHTML="<strong>"+String(driver.points)+"</strong>";
       tr.append(pos,pilot,team,wins,points);return tr;
-    }));
-    const byTeam=new Map();
-    drivers.forEach(driver=>{
-      const key=driver.team||"Sin escudería",row=byTeam.get(key)||{name:key,points:0,drivers:[]};
-      row.points+=driver.points;row.drivers.push(driver.name);byTeam.set(key,row);
-    });
-    const teams=Array.from(byTeam.values()).sort((a,b)=>b.points-a.points||a.name.localeCompare(b.name));
-    setText("#teamCount",teams.length+" ESCUDERÍAS");
-    const teamHost=$("#teamStandings");
-    if(teamHost)teamHost.replaceChildren(...teams.map((entry,index)=>{
-      const tr=document.createElement("tr");const pos=document.createElement("td");pos.textContent=String(index+1).padStart(2,"0");
-      const team=document.createElement("td");team.className="teamCell";const logo=makeLogo(entry.name,"driverTeamLogo");if(logo)team.append(logo);const name=document.createElement("strong");name.textContent=entry.name;team.append(name);
-      const pilots=document.createElement("td");pilots.textContent=entry.drivers.join(", ");const points=document.createElement("td");points.innerHTML="<strong>"+entry.points+"</strong>";
-      tr.append(pos,team,pilots,points);return tr;
     }));
   }
   function renderCalendar(schedule){
@@ -258,10 +225,6 @@
       });
       section.append(head,...rows);return section;
     }));
-  }
-  function setStandingsTab(type){
-    $$("[data-standing]").forEach(button=>button.classList.toggle("isActive",button.dataset.standing===type));
-    $("#driverStandingView").hidden=type!=="drivers";$("#teamStandingView").hidden=type!=="teams";
   }
   function setupMagazine(config,race){
     const pages=Array.isArray(config?.fallbackPages)?config.fallbackPages.slice():[];
@@ -336,35 +299,10 @@
       catch(_){copy.textContent=registration.paymentAlias||"JOTRACKS";}
     });
   }
-  function setupTools(){
-    const buttons=$$("[data-tool]"),panels={telemetria:$("#tool-telemetria"),live:$("#tool-live")};
-    const activate=tool=>{
-      buttons.forEach(b=>b.classList.toggle("isActive",b.dataset.tool===tool));
-      Object.entries(panels).forEach(([key,panel])=>{panel.hidden=key!==tool;panel.classList.toggle("isActive",key===tool);});
-      loadToolFrame(tool);
-    };
-    buttons.forEach(button=>button.addEventListener("click",()=>activate(button.dataset.tool)));
-    $("#loadTelemetry").addEventListener("click",()=>{
-      const frame=$("#telemetryFrame");frame.hidden=false;if(!frame.src)frame.src=frame.dataset.src;$("#loadTelemetry").textContent="ANALIZADOR ABIERTO";
-    });
-    $("#liveFrame").addEventListener("load",()=>{
-      try{
-        const doc=$("#liveFrame").contentDocument;
-        doc?.querySelectorAll(".hero,.siteNav,.pageFooter").forEach(node=>node.remove());
-        if(doc?.body){doc.body.style.background="#08090b";doc.body.style.padding="0";}
-        const wrap=doc?.querySelector(".wrap");if(wrap){wrap.style.width="100%";wrap.style.maxWidth="none";wrap.style.margin="0";wrap.style.padding="0";}
-      }catch(_){}
-    });
-  }
-  function loadToolFrame(tool){
-    if(tool==="telemetria" && $("#telemetryFrame") && !$("#telemetryFrame").hidden && !$("#telemetryFrame").src)$("#telemetryFrame").src=$("#telemetryFrame").dataset.src;
-    if(tool==="live"){const frame=$("#liveFrame");frame.hidden=false;if(!frame.src)frame.src=frame.dataset.src;}
-  }
   function setupRuleNavigation(){
     $$("[data-rule-jump]").forEach(button=>button.addEventListener("click",()=>{
       const details=$("#"+button.dataset.ruleJump);if(details){details.open=true;details.scrollIntoView({behavior:"smooth",block:"start"});}
     }));
-    $$("[data-standing]").forEach(button=>button.addEventListener("click",()=>setStandingsTab(button.dataset.standing)));
   }
   function setupModalNavigation(){
     const modal=$("#magazineModal");
@@ -399,10 +337,9 @@
     setText("#nextDate",next.date?formatDate(next.date,true):"FECHA A CONFIRMAR");
     if(next.trackAsset)$("#nextTrack").src=next.trackAsset;
     if(currentSite.media?.carousel?.nextRace?.src)$("#nextBackdrop").src=currentSite.media.carousel.nextRace.src;
-    setText("#resultSummary",(track.circuit||track.name||currentRace?.trackName||"")+" · "+(raceLaps(currentRace))+" VUELTAS");
-    renderTopRows(currentRace);renderHomeRaceArchive(races);renderResults(currentRace,races);renderStandings();renderCalendar(schedule);
+    renderTopRows(currentRace);renderHomeRaceArchive(races);renderStandings();renderCalendar(schedule);
     setupRegistration();setupMagazine(currentSite.magazine||{},currentRace);
-    setupNavigation();setupTools();setupRuleNavigation();setupModalNavigation();
+    setupNavigation();setupRuleNavigation();setupModalNavigation();
   }
   main().catch(error=>console.error("Assetto F1 SPA:",error));
 })();
