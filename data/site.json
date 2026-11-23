@@ -58,11 +58,11 @@
     }
   },
   "nextRace": {
-    "name": "GP DE LAS VEGAS",
-    "country": "Las Vegas",
-    "circuit": "Las Vegas Strip Circuit",
-    "date": "2026-11-21T21:00:00-03:00",
-    "trackAsset": "img/tracks/las-vegas.svg"
+    "name": "GP DE QATAR",
+    "country": "Qatar",
+    "circuit": "Lusail International Circuit",
+    "date": "2026-11-29T21:00:00-03:00",
+    "trackAsset": "img/tracks/lusail.svg"
   },
   "trackAliases": {
     "montreal": {
@@ -184,6 +184,26 @@
       "name": "Las Vegas",
       "circuit": "Las Vegas Strip Circuit",
       "trackAsset": "img/tracks/las-vegas.svg"
+    },
+    "lasvegas23": {
+      "name": "Las Vegas",
+      "circuit": "Las Vegas Strip Circuit",
+      "trackAsset": "img/tracks/las-vegas.svg"
+    },
+    "qatar": {
+      "name": "Qatar",
+      "circuit": "Lusail International Circuit",
+      "trackAsset": "img/tracks/lusail.svg"
+    },
+    "lusail": {
+      "name": "Qatar",
+      "circuit": "Lusail International Circuit",
+      "trackAsset": "img/tracks/lusail.svg"
+    },
+    "losail": {
+      "name": "Qatar",
+      "circuit": "Lusail International Circuit",
+      "trackAsset": "img/tracks/lusail.svg"
     }
   },
   "teams": {
