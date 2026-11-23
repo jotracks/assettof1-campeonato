@@ -311,7 +311,7 @@
   async function main(){
     const snapshot=window.ASSETTO_F1_SNAPSHOT||{};
     const loaded=await Promise.all([
-      safeJson("data/site.json",snapshot.site),
+      safeJson("data/site.json?v=7",snapshot.site),
       safeJson("data/championship.json",snapshot.championship),
       safeJson("data/calendar.json",fallbackCalendar)
     ]);
