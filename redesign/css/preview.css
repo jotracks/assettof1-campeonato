@@ -386,3 +386,22 @@ td strong{color:#fff;font-size:10px}
 .homeArchiveHead h2{margin-top:0}
 .homeArchiveList{grid-template-columns:minmax(0,1fr)}
 @media(max-width:760px){.homeArchiveList{grid-template-columns:minmax(0,1fr)}}
+
+/* Navegación social, fondos editoriales y descarga del reglamento */
+.socialIcon{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid rgba(255,255,255,.17);border-radius:50%;color:#d7d8d5;transition:color .18s,border-color .18s,background .18s}
+.socialIcon:hover{color:#fff;border-color:var(--yellow);background:rgba(255,255,255,.06)}
+.socialIcon svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.socialIcon .youtubeShape{fill:currentColor;stroke:none}
+.socialIcon .youtubePlay{fill:#111316;stroke:none}
+.socialIcon .socialDot{fill:currentColor;stroke:none}
+.ruleActions{display:flex;justify-content:flex-end;margin:-9px 0 17px}
+.pdfDownload{display:inline-flex;align-items:center;gap:13px;padding:10px 12px;border:1px solid rgba(255,255,255,.19);border-radius:3px;color:#e6e6e2;font-size:8px;font-weight:950;letter-spacing:.1em}
+.pdfDownload:hover{border-color:var(--yellow);color:#fff}
+.pdfDownload b{color:var(--yellow);font-size:8px}
+.criteriaLink{display:inline-flex;margin-top:11px;color:#c9c9c6;font-size:8px;font-weight:900;letter-spacing:.09em}
+.criteriaLink:hover{color:var(--yellow)}
+.pageIntro.regulationIntro,.view[data-view="calendario"] .pageIntro{position:relative;isolation:isolate;overflow:hidden;padding:28px 24px 24px;border:1px solid var(--line);border-radius:4px;background-size:cover;background-position:center}
+.pageIntro.regulationIntro{background-image:linear-gradient(90deg,rgba(8,9,11,.97),rgba(8,9,11,.74) 52%,rgba(8,9,11,.42)),url("../img/media/generated-paddock.svg")}
+.view[data-view="calendario"] .pageIntro{background-image:linear-gradient(90deg,rgba(8,9,11,.94),rgba(8,9,11,.68) 55%,rgba(8,9,11,.3)),url("../img/media/generated-vegas-night.svg")}
+.pageIntro.regulationIntro>* ,.view[data-view="calendario"] .pageIntro>*{position:relative;z-index:1}
+@media(max-width:760px){.socialIcon{width:28px;height:28px}.socialIcon svg{width:14px;height:14px}.ruleActions{justify-content:flex-start;margin:0 0 14px}.pageIntro.regulationIntro,.view[data-view="calendario"] .pageIntro{padding:22px 15px}}
