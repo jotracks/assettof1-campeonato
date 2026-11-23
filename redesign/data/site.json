@@ -190,47 +190,47 @@
   },
   "teams": {
     "Red Bull": {
-      "asset": "img/Red Bull.png",
+      "asset": "img/brands/red-bull.svg",
       "color": "#e11d3b"
     },
     "Ferrari": {
-      "asset": "img/Ferrari.png",
+      "asset": "img/brands/ferrari.svg",
       "color": "#ef233c"
     },
     "Mercedes": {
-      "asset": "img/Mercedes.png",
+      "asset": "img/brands/mercedes.svg",
       "color": "#12b8a6"
     },
     "Mclaren": {
-      "asset": "img/Mclaren.png",
+      "asset": "img/brands/mclaren.svg",
       "color": "#ff8700"
     },
     "Audi": {
-      "asset": "img/Audi.png",
+      "asset": "img/brands/audi.svg",
       "color": "#d7d9de"
     },
     "Williams": {
-      "asset": "img/Williams.png",
+      "asset": "img/brands/williams.svg",
       "color": "#5a86ff"
     },
     "Aston Martin": {
-      "asset": "img/Aston Martin.png",
+      "asset": "img/brands/aston-martin.svg",
       "color": "#229971"
     },
     "Alpine": {
-      "asset": "img/Alpine.png",
+      "asset": "img/brands/alpine.svg",
       "color": "#e770b9"
     },
     "Haas": {
-      "asset": "img/Haas.png",
+      "asset": "img/brands/haas.svg",
       "color": "#b9bcc3"
     },
     "Cadillac": {
-      "asset": "img/Cadillac.png",
+      "asset": "img/brands/cadillac.svg",
       "color": "#d7d9de"
     },
     "Racing Bulls": {
-      "asset": "img/Racing Bulls.png",
+      "asset": "img/brands/racing-bulls.svg",
       "color": "#7b8cff"
     }
   },
