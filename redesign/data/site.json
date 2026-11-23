@@ -24,10 +24,9 @@
     "rulesUrl": "reglamento.html#s6"
   },
   "links": {
-    "youtube": "https://www.youtube.com/@jotracks-ac/streams",
+    "youtube": "https://www.youtube.com/@jotracks-ac",
     "server": "https://server.jotracks.com/live-timing?server=0",
-    "instagram": "https://www.instagram.com/assetto.f1/",
-    "telemetry": "telemetria.html"
+    "instagram": "https://www.instagram.com/assetto.f1/"
   },
   "media": {
     "carousel": {
@@ -36,24 +35,12 @@
         "alt": "Pelotón de monoplazas peleando posiciones durante una carrera de Assetto F1"
       },
       "nextRace": {
-        "src": "img/media/mercedes-overhead-wide.webp",
-        "alt": "Monoplaza fotografiado desde arriba junto al piano"
-      },
-      "youtube": {
-        "src": "img/media/mercedes-sunset-wide.webp",
-        "alt": "Dos monoplazas corriendo lado a lado al atardecer"
-      },
-      "youtubeWindow": {
-        "src": "img/media/youtube-broadcast.webp",
-        "alt": "Captura de una transmisión oficial de Assetto F1"
+        "src": "img/media/generated-lusail-night.svg",
+        "alt": "Monoplazas bajo las luces del circuito de Lusail"
       },
       "registration": {
         "src": "img/media/pack-straight-wide.webp",
         "alt": "Pelotón de monoplazas recorriendo una recta a gran velocidad"
-      },
-      "telemetry": {
-        "src": "img/media/jotracks-telemetry-analyzer.png",
-        "alt": "Analizador JOTRACKS con gráficos de inputs, mapa, combustible y energía"
       }
     }
   },
